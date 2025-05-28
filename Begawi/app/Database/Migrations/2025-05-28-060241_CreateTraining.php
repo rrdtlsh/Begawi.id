@@ -31,16 +31,18 @@ class CreateTrainingsTable extends Migration
                 'null' => true,
             ],
             'created_at' => [
-                'type' => 'DATETIME',
-                'default' => 'CURRENT_TIMESTAMP',
+                'type' => 'TIMESTAMP',
+                'null' => true,
+                'default' => null,
             ],
             'updated_at' => [
-                'type' => 'DATETIME',
-                'default' => 'CURRENT_TIMESTAMP',
+                'type' => 'TIMESTAMP',
+                'null' => true,
+                'default' => null,
             ],
         ]);
 
-        $this->forge->addKey('id', true); // primary key
+        $this->forge->addKey('id', true);
         $this->forge->createTable('trainings');
     }
 
