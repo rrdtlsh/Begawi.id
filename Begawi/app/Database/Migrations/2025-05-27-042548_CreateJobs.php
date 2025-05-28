@@ -10,32 +10,33 @@ class CreateJobs extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type'           => 'INT',
-                'unsigned'       => true,
+                'type' => 'INT',
+                'unsigned' => true,
                 'auto_increment' => true,
             ],
             'vendor_id' => [
-                'type'       => 'INT',
-                'unsigned'   => true,
+                'type' => 'INT',
+                'unsigned' => true,
             ],
             'title' => [
-                'type'       => 'VARCHAR',
+                'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
             'description' => [
                 'type' => 'TEXT',
             ],
             'location' => [
-                'type'       => 'VARCHAR',
+                'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
             'salary_range' => [
-                'type'       => 'VARCHAR',
+                'type' => 'VARCHAR',
                 'constraint' => 100,
             ],
             'created_at' => [
-                'type'    => 'TIMESTAMP',
-                'default' => 'CURRENT_TIMESTAMP',
+                'type' => 'TIMESTAMP',
+                'null' => true,
+                'default' => null,
             ],
         ]);
 

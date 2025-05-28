@@ -9,33 +9,34 @@ class CreateUsers extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id'          => [
-                'type'           => 'INT',
+            'id' => [
+                'type' => 'INT',
                 'auto_increment' => true,
-                'unsigned'       => true,
+                'unsigned' => true,
             ],
-            'username'        => [
-                'type'       => 'VARCHAR',
+            'username' => [
+                'type' => 'VARCHAR',
                 'constraint' => 100,
-                'null'       => false,
+                'null' => false,
             ],
-            'email'       => [
-                'type'       => 'VARCHAR',
+            'email' => [
+                'type' => 'VARCHAR',
                 'constraint' => 100,
-                'unique'     => true,
+                'unique' => true,
             ],
-            'password'    => [
-                'type'       => 'VARCHAR',
+            'password' => [
+                'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
-            'role'        => [
-                'type'       => 'ENUM',
+            'role' => [
+                'type' => 'ENUM',
                 'constraint' => ['admin', 'vendor', 'jobseeker'],
-                'null'       => false,
+                'null' => false,
             ],
-            'created_at'  => [
-                'type'    => 'TIMESTAMP',
-                'default' => 'CURRENT_TIMESTAMP',
+            'created_at' => [
+                'type' => 'TIMESTAMP',
+                'null' => true,
+                'default' => null,
             ],
         ]);
 

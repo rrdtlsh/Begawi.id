@@ -10,26 +10,27 @@ class CreateApplications extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type'           => 'INT',
-                'unsigned'       => true,
+                'type' => 'INT',
+                'unsigned' => true,
                 'auto_increment' => true,
             ],
             'job_id' => [
-                'type'     => 'INT',
+                'type' => 'INT',
                 'unsigned' => true,
             ],
             'jobseeker_id' => [
-                'type'     => 'INT',
+                'type' => 'INT',
                 'unsigned' => true,
             ],
             'applied_at' => [
-                'type'    => 'TIMESTAMP',
-                'default' => 'CURRENT_TIMESTAMP',
+                'type' => 'TIMESTAMP',
+                'null' => true,
+                'default' => null,
             ],
             'status' => [
-                'type'       => 'VARCHAR',
+                'type' => 'VARCHAR',
                 'constraint' => 50,
-                'default'    => 'pending',
+                'default' => 'pending',
             ],
         ]);
 
