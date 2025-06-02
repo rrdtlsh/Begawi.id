@@ -6,7 +6,14 @@ use CodeIgniter\Model;
 
 class JobsModel extends Model
 {
-    protected $table      = 'users';
+    protected $table = 'jobs';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['username', 'email', 'password', 'role'];
+
+    protected $allowedFields = [
+        'title',
+        'description',
+        'location',
+        'salary_range',
+        'created_at'
+    ];
 }
