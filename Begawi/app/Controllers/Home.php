@@ -2,10 +2,20 @@
 
 namespace App\Controllers;
 
+use App\Models\JobsModel;
+
 class Home extends BaseController
 {
-    public function index(): string
+    protected $jobsModel;
+
+    public function __construct()
     {
-        return view('welcome_message');
+        $this->jobsModel = new JobsModel();
+    }
+
+    public function index()
+    {
+        $data['jobs'] = $this->jobsModel->findAll();
+        return view('guest_homescreen', $data);
     }
 }
