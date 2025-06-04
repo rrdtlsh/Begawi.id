@@ -14,7 +14,7 @@ class CreateUsers extends Migration
                 'auto_increment' => true,
                 'unsigned' => true,
             ],
-            'username' => [
+            'fullname' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
                 'null' => false,
@@ -34,6 +34,11 @@ class CreateUsers extends Migration
                 'null' => false,
             ],
             'created_at' => [
+                'type' => 'TIMESTAMP',
+                'null' => true,
+                'default' => null,
+            ],
+            'updated_at' => [ // Ditambahkan untuk pelacakan update
                 'type' => 'TIMESTAMP',
                 'null' => true,
                 'default' => null,

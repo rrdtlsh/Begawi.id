@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateJobs extends Migration
+class CreateUserSkills extends Migration
 {
     public function up()
     {
@@ -14,24 +14,19 @@ class CreateJobs extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'vendor_id' => [
+            'jobseeker_id' => [
                 'type' => 'INT',
                 'unsigned' => true,
             ],
-            'title' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
-            ],
-            'description' => [
-                'type' => 'TEXT',
-            ],
-            'location' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
-            ],
-            'salary_range' => [
+            'skill_name' => [ // Atau 'skill_id' jika ada tabel 'skills' master
                 'type' => 'VARCHAR',
                 'constraint' => 100,
+                'null' => false,
+            ],
+            'proficiency_level' => [ // Contoh: beginner, intermediate, advanced
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'null' => true,
             ],
             'created_at' => [
                 'type' => 'TIMESTAMP',
@@ -41,12 +36,12 @@ class CreateJobs extends Migration
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('vendor_id', 'users', 'id', 'CASCADE', 'CASCADE'); // FK ke users
-        $this->forge->createTable('jobs');
+        $this->forge->addForeignKey('jobseeker_id', 'jobseekers', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('user_skills');
     }
 
     public function down()
     {
-        $this->forge->dropTable('jobs');
+        $this->forge->dropTable('user_skills');
     }
 }

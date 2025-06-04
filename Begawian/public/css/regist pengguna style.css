@@ -1,0 +1,206 @@
+/* regist_pengguna_style.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+    --sasirangan-green-dark: #2A5C0F;
+    --sasirangan-green-medium: #5D8B2F;
+    --sasirangan-green-light: #A1C349;
+    --sasirangan-yellow: #F8DE3D;
+    --sasirangan-yellow-light: #FFF9C4;
+    --neutral-light: #F7F7F7;
+    --neutral-white: #FFFFFF;
+    --neutral-dark: #333333;
+    --neutral-grey: #B0B0B0;
+    /* Variabel lain dari file Anda bisa ditambahkan di sini jika diperlukan */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--neutral-light);
+    color: var(--neutral-dark);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Untuk scroll jika form panjang */
+    min-height: 100vh;
+    padding: 20px;
+    overflow-y: auto; /* Memungkinkan scroll vertikal */
+}
+
+.registration-container {
+    background-color: var(--neutral-white);
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 550px; /* Disesuaikan untuk form registrasi yang mungkin lebih panjang */
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.logo-begawi {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--sasirangan-green-dark);
+    margin-bottom: 10px;
+}
+
+.logo-begawi span {
+    color: var(--sasirangan-yellow);
+}
+
+.registration-container h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: var(--neutral-dark);
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--sasirangan-green-dark);
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--neutral-grey);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif; /* Memastikan font Poppins digunakan */
+    color: var(--neutral-dark);
+    background-color: var(--neutral-white);
+    transition: border-color 0.3s ease;
+}
+
+.input-group textarea {
+    min-height: 48px; /* Tinggi minimal, bisa bertambah jika teks banyak */
+    resize: vertical; /* Memungkinkan resize vertikal */
+}
+
+.input-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23B0B0B0' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
+    padding-right: 40px; /* Memberi ruang untuk ikon panah */
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: var(--sasirangan-green-medium);
+    box-shadow: 0 0 0 2px rgba(93, 139, 47, 0.2);
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+    color: var(--neutral-grey);
+    opacity: 0.8;
+}
+
+.checkbox-group {
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: auto; /* Biarkan browser menentukan width */
+    margin-right: 10px;
+    accent-color: var(--sasirangan-green-medium); /* Warna checkbox saat dicentang */
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checkbox-item label {
+    font-size: 14px;
+    font-weight: 400; /* Bobot font normal untuk label checkbox */
+    color: var(--neutral-dark); /* Warna font label dari variabel */
+    cursor: pointer;
+    margin-bottom: 0; /* Reset margin bottom default dari label input-group */
+}
+
+.skill-description-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.skill-description-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--sasirangan-green-dark);
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--sasirangan-green-medium);
+    color: var(--neutral-white);
+    margin-top: 20px; /* Memberi jarak atas sebelum tombol utama */
+}
+
+.btn-primary:hover {
+    background-color: var(--sasirangan-green-dark);
+}
+
+.login-link { /* Menggunakan nama kelas yang sama dengan form sebelumnya untuk konsistensi */
+    margin-top: 25px;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: var(--sasirangan-green-medium);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+    color: var(--sasirangan-green-dark);
+}
+
+.hidden {
+    display: none !important;
+}

@@ -10,27 +10,32 @@ class CreateVendors extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type'           => 'INT',
-                'unsigned'       => true,
+                'type' => 'INT',
+                'unsigned' => true,
                 'auto_increment' => true,
             ],
             'user_id' => [
-                'type'       => 'INT',
-                'unsigned'   => true,
+                'type' => 'INT',
+                'unsigned' => true,
+            ],
+            'company_name' => [ // Ditambahkan untuk nama perusahaan
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => false,
             ],
             'company_email' => [
-                'type'       => 'VARCHAR',
+                'type' => 'VARCHAR',
                 'constraint' => 100,
-                'null'       => false,
+                'null' => false,
             ],
             'company_profile' => [
                 'type' => 'TEXT',
                 'null' => true,
             ],
             'contact' => [
-                'type'       => 'VARCHAR',
+                'type' => 'VARCHAR',
                 'constraint' => 20,
-                'null'       => true,
+                'null' => true,
             ],
             'company_address' => [
                 'type' => 'TEXT',

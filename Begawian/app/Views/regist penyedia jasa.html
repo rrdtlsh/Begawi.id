@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrasi Penyedia Jasa - Begawi</title>
+    <link rel="stylesheet" href="regist pengguna style.css">
+</head>
+<body>
+    <div class="registration-container">
+        <div class="logo-begawi">Begaw<span>i</span></div>
+        <h2>Registrasi Penyedia Jasa</h2>
+
+        <form action="#" method="POST" id="providerRegistrationForm">
+            <div class="input-group">
+                <label for="nama_penyedia">Nama Penyedia Jasa / Usaha</label>
+                <input type="text" id="nama_penyedia" name="nama_penyedia" placeholder="Masukkan nama Anda atau nama usaha" required>
+            </div>
+
+            <div class="input-group">
+                <label for="kategori_jasa">Bidang Kategori Jasa</label>
+                <select id="kategori_jasa" name="kategori_jasa" required>
+                    <option value="" disabled selected>Pilih Kategori Jasa</option>
+                    <option value="it">IT & Perangkat Lunak</option>
+                    <option value="marketing">Pemasaran & Komunikasi</option>
+                    <option value="sales">Penjualan</option>
+                    <option value="design">Desain/Kreatif</option>
+                    <option value="finance">Keuangan/Akuntansi</option>
+                    <option value="education">Pendidikan</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="domisili_usaha">Domisili Usaha (Banjarmasin)</label>
+                <select id="domisili_usaha" name="domisili_usaha" required>
+                    <option value="" disabled selected>Pilih Domisili Usaha</option>
+                    <option value="Banjarmasin Selatan">Banjarmasin Selatan</option>
+                    <option value="Banjarmasin Utara">Banjarmasin Utara</option>
+                    <option value="Banjarmasin Tengah">Banjarmasin Tengah</option>
+                    <option value="Banjarmasin Barat">Banjarmasin Barat</option>
+                    <option value="Banjarmasin Timur">Banjarmasin Timur</option>
+                    <option value="Luar Banjarmasin">Luar Banjarmasin (tetap melayani area Banjarmasin)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="nomor_telepon">Nomor Telepon / WhatsApp</label>
+                <input type="tel" id="nomor_telepon" name="nomor_telepon" placeholder="Contoh: 081234567890" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email_usaha">Email Usaha</label>
+                <input type="email" id="email_usaha" name="email_usaha" placeholder="emailbisnis@example.com" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password_usaha">Kata Sandi</label>
+                <input type="password" id="password_usaha" name="password_usaha" placeholder="Buat kata sandi (minimal 8 karakter)" required minlength="8">
+            </div>
+             <div class="input-group">
+                <label for="konfirmasi_password_usaha">Konfirmasi Kata Sandi</label>
+                <input type="password" id="konfirmasi_password_usaha" name="konfirmasi_password_usaha" placeholder="Ulangi kata sandi Anda" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">DAFTAR SEBAGAI PENYEDIA JASA</button>
+        </form>
+
+        <p class="login-link">
+            Sudah mempunyai akun Begawi? <a href="login.html">Masuk</a>
+        </p>
+    </div>
+
+    <script>
+        // Validasi konfirmasi password
+        const passwordInput = document.getElementById('password_usaha');
+        const confirmPasswordInput = document.getElementById('konfirmasi_password_usaha');
+        const providerRegistrationForm = document.getElementById('providerRegistrationForm');
+
+        function validatePasswordConfirmation() {
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                confirmPasswordInput.setCustomValidity("Kata sandi tidak cocok.");
+            } else {
+                confirmPasswordInput.setCustomValidity("");
+            }
+        }
+
+        if (passwordInput && confirmPasswordInput && providerRegistrationForm) {
+            passwordInput.addEventListener('change', validatePasswordConfirmation);
+            confirmPasswordInput.addEventListener('keyup', validatePasswordConfirmation);
+            
+            providerRegistrationForm.addEventListener('submit', function(event) {
+                // Validasi konfirmasi password sebelum submit
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    alert("Konfirmasi kata sandi tidak cocok dengan kata sandi yang Anda masukkan.");
+                    confirmPasswordInput.focus();
+                    event.preventDefault(); // Mencegah form dikirim
+                    return;
+                }
+                
+                // Di sini Anda bisa menambahkan logika pengiriman data form
+                // Untuk saat ini, kita hanya mencegah default jika ada error
+                // Jika semua validasi lolos, form akan dikirim secara normal (atau via AJAX jika Anda implementasikan)
+                
+                // Contoh: alert("Form siap dikirim!"); // Hapus atau sesuaikan ini
+            });
+        }
+    </script>
+</body>
+</html>
