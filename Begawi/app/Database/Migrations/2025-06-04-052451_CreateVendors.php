@@ -8,11 +8,53 @@ class CreateVendors extends Migration
 {
     public function up()
     {
-        //
+        $this->forge->addField([
+            'id' => [
+                'type' => 'INT',
+                'unsigned' => true,
+                'auto_increment' => true,
+            ],
+            'user_id' => [
+                'type' => 'INT',
+                'unsigned' => true,
+            ],
+            'company_name' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => false,
+            ],
+            'company_email' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'null' => false,
+            ],
+            'company_profile' => [
+                'type' => 'TEXT',
+                'null' => true,
+            ],
+            'contact' => [
+                'type' => 'VARCHAR',
+                'constraint' => 20,
+                'null' => true,
+            ],
+            'company_address' => [
+                'type' => 'TEXT',
+                'null' => true,
+            ],
+            'website' => [ // URL Website perusahaan
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true,
+            ],
+        ]);
+
+        $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('vendors');
     }
 
     public function down()
     {
-        //
+        $this->forge->dropTable('vendors');
     }
 }
