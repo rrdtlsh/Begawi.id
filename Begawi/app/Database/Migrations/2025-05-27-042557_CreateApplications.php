@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateTrainingApplication extends Migration
+class CreateApplications extends Migration
 {
     public function up()
     {
@@ -14,20 +14,20 @@ class CreateTrainingApplication extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'training_id' => [ // FK ke tabel 'trainings'
+            'job_id' => [
                 'type' => 'INT',
                 'unsigned' => true,
             ],
-            'jobseeker_id' => [ // FK ke tabel 'jobseekers'
+            'jobseeker_id' => [
                 'type' => 'INT',
                 'unsigned' => true,
             ],
-            'enrolled_at' => [
+            'applied_at' => [
                 'type' => 'TIMESTAMP',
                 'null' => true,
                 'default' => null,
             ],
-            'status' => [ // Contoh: pending, accepted, rejected, completed
+            'status' => [
                 'type' => 'VARCHAR',
                 'constraint' => 50,
                 'default' => 'pending',
@@ -35,13 +35,13 @@ class CreateTrainingApplication extends Migration
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('training_id', 'trainings', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('jobseeker_id', 'jobseekers', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->createTable('training_enrollments');
+        $this->forge->addForeignKey('job_id', 'jobs', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('jobseeker_id', 'users', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('applications');
     }
 
     public function down()
     {
-        $this->forge->dropTable('training_enrollments');
+        $this->forge->dropTable('applications');
     }
 }

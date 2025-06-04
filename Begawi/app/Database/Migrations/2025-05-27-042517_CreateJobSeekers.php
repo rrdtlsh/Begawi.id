@@ -10,34 +10,34 @@ class CreateJobSeekers extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'INT',
-                'unsigned' => true,
+                'type'           => 'INT',
+                'unsigned'       => true,
                 'auto_increment' => true,
             ],
             'user_id' => [
-                'type' => 'INT',
-                'unsigned' => true,
+                'type'       => 'INT',
+                'unsigned'   => true,
             ],
             'full_name' => [
-                'type' => 'VARCHAR',
+                'type'       => 'VARCHAR',
                 'constraint' => 100,
-                'null' => false,
+                'null'       => false,
             ],
             'phone' => [
-                'type' => 'VARCHAR',
+                'type'       => 'VARCHAR',
                 'constraint' => 20,
-                'null' => true,
+                'null'       => true,
             ],
             'address' => [
                 'type' => 'TEXT',
                 'null' => true,
             ],
             'education' => [
-                'type' => 'VARCHAR',
+                'type'       => 'VARCHAR',
                 'constraint' => 150,
-                'null' => true,
+                'null'       => true,
             ],
-            'skills' => [ // Skills dalam format teks, atau bisa dipisah ke tabel user_skills
+            'skills' => [
                 'type' => 'TEXT',
                 'null' => true,
             ],
