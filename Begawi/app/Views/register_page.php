@@ -69,11 +69,9 @@
                             <div class="form-group">
                                 <label for="skills">Kategori Keahlian</label>
                                 <select name="skills[]" class="form-control">
-                                    <option value="">Pilih Keahlian</option>
                                     <?php foreach ($skills as $skill): ?>
-                                        <option valu="<?= $skill->id ?>" <?= old('skills') == $skill->id ? 'selected' : '' ?>>
-                                            < ?=esc($skill->name) ?>
-                                            <?php endforeach; ?>
+                                        <option value="<?= $skill->id ?>"><?= esc($skill->name) ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
