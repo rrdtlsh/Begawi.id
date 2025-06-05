@@ -6,6 +6,7 @@ use CodeIgniter\Database\Migration;
 
 class CreateSkills extends Migration
 {
+    //table skills
     public function up()
     {
         $this->forge->addField([
