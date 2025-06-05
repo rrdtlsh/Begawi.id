@@ -26,7 +26,7 @@ class CreateVendors extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->createTable('vendors');
+        $this->forge->createTable('vendors'); // Create the vendors table
     }
 
     public function down()

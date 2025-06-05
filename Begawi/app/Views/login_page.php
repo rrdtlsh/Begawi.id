@@ -17,10 +17,10 @@
                     </div>
                     <div class="card-body">
                         <?php if (session()->getFlashdata('success')): ?>
-                            <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+                        <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
                         <?php endif; ?>
                         <?php if (session()->getFlashdata('error')): ?>
-                            <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+                        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
                         <?php endif; ?>
 
                         <?= form_open('login/process') ?>
@@ -36,7 +36,7 @@
                         <?= form_close() ?>
                     </div>
                     <div class="card-footer text-center">
-                        <p>Belum punya akun? <a href="<?= site_url('register') ?>">Daftar sekarang</a></p>
+                        <p>Belum punya akun? <a href="/register">Daftar sekarang</a></p>
                     </div>
                 </div>
             </div>

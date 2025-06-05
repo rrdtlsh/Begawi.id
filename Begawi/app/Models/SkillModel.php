@@ -12,4 +12,6 @@ class SkillModel extends Model
     protected $useTimestamps = true;
 
     protected $allowedFields = ['name'];
+
+
 }
