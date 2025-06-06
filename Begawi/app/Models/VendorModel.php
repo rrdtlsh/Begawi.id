@@ -26,4 +26,13 @@ class VendorModel extends Model
 
     protected $useTimestamps = true;
     protected $deletedField = 'deleted_at';
+
+    public function getVendorProfileByUserId(int $userId)
+    {
+        return $this->select('vendors.*, locations.name as location_name, users.email as user_email')
+                    ->join('users', 'users.id = vendors.user_id')
+                    ->join('locations', 'locations.id = vendors.location_id', 'left')
+                    ->where('vendors.user_id', $userId)
+                    ->first();
+    }
 }
