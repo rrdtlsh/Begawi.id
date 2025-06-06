@@ -10,33 +10,37 @@ class DashboardController extends BaseController
 {
     public function index()
     {
-        // 1. Ambil ID user dari session yang sedang login
-        $userId = session()->get('user_id');
 
-        // 2. Load model yang diperlukan
         $vendorModel = new VendorModel();
-        
-        // Asumsi Anda punya model untuk postingan (lowongan/training)
-        // Jika belum ada, Anda bisa kosongkan bagian ini dulu
-        // $jobModel = new JobModel();
+        $db = \Config\Database::connect();
 
-        // 3. Ambil data profil vendor dari database berdasarkan user_id
-        // Kita akan buat method getVendorProfileByUserId() di VendorModel
-        $vendorData = $vendorModel->getVendorProfileByUserId($userId);
-        
-        // 4. Ambil data postingan yang dibuat oleh vendor ini
-        // Gunakan profile_id dari session yang sudah kita set saat login
-        $vendorProfileId = session()->get('profile_id');
-        // $postings = $jobModel->where('vendor_id', $vendorProfileId)->findAll(); // Contoh query
+        $userId = session()->get('user_id');
+        $vendorId = session()->get('profile_id');
 
-        // 5. Siapkan semua data untuk dikirim ke view
-        $data = [
+        // 1. Ambil data profil vendor
+        $vendorProfile = $vendorModel->getVendorProfileByUserId($userId);
+
+        // 2. Ambil daftar postingan (gabungan jobs dan trainings)
+        $jobsQuery = $db->table('jobs')
+            ->select("id, title, 'Lowongan Pekerjaan' as type, created_at")
+            ->where('vendor_id', $vendorId);
+
+        $postings = $db->table('trainings')
+            ->select("id, title, 'Pelatihan' as type, created_at")
+            ->where('vendor_id', $vendorId)
+            ->union($jobsQuery) // Gabungkan dengan query jobs
+            ->orderBy('created_at', 'DESC') // Urutkan hasil gabungan
+            ->get()
+            ->getResult();
+
+
+        // Siapkan semua data untuk dikirim ke view
+        $vendorData = [
             'title' => 'Dashboard Vendor',
-            'vendor' => $vendorData,
-            'postings' => [] // Kita isi array kosong dulu untuk postingan
-            // 'postings' => $postings // Gunakan ini jika JobModel sudah siap
+            'vendor' => $vendorProfile,
+            'postings' => $postings,
         ];
-        
+
         // Jika user bukan vendor atau data tidak ditemukan, arahkan keluar
         if (session()->get('role') !== 'vendor' || !$vendorData) {
             session()->destroy();
@@ -44,6 +48,6 @@ class DashboardController extends BaseController
         }
 
         // 6. Tampilkan view dan kirim datanya
-        return view('vendor/dashboard_view', $data);
+        return view('vendor/dashboard_view', $vendorData);
     }
 }

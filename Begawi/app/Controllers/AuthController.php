@@ -125,6 +125,7 @@ class AuthController extends BaseController
                 'industry' => $this->request->getPost('industry'),
                 'location_id' => $this->request->getPost('vendor_location_id'),
                 'contact' => $this->request->getPost('contact'),
+                'company_address' => $this->request->getPost('company_address'),
             ];
             $vendorModel->save($vendorData);
         }

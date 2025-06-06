@@ -41,19 +41,18 @@
                                 <?php foreach ($locations as $loc): ?>
                                 <option value="<?= $loc->id ?>"
                                     <?= old('js_location_id') == $loc->id ? 'selected' : '' ?>>
-                                    <?= esc($loc->name) ?></option>
+                                    <?= esc($loc->name) ?>
+                                </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="skills">Keahlian</label>
-                            <select name="skills[]" class="form-control" multiple>
+                            <select name="skills[]" class="form-control">
                                 <?php foreach ($skills as $skill): ?>
                                 <option value="<?= $skill->id ?>"><?= esc($skill->name) ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <small class="form-text text-muted">Tahan Ctrl (atau Cmd) untuk memilih lebih dari
-                                satu.</small>
                         </div>
                         <hr>
                         <div class="form-group">
