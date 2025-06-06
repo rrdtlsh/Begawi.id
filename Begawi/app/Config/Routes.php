@@ -15,6 +15,7 @@ $routes->post('/search/jobs', 'SearchController::jobs');
 // --- Routes untuk Autentikasi ---
 $routes->get('/register', 'AuthController::register');
 $routes->get('/register/jobseeker', 'AuthController::registerJobseeker');
+$routes->get('/register/vendor', 'AuthController::registerVendor');
 $routes->post('/register/process', 'AuthController::processRegister');
 $routes->get('/login', 'AuthController::login');
 $routes->post('/login/process', 'AuthController::processLogin');
