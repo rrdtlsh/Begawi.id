@@ -16,7 +16,6 @@ class DashboardController extends BaseController
             return redirect()->to('/profile/complete')->with('info', 'Silakan lengkapi profil Anda terlebih dahulu.');
         }
 
-        // Inisialisasi model untuk mengambil data aplikasi pekerjaan
         $applicationModel = new JobApplicationModel();
 
         // Ambil ID jobseeker dari sesi
