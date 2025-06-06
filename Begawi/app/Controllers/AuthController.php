@@ -21,15 +21,33 @@ class AuthController extends BaseController
      */
     public function register()
     {
+        return view('register_choice_page');
+    }
+
+    public function registerJobseeker()
+    {
         $locationModel = new LocationModel();
         $skillModel = new SkillModel();
 
         $data = [
-            'locations' => $locationModel->orderBy('name', 'ASC')->findAll(),
-            'skills' => $skillModel->orderBy('name', 'ASC')->findAll(),
+            'title' => 'Registrasi Jobseeker',
+            'locations' => $locationModel->findAll(),
+            'skills' => $skillModel->findAll(),
         ];
 
-        return view('register_page', $data);
+        return view('register_jobseeker_page', $data);
+    }
+
+    public function registerVendor()
+    {
+        $locationModel = new LocationModel();
+
+        $data = [
+            'title' => 'Registrasi Vendor',
+            'locations' => $locationModel->findAll(),
+        ];
+
+        return view('register_vendor_page', $data);
     }
 
     /**
@@ -42,6 +60,7 @@ class AuthController extends BaseController
 
         // Aturan validasi bersama untuk semua peran
         $validationRules = [
+            'fullname' => 'required|min_length[3]',
             'email' => 'required|valid_email|is_unique[users.email]',
             'password' => 'required|min_length[8]',
             'password_confirm' => 'required|matches[password]'
@@ -59,7 +78,9 @@ class AuthController extends BaseController
 
         // Jalankan validasi
         if (!$this->validate($validationRules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            $redirectUrl = ($role === 'vendor') ? '/register/vendor' : '/register/jobseeker';
+            return redirect()->to($redirectUrl)->withInput()->with('errors', $this->validator->getErrors());
+
         }
 
         // Siapkan data untuk tabel 'users'
