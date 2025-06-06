@@ -1,85 +1,102 @@
-<!DOCTYPE html>
-<html lang="id">
+<?php // File: app/Views/home.php ?>
+<?= $this->extend('layouts/guest_layout') ?>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Begawi - Temukan Pekerjaan Impian Anda</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
+<?= $this->section('content') ?>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">Begawi</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-                <?php if (session()->get('isLoggedIn')): ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
+    <header class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">Temukan Pekerjaan Impianmu</h1>
+            <p class="lead mb-5">Platform pencarian kerja terpercaya di Kalimantan Selatan.</p>
+            
+            <!-- Mengisi bagian yang tadinya kosong -->
+            <div class="search-form-card col-lg-10 mx-auto">
+                <form class="row g-3 align-items-end" action="<?= site_url('search/jobs') ?>" method="post">
+                    
+                    <!-- Input Kata Kunci -->
+                    <div class="col-md-4 text-start">
+                        <label for="job-title" class="form-label">Judul Pekerjaan/Kata Kunci</label>
+                        <input type="text" class="form-control form-control-lg" id="job-title" name="keyword" placeholder="Contoh: Web Developer">
+                    </div>
+                    
+                    <!-- Dropdown Lokasi (Dinamis) -->
+                    <div class="col-md-3 text-start">
+                        <label for="location" class="form-label">Lokasi</label>
+                        <select class="form-select form-select-lg" id="location" name="location">
+                            <option selected value="">Pilih Lokasi</option>
+                            <?php if (!empty($locations)): ?>
+                                <?php foreach ($locations as $loc): ?>
+                                    <option value="<?= $loc->id ?>"><?= esc($loc->name) ?></option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+                    </div>
+
+                    <!-- Dropdown Kategori (Dinamis) -->
+                    <div class="col-md-3 text-start">
+                        <label for="category" class="form-label">Kategori</label>
+                        <select class="form-select form-select-lg" id="category" name="category">
+                            <option selected value="">Semua Kategori</option>
+                            <?php if (!empty($categories)): ?>
+                                <?php foreach ($categories as $cat): ?>
+                                    <option value="<?= $cat->id ?>"><?= esc($cat->name) ?></option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+                    </div>
+
+                    <!-- Tombol Cari -->
+                    <div class="col-md-2 d-grid">
+                        <button type="submit" class="btn btn-custom-green btn-lg btn-search">
+                            <i class="bi bi-search me-2"></i>Cari
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Kategori Populer</h2>
+            <div class="row g-4 justify-content-center">
+                <?php if (!empty($categories)): ?>
+                    <?php foreach ($categories as $category): ?>
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                            <a href="#" class="d-block p-3 category-card text-center">
+                                <div class="category-card-icon">
+                                    <i class="bi <?= esc($category->icon_path, 'attr') ?>" style="font-size: 2.5rem;"></i>
+                                </div>
+                                <h5><?= esc($category->name) ?></h5>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
                 <?php else: ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-primary" href="/register">Daftar</a>
-                    </li>
+                    <p class="col text-center">Belum ada kategori yang tersedia.</p>
                 <?php endif; ?>
-            </ul>
+            </div>
         </div>
-    </nav>
+    </section>
 
-    <div class="container mt-4">
-        <div class="jumbotron">
-            <h1 class="display-4"><?= esc($title ?? 'Selamat Datang di Begawi') ?></h1>
-            <p class="lead">Platform nomor satu untuk mencari pekerjaan dan meningkatkan karir Anda.</p>
-        </div>
-
-        <h2>Kategori Populer</h2>
-        <hr>
-        <div class="row">
-            <?php if (!empty($categories)): ?>
-                <?php foreach ($categories as $category): ?>
-                    <div class="col-md-3 mb-3">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <h5 class="card-title"><?= esc($category->name) ?></h5>
+    <section class="py-5 bg-white">
+        <div class="container">
+            <h2 class="text-center section-title">Lowongan Terbaru</h2>
+            <div class="row g-4">
+                <?php if (!empty($jobs)): ?>
+                    <?php foreach ($jobs as $job): ?>
+                        <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+                            <div class="card job-card w-100">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="#"><?= esc($job->title) ?></a></h5>
+                                    <h6 class="card-subtitle mb-2 text-muted"><?= esc($job->company_name) ?></h6>
+                                    <p class="job-detail-item">Lokasi: <?= esc($job->location_name) ?></p>
+                                    <p class="job-detail-item">Tipe: <?= esc($job->job_type) ?></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p class="col">Belum ada kategori yang tersedia.</p>
-            <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
         </div>
+    </section>
 
-        <h2 class="mt-5">Lowongan Terbaru</h2>
-        <hr>
-        <div class="row">
-            <?php if (!empty($jobs)): ?>
-                <?php foreach ($jobs as $job): ?>
-                    <div class="col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title"><?= esc($job->title) ?></h5>
-                                <h6 class="card-subtitle mb-2 text-muted"><?= esc($job->company_name) ?></h6>
-                                <p class="card-text">
-                                    <strong>Lokasi:</strong> <?= esc($job->location) ?><br>
-                                    <strong>Tipe:</strong> <?= esc($job->job_type) ?><br>
-                                    <strong>Kategori:</strong> <?= esc($job->category_name ?? 'N/A') ?>
-                                </p>
-                                <a href="#" class="btn btn-info">Lihat Detail</a>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p class="col">Belum ada lowongan pekerjaan yang tersedia saat ini.</p>
-            <?php endif; ?>
-        </div>
-    </div>
-</body>
-
-</html>
+<?= $this->endSection() ?>
