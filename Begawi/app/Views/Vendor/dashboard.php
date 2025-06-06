@@ -79,13 +79,9 @@
         </div>
         <div class="menu">
             <a href="/vendor/dashboard" class="active">Beranda Vendor</a>
-            <div class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">+ Posting</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/vendor/jobs/new">Lowongan Pekerjaan</a>
-                    <a class="dropdown-item" href="/vendor/trainings/new">Pelatihan</a>
-                </div>
-            </div>
+            
+            <a href="/vendor/jobs/new">+ Posting</a>
+            
         </div>
         <div class="logout">
             <a href="/logout" class="btn btn-danger btn-block">Log Out</a>
