@@ -40,6 +40,13 @@
             <a href="/vendor/jobs/new" class="btn btn-primary">+ Buat Postingan Baru</a>
         </div>
 
+        <div class="list-group">
+            <a href="/vendor/jobs" class="list-group-item list-group-item-action font-weight-bold">Kelola Lowongan
+                Pekerjaan</a>
+            <a href="/vendor/trainings" class="list-group-item list-group-item-action font-weight-bold">Kelola
+                Pelatihan</a>
+        </div>
+
         <div class="card">
             <div class="card-body">
                 <?php if (!empty($postings)): ?>
