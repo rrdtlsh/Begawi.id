@@ -17,6 +17,7 @@ class CreateJobs extends Migration
             'description' => ['type' => 'TEXT', 'null' => true],
             'qualifications' => ['type' => 'TEXT', 'null' => true],
             'application_instructions' => ['type' => 'TEXT', 'null' => true],
+            'quota' => ['type' => 'INT', 'unsigned' => true, 'null' => true, 'comment' => 'Kuota maksimal pelamar'],
             'contact_email' => ['type' => 'VARCHAR', 'constraint' => 100, 'null' => true],
             'contact_phone' => ['type' => 'VARCHAR', 'constraint' => 50, 'null' => true],
             'job_type' => ['type' => 'ENUM', 'constraint' => ['Full-time', 'Part-time', 'Contract', 'Internship', 'Freelance']],

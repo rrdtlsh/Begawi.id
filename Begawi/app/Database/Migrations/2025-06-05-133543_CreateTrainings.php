@@ -23,6 +23,13 @@ class CreateTrainings extends Migration
             'end_date' => ['type' => 'DATETIME', 'null' => true],
             'duration' => ['type' => 'VARCHAR', 'constraint' => 100, 'null' => true],
             'cost' => ['type' => 'DECIMAL', 'constraint' => '10,2', 'default' => 0.00],
+            'quota' => [
+                'type' => 'INT',
+                'unsigned' => true,
+                'null' => true,
+                'comment' => 'Kuota maksimal pelamar'
+            ],
+
             'is_paid' => ['type' => 'BOOLEAN', 'default' => false],
             'created_at' => ['type' => 'TIMESTAMP', 'null' => true],
             'updated_at' => ['type' => 'TIMESTAMP', 'null' => true],
