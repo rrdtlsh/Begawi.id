@@ -63,7 +63,7 @@ class CreateTrainingApplications extends Migration
         // Tambahkan foreign key baru
         $this->forge->addForeignKey('category_id', 'job_categories', 'id', 'SET NULL', 'SET NULL');
         $this->forge->addForeignKey('location_id', 'locations', 'id', 'SET NULL', 'SET NULL');
-        $this->forge->createTable('trainings');
+        $this->forge->createTable('trainingsApplications');
     }
 
     public function down()
