@@ -50,4 +50,26 @@ class JobModel extends Model
         $this->join('job_categories', 'job_categories.id = jobs.category_id', 'left');
         return $this;
     }
+    
+    public function searchJobs($keyword, $locationId, $categoryId)
+    {
+        $builder = $this->builder();
+        $builder->select('jobs.*, vendors.company_name, locations.name as location_name');
+        $builder->join('vendors', 'vendors.id = jobs.vendor_id');
+        $builder->join('locations', 'locations.id = vendors.location_id');
+
+        if (!empty($keyword)) {
+            $builder->like('jobs.title', $keyword);
+        }
+
+        if (!empty($locationId)) {
+            $builder->where('vendors.location_id', $locationId);
+        }
+
+        if (!empty($categoryId)) {
+            $builder->where('jobs.category_id', $categoryId);
+        }
+
+        return $builder->get()->getResult();
+    }
 }
