@@ -95,22 +95,40 @@ class JobController extends BaseController
      */
     public function updateJob($id = null)
     {
-        $jobModel = new JobModel();
+        $jobModel = new \App\Models\JobModel();
         $vendorId = session()->get('profile_id');
 
+        // Cek kepemilikan, sudah benar
         if (!$jobModel->where(['id' => $id, 'vendor_id' => $vendorId])->first()) {
             return redirect()->to('/vendor/jobs')->with('error', 'Akses ditolak.');
         }
 
-        // --- LOGIKA DILENGKAPI ---
-        $data = $this->request->getPost();
+        // --- LOGIKA BARU UNTUK UPDATE FLEKSIBEL ---
 
-        if (!$jobModel->update($id, $data)) {
-            return redirect()->back()->withInput()->with('errors', $jobModel->errors());
+        // 1. Ambil semua data yang dikirim dari form
+        $allPostData = $this->request->getPost();
+
+        // 2. Siapkan array kosong untuk menampung data yang benar-benar akan di-update
+        $dataToUpdate = [];
+
+        // 3. Loop melalui setiap data yang dikirim
+        //    Hanya masukkan ke array jika nilainya TIDAK KOSONG
+        foreach ($allPostData as $key => $value) {
+            if ($value !== null && $value !== '') {
+                $dataToUpdate[$key] = $value;
+            }
         }
 
+        // 4. Lakukan update hanya jika ada data yang akan diupdate
+        if (!empty($dataToUpdate)) {
+            if (!$jobModel->update($id, $dataToUpdate)) {
+                // Walaupun fleksibel, tetap bisa ada error dari validasi model jika tipe data salah
+                return redirect()->back()->withInput()->with('errors', $jobModel->errors());
+            }
+        }
+        // --- AKHIR LOGIKA BARU ---
+
         return redirect()->to('/vendor/jobs')->with('success', 'Lowongan pekerjaan berhasil diperbarui.');
-        // --- AKHIR LOGIKA YANG DILENGKAPI ---
     }
 
     /**

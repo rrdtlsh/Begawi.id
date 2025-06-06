@@ -102,17 +102,44 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="quota">Kuota Peserta (Opsional)</label>
-                                <input type="number" name="quota" class="form-control" placeholder="Contoh: 50"
-                                    value="<?= old('quota', $training->quota ?? '') ?>">
-                                <small class="form-text text-muted">Kosongkan jika tidak ada batasan kuota.</small>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6"">
+                                    <label for=" application_deadline">Batas Waktu Pendaftaran</label>
+                                    <input type="datetime-local" name="application_deadline" class="form-control"
+                                        value="<?= old('application_deadline', isset($training->application_deadline) ? date('Y-m-d\TH:i', strtotime($training->application_deadline)) : '') ?>"
+                                        required>
+                                    <small class="form-text text-muted">Peserta harus mendaftar sebelum tanggal
+                                        ini.</small>
+                                </div>
+
+                                <div class="form-group col-md-6"">
+                                    <label for=" quota">Kuota Peserta (Opsional)</label>
+                                    <input type="number" name="quota" class="form-control" placeholder="Contoh: 50"
+                                        value="<?= old('quota', $training->quota ?? '') ?>">
+                                    <small class="form-text text-muted">Kosongkan jika tidak ada batasan kuota.</small>
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="registration_instructions">Cara Mendaftar</label>
                                 <textarea name="registration_instructions" class="form-control" rows="3"
                                     placeholder="Contoh: Daftar melalui link bit.ly/daftarkelas atau hubungi CP..."><?= old('registration_instructions', $training->registration_instructions ?? '') ?></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="contact_email">Email Kontak</label>
+                                    <input type="email" name="contact_email" class="form-control"
+                                        placeholder="email.hrd@perusahaan.com"
+                                        value="<?= old('contact_email', $training->contact_email ?? '') ?>" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="contact_phone">Nomor Telepon Kontak (Opsional)</label>
+                                    <input type="text" name="contact_phone" class="form-control"
+                                        placeholder="08xxxxxxxxxx"
+                                        value="<?= old('contact_phone', $training->contact_phone ?? '') ?>">
+                                </div>
                             </div>
                             <hr>
 
