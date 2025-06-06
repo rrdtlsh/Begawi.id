@@ -1,0 +1,32 @@
+/* navbar.css */
+.navbar {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background-color: var(--neutral-white);
+}
+
+.navbar-brand img {
+  max-height: 80px;
+}
+
+.nav-link {
+  color: var(--neutral-dark);
+  font-weight: 500;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--sasirangan-green-medium);
+}
+
+.btn-custom-green {
+  background-color: var(--sasirangan-green-medium);
+  border-color: var(--sasirangan-green-medium);
+  color: var(--neutral-white);
+  font-weight: 600;
+}
+
+.btn-custom-green:hover {
+  background-color: var(--sasirangan-green-dark);
+  border-color: var(--sasirangan-green-dark);
+  color: var(--neutral-white);
+}
