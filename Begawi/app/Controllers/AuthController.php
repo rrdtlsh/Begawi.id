@@ -60,7 +60,6 @@ class AuthController extends BaseController
 
         // Aturan validasi bersama untuk semua peran
         $validationRules = [
-            'fullname' => 'required|min_length[3]',
             'email' => 'required|valid_email|is_unique[users.email]',
             'password' => 'required|min_length[8]',
             'password_confirm' => 'required|matches[password]'
@@ -70,6 +69,7 @@ class AuthController extends BaseController
         if ($role === 'jobseeker') {
             $validationRules['fullname'] = 'required|min_length[3]';
             $validationRules['js_location_id'] = 'required';
+            $validationRules['skills'] = 'required'; // Pastikan skill yang dipilih ada di database
         } elseif ($role === 'vendor') {
             $validationRules['company_name'] = 'required|min_length[3]';
             $validationRules['vendor_location_id'] = 'required';
