@@ -15,7 +15,6 @@ $routes->post('/search/jobs', 'SearchController::jobs');
 // --- Routes untuk Autentikasi ---
 $routes->get('/register', 'AuthController::register');
 $routes->get('/register/jobseeker', 'AuthController::registerJobseeker');
-$routes->get('/register/vendor', 'AuthController::registerVendor');
 $routes->post('/register/process', 'AuthController::processRegister');
 $routes->get('/login', 'AuthController::login');
 $routes->post('/login/process', 'AuthController::processLogin');
@@ -46,12 +45,6 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
 
 $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     $routes->get('dashboard', 'Vendor\DashboardController::index');
-
-    // --- Rute CRUD untuk Lowongan (Jobs) ---
-    $routes->get('jobs', 'Vendor\JobController::index');
-    $routes->get('jobs/new', 'Vendor\JobController::newJob');
-    // ... dan seterusnya untuk jobs ...
-    $routes->get('jobs/delete/(:num)', 'Vendor\JobController::deleteJob/$1');
 
     // --- RUTE BARU UNTUK CRUD PELATIHAN (TRAININGS) ---
     $routes->get('trainings', 'Vendor\TrainingController::index');
