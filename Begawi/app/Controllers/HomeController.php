@@ -2,25 +2,43 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
-use App\Models\JobModel; // <-- Nama yang benar
+// 1. Pastikan semua model yang dibutuhkan sudah dipanggil
+use App\Models\JobModel;
 use App\Models\JobCategoryModel;
+use App\Models\LocationModel;
 
 class HomeController extends BaseController
 {
     public function index()
     {
-        // PERBAIKI DI SINI
-        $jobModel = new JobModel(); 
+        // 2. Buat instance dari setiap model
+        $jobModel = new JobModel();
         $categoryModel = new JobCategoryModel();
-        $locationModel = model('LocationModel'); 
+        $locationModel = new LocationModel();
 
+        // 3. Siapkan data yang selalu ada di halaman utama
         $data = [
-            'title' => 'Selamat Datang di Begawi',
-            'categories' => $categoryModel->findAll(),
-            'jobs' => $jobModel->getJobsWithDetails()->orderBy('jobs.created_at', 'DESC')->findAll(10),
-            'locations' => $locationModel->findAll()// Pastikan $locationModel sudah didefinisikan
+            'title'        => 'Selamat Datang di Begawi',
+            'categories'   => $categoryModel->findAll(),
+            'locations'    => $locationModel->findAll(),
+            'search_terms' => null, // Nilai default untuk pencarian
         ];
+
+        // 4. Logika untuk mengisi data 'jobs' dan 'list_title'
+        if ($this->request->getMethod() === 'post') {
+            // Jika ada PENCARIAN (metode POST)
+            $keyword  = $this->request->getPost('keyword');
+            $location = $this->request->getPost('location');
+            $category = $this->request->getPost('category');
+            
+            $data['jobs'] = $jobModel->searchJobs($keyword, $location, $category);
+            $data['search_terms'] = ['keyword' => $keyword, 'location' => $location, 'category' => $category];
+            $data['list_title'] = 'Hasil Pencarian'; // Judul untuk hasil pencarian
+        } else {
+            // Jika hanya membuka halaman (metode GET)
+            $data['jobs'] = $jobModel->getLatestJobs(6);
+            $data['list_title'] = 'Lowongan Terbaru'; // Judul untuk halaman utama
+        }
 
         return view('home', $data);
     }

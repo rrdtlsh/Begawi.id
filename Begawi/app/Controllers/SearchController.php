@@ -26,6 +26,7 @@ class SearchController extends BaseController
         $data = [
             'title' => 'Hasil Pencarian Lowongan',
             'jobs'  => $jobs,
+            'list_title' => 'Hasil Pencarian',
             'search_terms' => ['keyword' => $keyword, 'location' => $location, 'category' => $category]
         ];
 

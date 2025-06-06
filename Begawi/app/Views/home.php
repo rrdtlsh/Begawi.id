@@ -78,25 +78,33 @@
     </section>
 
     <section class="py-5 bg-white">
-        <div class="container">
-            <h2 class="text-center section-title">Lowongan Terbaru</h2>
-            <div class="row g-4">
-                <?php if (!empty($jobs)): ?>
-                    <?php foreach ($jobs as $job): ?>
-                        <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
-                            <div class="card job-card w-100">
-                                <div class="card-body">
-                                    <h5 class="card-title"><a href="#"><?= esc($job->title) ?></a></h5>
-                                    <h6 class="card-subtitle mb-2 text-muted"><?= esc($job->company_name) ?></h6>
-                                    <p class="job-detail-item">Lokasi: <?= esc($job->location_name) ?></p>
-                                    <p class="job-detail-item">Tipe: <?= esc($job->job_type) ?></p>
-                                </div>
+    <div class="container">
+        <h2 class="text-center section-title"><?= esc($list_title) ?></h2>
+        <div class="row g-4">
+            <?php if (!empty($jobs)): ?>
+                <?php foreach ($jobs as $job): ?>
+                    <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+                        <div class="card job-card w-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="#"><?= esc($job->title) ?></a></h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><?= esc($job->company_name) ?></h6>
+                                <p class="job-detail-item">Lokasi: <?= esc($job->location_name ?? 'N/A') ?></p>
+                                <p class="job-detail-item">Tipe: <?= esc($job->job_type) ?></p>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <!-- TAMBAHKAN BAGIAN INI -->
+                <div class="col-12">
+                    <div class="alert alert-warning text-center">
+                        <h4>Tidak Ada Lowongan</h4>
+                        <p>Saat ini belum ada lowongan yang tersedia atau cocok dengan kriteria Anda.</p>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
-    </section>
+    </div>
+</section>
 
 <?= $this->endSection() ?>

@@ -9,6 +9,7 @@ use CodeIgniter\Router\RouteCollection;
 // Halaman utama
 $routes->get('/', 'HomeController::index');
 
+
 $routes->post('/search/jobs', 'SearchController::jobs');
 
 // --- Routes untuk Autentikasi ---
