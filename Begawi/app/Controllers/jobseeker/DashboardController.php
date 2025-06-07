@@ -1,37 +1,37 @@
 <?php
+
 namespace App\Controllers\Jobseeker;
+
 use App\Controllers\BaseController;
-use App\Models\JobApplicationModel;
+use App\Models\JobseekerModel;
+use App\Models\BookmarkedJobModel;
+use App\Models\BookmarkedTrainingModel;
 
 class DashboardController extends BaseController
 {
     public function index()
     {
-        // Cek apakah pengguna adalah jobseeker
         if (session()->get('role') !== 'jobseeker') {
             return redirect()->to('/');
         }
-
         if (empty(session()->get('fullname'))) {
-            return redirect()->to('/profile/complete')->with('info', 'Silakan lengkapi profil Anda terlebih dahulu.');
+            return redirect()->to('/jobseeker/profile/edit')->with('info', 'Silakan lengkapi profil Anda.');
         }
 
-        $applicationModel = new JobApplicationModel();
+        $jobseekerModel = new JobseekerModel();
+        $bookmarkedJobModel = new BookmarkedJobModel();
+        $bookmarkedTrainingModel = new BookmarkedTrainingModel();
 
-        // Ambil ID jobseeker dari sesi
-        $jobseeker_id = session()->get('profile_id');
+        $userId = session()->get('user_id');
+        $jobseekerId = session()->get('profile_id');
 
-        // Hitung total aplikasi pekerjaan yang telah diajukan oleh jobseeker
-        $totalApplications = $applicationModel->where('jobseeker_id', $jobseeker_id)->countAllResults();
-
-        // Siapkan data untuk dikirim ke view
         $data = [
-            'title' => 'Dashboard Jobseeker',
-            'total_applications' => $totalApplications,
+            'title' => 'Dashboard Saya',
+            'profile' => $jobseekerModel->getProfileByUserId($userId),
+            'bookmarked_jobs' => $bookmarkedJobModel->getBookmarksByJobseeker($jobseekerId, 10),
+            'bookmarked_trainings' => $bookmarkedTrainingModel->getBookmarksByJobseeker($jobseekerId, 10),
         ];
 
-        // Tampilkan view dashboard jobseeker
         return view('jobseeker/dashboard', $data);
     }
 }
-?>

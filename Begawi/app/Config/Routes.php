@@ -52,4 +52,7 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
 // --- Routes untuk Area Jobseeker (Memerlukan Login) ---
 $routes->group('jobseeker', ['filter' => 'auth'], function ($routes) {
     $routes->get('dashboard', 'Jobseeker\DashboardController::index');
+    $routes->get('profile/edit', 'Jobseeker\ProfileController::edit');
+    $routes->post('profile/update', 'Jobseeker\ProfileController::update');
+    $routes->get('history', 'Jobseeker\HistoryController::index');
 });
