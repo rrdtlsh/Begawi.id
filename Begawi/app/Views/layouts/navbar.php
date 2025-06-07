@@ -3,7 +3,8 @@
         <a class="navbar-brand" href="<?= site_url('/') ?>">
             <img src="<?= base_url('images/Logo_Begawi.png') ?>" alt="Logo Begawi" style="height: 40px;">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mainNav">
@@ -12,7 +13,8 @@
                     <a class="nav-link" href="<?= site_url('/') ?>">Beranda</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="workDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="workDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         Lowongan Kerja
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="workDropdown">
@@ -30,7 +32,8 @@
             <div class="d-flex">
                 <?php if (session()->get('isLoggedIn')): ?>
                     <!-- Ini bisa diganti dengan ikon user jika sudah login -->
-                    <a href="<?= site_url((session()->get('role') === 'vendor') ? 'vendor/dashboard' : 'jobseeker/dashboard') ?>" class="btn btn-outline-success me-2">Dashboard</a>
+                    <a href="<?= site_url((session()->get('role') === 'vendor') ? 'vendor/dashboard' : 'jobseeker/dashboard') ?>"
+                        class="btn btn-outline-success me-2">Dashboard</a>
                     <a href="<?= site_url('logout') ?>" class="btn btn-success">Logout</a>
                 <?php else: ?>
                     <a href="<?= site_url('register') ?>" class="btn btn-outline-success me-2">Daftar</a>
