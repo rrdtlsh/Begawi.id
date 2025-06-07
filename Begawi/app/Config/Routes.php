@@ -31,6 +31,7 @@ $routes->post('/register/process', 'AuthController::processRegister');
 $routes->get('/login', 'AuthController::login');
 $routes->post('/login/process', 'AuthController::processLogin');
 $routes->get('/logout', 'AuthController::logout');
+$routes->get('/lowongan/detail/(:num)', 'JobPageController::detail/$1');
 
 
 // ===================================================================
