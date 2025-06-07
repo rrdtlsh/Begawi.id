@@ -1,52 +1,45 @@
-<!DOCTYPE html>
-<html lang="id">
+<?= $this->extend('layouts/regist_choice_layout') ?>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Pilih Tipe Akun - Begawi</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
+<?= $this->section('content') ?>
 
-<body>
-    <div class="container mt-5">
-        <div class="text-center">
-            <img src="/logo-begawi.png" alt="Begawi Logo" style="height: 50px; margin-bottom: 20px;">
-            <h2>Selamat datang di Begawi!</h2>
-            <p class="lead text-muted">Pertama-tama, apa tujuan Anda di sini?</p>
-        </div>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="text-center">
+                <h1 class="display-5 fw-bold">Selamat datang di Begawi!</h1>
+                <p class="lead text-muted mb-5">Pertama-tama, apa tujuan Anda di sini?</p>
 
-        <div class="row mt-4">
-            <div class="col-md-5 mx-auto">
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column">
-                        <h4 class="card-title">Saya Pencari Kerja</h4>
-                        <p class="card-text flex-grow-1">Temukan pekerjaan impian Anda, tingkatkan keahlian melalui
-                            pelatihan, dan jelajahi berbagai peluang karir yang sesuai dengan minat dan bakat Anda di
-                            Kalimantan Selatan.</p>
-                        <a href="/register/jobseeker" class="btn btn-primary btn-block mt-auto">DAFTAR SEBAGAI PENCARI
-                            KERJA</a>
+                <div class="row">
+                    <!-- Kotak Pilihan untuk Pencari Kerja -->
+                    <div class="col-md-5 mb-4">
+                        <div class="p-5 border rounded-3 h-100 d-flex flex-column">
+                            <h2>Saya Pencari Kerja</h2>
+                            <p class="flex-grow-1">Temukan pekerjaan impian Anda, tingkatkan keahlian melalui pelatihan, dan jelajahi berbagai peluang karir yang sesuai dengan minat dan bakat Anda di Kalimantan Selatan.</p>
+                            <a href="<?= site_url('register/jobseeker') ?>" class="btn btn-success btn-lg mt-auto">DAFTAR SEBAGAI PENCARI KERJA</a>
+                        </div>
+                    </div>
+
+                    <!-- Pemisah "ATAU" -->
+                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                        <div class="divider-container w-100">ATAU</div>
+                    </div>
+
+                    <!-- Kotak Pilihan untuk Penyedia Jasa -->
+                    <div class="col-md-5 mb-4">
+                        <div class="p-5 border rounded-3 h-100 d-flex flex-column">
+                            <h2>Saya Penyedia Jasa</h2>
+                            <p class="flex-grow-1">Rekrut talenta terbaik untuk perusahaan Anda, tawarkan program pelatihan yang berkualitas, atau promosikan layanan dan jasa Anda kepada audiens yang lebih luas dan tepat sasaran.</p>
+                            <a href="<?= site_url('register/vendor') ?>" class="btn btn-success btn-lg mt-auto">DAFTAR SEBAGAI PENYEDIA JASA</a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-5 mx-auto">
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column">
-                        <h4 class="card-title">Saya Penyedia Jasa</h4>
-                        <p class="card-text flex-grow-1">Rekrut talenta terbaik untuk perusahaan Anda, tawarkan program
-                            pelatihan yang berkualitas, atau promosikan layanan dan jasa Anda kepada audiens yang lebih
-                            luas dan tepat sasaran.</p>
-                        <a href="/register/vendor" class="btn btn-primary btn-block mt-auto">DAFTAR SEBAGAI PENYEDIA
-                            JASA</a>
-                    </div>
-                </div>
+                <p class="mt-4">
+                    Sudah mempunyai akun? <a href="<?= site_url('login') ?>">Masuk</a>
+                </p>
             </div>
-        </div>
-
-        <div class="text-center mt-4">
-            <p>Sudah mempunyai akun? <a href="/login">Masuk</a></p>
         </div>
     </div>
-</body>
+</div>
 
-</html>
+<?= $this->endSection() ?>
