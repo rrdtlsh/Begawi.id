@@ -1,0 +1,96 @@
+:root {
+  --sasirangan-green: #215546;
+  --sasirangan-yellow: #ffc700;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+}
+
+.login {
+  background: linear-gradient(
+    135deg,
+    var(--sasirangan-green),
+    var(--sasirangan-yellow)
+  );
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container {
+  background-color: #fff;
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  width: 100%;
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+h2 {
+  color: var(--sasirangan-green);
+  font-weight: 700;
+  font-size: 1.75rem;
+}
+
+.logo-begawi {
+  font-size: 2rem;
+  color: var(--sasirangan-green);
+}
+
+.logo-begawi span {
+  color: var(--sasirangan-yellow);
+}
+
+.form-control {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+  border-color: var(--sasirangan-green);
+  box-shadow: 0 0 0 0.2rem rgba(33, 85, 70, 0.25);
+}
+
+.btn-primary {
+  background-color: var(--sasirangan-green);
+  border-color: var(--sasirangan-green);
+  font-weight: 600;
+  transition: 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #1a4437;
+  border-color: #1a4437;
+}
+
+.signup-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.signup-link a {
+  color: var(--sasirangan-green);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
