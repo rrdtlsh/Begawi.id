@@ -1,47 +1,44 @@
-<!DOCTYPE html>
-<html lang="id">
+<?= $this->extend('layouts/login_layout') ?>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Login - Begawi</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
+<?= $this->section('content') ?>
 
-<body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-5">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Login</h3>
-                    </div>
-                    <div class="card-body">
-                        <?php if (session()->getFlashdata('success')): ?>
-                        <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
-                        <?php endif; ?>
-                        <?php if (session()->getFlashdata('error')): ?>
-                        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
-                        <?php endif; ?>
-
-                        <?= form_open('login/process') ?>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" class="form-control" value="<?= old('email') ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" name="password" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Login</button>
-                        <?= form_close() ?>
-                    </div>
-                    <div class="card-footer text-center">
-                        <p>Belum punya akun? <a href="/register">Daftar sekarang</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="form-container">
+    <div class="text-center mb-4">
+        <a href="<?= site_url('/') ?>" class="text-decoration-none">
+            <div class="logo-begawi">Begaw<span>i</span></div>
+        </a>
+        <h2 class="mt-2">Masuk ke Begawi</h2>
     </div>
-</body>
 
-</html>
+    <!-- Menampilkan pesan sukses atau error dari session -->
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+    <?php endif; ?>
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+    <?php endif; ?>
+
+    <?= form_open('login/process') ?>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com" value="<?= old('email') ?>" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Kata Sandi</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan kata sandi" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">MASUK</button>
+    <?= form_close() ?>
+
+    <p class="form-text text-center mt-3">
+        Dengan masuk, Anda menyetujui <a href="#" class="text-decoration-none">Syarat & Ketentuan</a> dan <a href="#" class="text-decoration-none">Kebijakan Privasi</a> kami.
+    </p>
+
+    <p class="signup-link">
+        Belum punya akun Begawi? <a href="<?= site_url('register') ?>">Daftar</a>
+    </p>
+</div>
+
+<?= $this->endSection() ?>
