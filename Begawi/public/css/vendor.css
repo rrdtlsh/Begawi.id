@@ -129,15 +129,29 @@ body {
 
 /* 4. Mengganti tombol utama dengan warna hijau dari palet baru */
 .btn-brand-green {
-  background-color: var(--sasirangan-green-medium);
+  background-color: var(--sasirangan-green-dark);
   color: var(--neutral-white);
   border: none;
   font-weight: 600;
 }
 .btn-brand-green:hover {
   background-color: var(
-    --sasirangan-green-dark
+    --sasirangan-green-medium
   ); /* Warna lebih gelap saat hover */
+  color: var(--neutral-white);
+}
+
+.btn-secondary {
+  background-color: var(--sasirangan-green-medium);
+  color: var(--neutral-white);
+  border: none;
+  font-weight: 600;
+}
+
+.btn-secondary:hover {
+  background-color: var(
+    --sasirangan-green-dark
+  ); /* Warna lebih terang saat hover */
   color: var(--neutral-white);
 }
 
