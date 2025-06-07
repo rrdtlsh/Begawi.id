@@ -106,4 +106,20 @@ class JobModel extends Model
         return $builder->orderBy('jobs.created_at', 'DESC');
     }
 
+    public function getJobDetails(int $id)
+    {
+        return $this->select('
+                        jobs.*,
+                        vendors.company_name,
+                        vendors.company_profile,
+                        vendors.company_logo_path,
+                        locations.name as location_name,
+                        job_categories.name as category_name
+                    ')
+            ->join('vendors', 'vendors.id = jobs.vendor_id')
+            ->join('locations', 'locations.id = jobs.location_id', 'left')
+            ->join('job_categories', 'job_categories.id = jobs.category_id', 'left')
+            ->where('jobs.id', $id)
+            ->first();
+    }
 }
