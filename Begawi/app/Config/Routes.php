@@ -10,7 +10,8 @@ use CodeIgniter\Router\RouteCollection;
 // RUTE PUBLIK (Bisa diakses siapa saja)
 // ===================================================================
 $routes->get('/', 'HomeController::index');
-$routes->get('/tentang-kami', 'HomeController::about');
+$routes->post('/search/jobs', 'SearchController::jobs');
+$routes->get('/about', 'HomeController::about');
 
 // Rute untuk Halaman Daftar & Detail Lowongan (Pekerjaan)
 $routes->get('/lowongan', 'JobPageController::index');
@@ -56,7 +57,6 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     $routes->post('profile/update', 'Vendor\ProfileController::update');
 
     // CRUD Lowongan Pekerjaan (Jobs)
-    $routes->get('jobs', 'Vendor\JobController::index');
     $routes->get('jobs/new', 'Vendor\JobController::newJob');
     $routes->post('jobs/create', 'Vendor\JobController::createJob');
     $routes->get('jobs/edit/(:num)', 'Vendor\JobController::editJob/$1');
@@ -64,7 +64,6 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     $routes->get('jobs/delete/(:num)', 'Vendor\JobController::deleteJob/$1');
 
     // CRUD Pelatihan (Trainings)
-    $routes->get('trainings', 'Vendor\TrainingController::index');
     $routes->get('trainings/new', 'Vendor\TrainingController::newTraining');
     $routes->post('trainings/create', 'Vendor\TrainingController::createTraining');
     $routes->get('trainings/edit/(:num)', 'Vendor\TrainingController::editTraining/$1');
