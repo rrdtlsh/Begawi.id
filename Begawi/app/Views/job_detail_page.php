@@ -175,11 +175,9 @@
                             <button class="btn btn-success btn-block" disabled><i class="bi bi-check-circle-fill"></i> Anda
                                 Sudah Melamar</button>
                         <?php else: ?>
-                            <form action="/lamar/job/<?= $job->id ?>" method="post">
-                                <?= csrf_field() ?>
-                                <button type="submit" class="btn btn-apply btn-block mb-2"><i class="bi bi-cursor-fill"></i>
-                                    Lamar dari Web Ini</button>
-                            </form>
+                            <a href="/lamar/job/<?= $job->id ?>" class="btn btn-apply btn-block mb-2">
+                                <i class="bi bi-cursor-fill"></i> Lamar dari Web Ini
+                            </a>
                             <?php if (!empty($job->contact_email)): ?>
                                 <a href="mailto:<?= esc($job->contact_email) ?>" class="btn btn-apply-email btn-block"><i
                                         class="bi bi-envelope-fill"></i> Lamar Via Email</a>
