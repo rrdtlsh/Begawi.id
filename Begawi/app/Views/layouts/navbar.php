@@ -16,8 +16,8 @@
                         Lowongan Kerja
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="workDropdown">
-                        <li><a class="dropdown-item" href="#lowongan">Pekerjaan</a></li>
-                        <li><a class="dropdown-item" href="#pelatihan">Workshop & Training</a></li>
+                        <li><a class="dropdown-item" href="/lowongan">Pekerjaan</a></li>
+                        <li><a class="dropdown-item" href="/pelatihan">Workshop & Training</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">

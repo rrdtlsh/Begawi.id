@@ -32,10 +32,6 @@
         <button type="submit" class="btn btn-primary w-100">MASUK</button>
     <?= form_close() ?>
 
-    <p class="form-text text-center mt-3">
-        Dengan masuk, Anda menyetujui <a href="#" class="text-decoration-none">Syarat & Ketentuan</a> dan <a href="#" class="text-decoration-none">Kebijakan Privasi</a> kami.
-    </p>
-
     <p class="signup-link">
         Belum punya akun Begawi? <a href="<?= site_url('register') ?>">Daftar</a>
     </p>
