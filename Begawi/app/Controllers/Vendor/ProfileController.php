@@ -9,17 +9,12 @@ use App\Models\LocationModel;
 
 class ProfileController extends BaseController
 {
-    /**
-     * Menampilkan halaman form untuk mengedit profil vendor.
-     */
+    // Fungsi edit() sudah benar, tugasnya menampilkan form dengan data yang ada
     public function edit()
     {
         $vendorModel = new VendorModel();
         $locationModel = new LocationModel();
-
         $userId = session()->get('user_id');
-
-        // Ambil data profil vendor yang sedang login
         $vendor = $vendorModel->getVendorProfileByUserId($userId);
 
         if (!$vendor) {
@@ -31,41 +26,32 @@ class ProfileController extends BaseController
             'vendor' => $vendor,
             'locations' => $locationModel->orderBy('name', 'ASC')->findAll(),
         ];
-
         return view('vendor/profile/form', $data);
     }
 
-    /**
-     * Memproses data dari form edit profil dengan validasi.
-     */
+    // Fungsi update() ini sudah menangani validasi, update data, dan upload logo
     public function update()
     {
         $userModel = new UserModel();
         $vendorModel = new VendorModel();
-
         $userId = session()->get('user_id');
         $vendorId = session()->get('profile_id');
 
-        // --- PERUBAHAN DI SINI: Aturan Validasi untuk Field Penting ---
         $rules = [
             'company_name' => 'required|min_length[3]',
             'location_id' => 'required|is_natural_no_zero',
-            'company_address' => 'required|min_length[10]',
             'contact' => 'required|min_length[9]',
+            'company_logo' => [
+                'label' => 'Logo Perusahaan',
+                'rules' => 'is_image[company_logo]|mime_in[company_logo,image/jpg,image/jpeg,image/png]|max_size[company_logo,1024]',
+            ],
         ];
 
-        $messages = [
-            'location_id' => [
-                'required' => 'Domisili Usaha wajib dipilih.'
-            ]
-        ];
-
-        if (!$this->validate($rules, $messages)) {
+        if (!$this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
-        // --- AKHIR PERUBAHAN VALIDASI ---
 
-        // Siapkan data untuk tabel 'vendors'
+        $logoFile = $this->request->getFile('company_logo');
         $vendorData = [
             'company_name' => $this->request->getPost('company_name'),
             'industry' => $this->request->getPost('industry'),
@@ -76,16 +62,22 @@ class ProfileController extends BaseController
             'company_profile' => $this->request->getPost('company_profile'),
         ];
 
-        // Siapkan data untuk tabel 'users' (menyamakan nama)
-        $userData = [
-            'fullname' => $this->request->getPost('company_name')
-        ];
+        if ($logoFile->isValid() && !$logoFile->hasMoved()) {
+            $currentVendor = $vendorModel->find($vendorId);
+            $oldLogo = $currentVendor->company_logo_path;
 
-        // Lakukan update ke kedua tabel
+            if ($oldLogo && file_exists('uploads/logos/' . $oldLogo)) {
+                unlink('uploads/logos/' . $oldLogo);
+            }
+            $newLogoName = $logoFile->getRandomName();
+            $logoFile->move('uploads/logos', $newLogoName);
+            $vendorData['company_logo_path'] = $newLogoName;
+        }
+
         $vendorModel->update($vendorId, $vendorData);
-        $userModel->update($userId, $userData);
 
-        // Perbarui session dengan nama baru
+        $userData = ['fullname' => $this->request->getPost('company_name')];
+        $userModel->update($userId, $userData);
         session()->set('fullname', $userData['fullname']);
 
         return redirect()->to('/vendor/dashboard')->with('success', 'Profil berhasil diperbarui.');

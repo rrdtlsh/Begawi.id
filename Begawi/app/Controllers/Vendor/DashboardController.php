@@ -5,7 +5,7 @@ namespace App\Controllers\Vendor;
 use App\Controllers\BaseController;
 use App\Models\VendorModel;
 use App\Models\JobModel;
-use App\Models\TrainingModel; // Pastikan ini dipanggil
+use App\Models\TrainingModel;
 
 class DashboardController extends BaseController
 {
@@ -23,28 +23,28 @@ class DashboardController extends BaseController
         $userId = session()->get('user_id');
         $vendorId = session()->get('profile_id');
 
-        // 1. Ambil data profil vendor
+        // 1. Mengambil data profil lengkap
         $vendorProfile = $vendorModel->getVendorProfileByUserId($userId);
 
-        // 2. Ambil 5 lowongan pekerjaan terakhir secara terpisah
+        // 2. Mengambil 5 lowongan pekerjaan terakhir
         $latestJobs = $jobModel->where('vendor_id', $vendorId)
             ->orderBy('created_at', 'DESC')
             ->findAll(5);
 
-        // 3. Ambil 5 pelatihan terakhir secara terpisah
+        // 3. Mengambil 5 pelatihan terakhir
         $latestTrainings = $trainingModel->where('vendor_id', $vendorId)
             ->orderBy('created_at', 'DESC')
             ->findAll(5);
 
-        // 4. Siapkan semua data untuk dikirim ke view
+        // 4. Menyiapkan semua data untuk dikirim ke view
         $data = [
             'title' => 'Beranda Vendor',
             'vendor' => $vendorProfile,
-            'jobs' => $latestJobs,      // Kirim daftar lowongan
-            'trainings' => $latestTrainings, // Kirim daftar pelatihan
+            'jobs' => $latestJobs,
+            'trainings' => $latestTrainings,
         ];
 
-        // 5. Tampilkan view dashboard yang baru
+        // 5. Menampilkan view dashboard
         return view('vendor/dashboard', $data);
     }
 }
