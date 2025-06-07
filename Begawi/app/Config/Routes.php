@@ -10,7 +10,7 @@ use CodeIgniter\Router\RouteCollection;
 // RUTE PUBLIK (Bisa diakses siapa saja)
 // ===================================================================
 $routes->get('/', 'HomeController::index');
-$routes->get('/tentang-kami', 'HomeController::about'); // Contoh halaman statis
+$routes->get('/about', 'HomeController::about'); // Contoh halaman statis
 
 // Rute untuk Halaman Daftar Lowongan (Pekerjaan)
 $routes->get('/lowongan', 'JobPageController::index');
@@ -31,6 +31,7 @@ $routes->post('/register/process', 'AuthController::processRegister');
 $routes->get('/login', 'AuthController::login');
 $routes->post('/login/process', 'AuthController::processLogin');
 $routes->get('/logout', 'AuthController::logout');
+$routes->get('/lowongan/detail/(:num)', 'JobPageController::detail/$1');
 
 
 // ===================================================================
