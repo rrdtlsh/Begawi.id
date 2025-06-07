@@ -11,6 +11,7 @@ $routes->get('/', 'HomeController::index');
 
 
 $routes->post('/search/jobs', 'SearchController::jobs');
+$routes->get('/about', 'HomeController::about');
 
 // --- Routes untuk Autentikasi ---
 $routes->get('/register', 'AuthController::register');
