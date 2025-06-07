@@ -24,6 +24,7 @@ class SkillSeeder extends Seeder
             ['name' => 'SEO Specialist'],
             ['name' => 'Content Writer'],
             ['name' => 'Administrasi Kantor'],
+            ['name' => 'Belum Ada']
         ];
         $this->db->table('skills')->insertBatch($data);
 
