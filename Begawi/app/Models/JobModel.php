@@ -25,7 +25,8 @@ class JobModel extends Model
     {
         return $this->select('
                 jobs.*, 
-                vendors.company_name, 
+                vendors.company_name,
+                vendors.company_logo_path,
                 locations.name as location_name
             ')
             ->join('vendors', 'vendors.id = jobs.vendor_id', 'left')
@@ -43,7 +44,8 @@ class JobModel extends Model
     {
         $builder = $this->select('
                 jobs.*, 
-                vendors.company_name, 
+                vendors.company_name,
+                vendors.company_logo_path,
                 locations.name as location_name
             ')
             ->join('vendors', 'vendors.id = jobs.vendor_id', 'left')

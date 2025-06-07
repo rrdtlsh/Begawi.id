@@ -1,5 +1,4 @@
-<?php // File: app/Views/home.php ?>
-<?= $this->extend('layouts/guest_layout') ?>
+<?= $this->extend('layouts/main_layout') ?>
 
 <?= $this->section('content') ?>
 
@@ -77,34 +76,96 @@
         </div>
     </section>
 
-    <section class="py-5 bg-white">
-    <div class="container">
-        <h2 class="text-center section-title"><?= esc($list_title) ?></h2>
-        <div class="row g-4">
-            <?php if (!empty($jobs)): ?>
-                <?php foreach ($jobs as $job): ?>
-                    <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
-                        <div class="card job-card w-100">
-                            <div class="card-body">
-                                <h5 class="card-title"><a href="#"><?= esc($job->title) ?></a></h5>
-                                <h6 class="card-subtitle mb-2 text-muted"><?= esc($job->company_name) ?></h6>
-                                <p class="job-detail-item">Lokasi: <?= esc($job->location_name ?? 'N/A') ?></p>
-                                <p class="job-detail-item">Tipe: <?= esc($job->job_type) ?></p>
+    <section class="py-5 bg-white" id="lowongan">
+        <div class="container">
+            <h2 class="text-center section-title"><?= esc($list_title) ?></h2>
+            <div class="row g-4">
+                <?php if (!empty($jobs)): ?>
+                    <?php foreach ($jobs as $job): ?>
+                        <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+                            <div class="card job-card w-100">
+                                <!-- UBAH STRUKTUR CARD-BODY DI SINI -->
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex align-items-start mb-3">
+                                        <!-- Tampilkan gambar logo -->
+                                        <img src="<?= esc($job->company_logo_path ?? 'https://placehold.co/60x60/A1C349/FFFFFF?text=PT') ?>" alt="Logo Perusahaan" class="company-logo me-3" style="width:60px; height:60px; border-radius: 0.5rem; object-fit: cover;">
+                                        
+                                        <!-- Bungkus judul dan subjudul -->
+                                        <div>
+                                            <h5 class="card-title mb-1"><a href="#"><?= esc($job->title) ?></a></h5>
+                                            <h6 class="card-subtitle mb-2 text-muted"><?= esc($job->company_name) ?></h6>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 small">
+                                        <p class="job-detail-item">
+                                            <i class="bi bi-geo-alt-fill"></i>
+                                            <?= esc($job->location_name ?? 'N/A') ?>
+                                        </p>
+                                        <p class="job-detail-item">
+                                            <i class="bi bi-briefcase-fill"></i>
+                                            <?= esc($job->job_type) ?>
+                                        </p>
+                                        <p class="job-detail-item">
+                                            <i class="bi bi-calendar3"></i>
+                                            Diposting: <?= date('j F Y', strtotime($job->created_at)) ?>
+                                        </p>
+                                    </div>
+                                    <a href="#" class="btn btn-custom-green mt-auto">Lihat Detail</a>
+                                </div>
                             </div>
                         </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="col-12">
+                        <div class="alert alert-warning text-center">
+                            <h4>Tidak Ada Lowongan</h4>
+                            <p>Saat ini belum ada lowongan yang tersedia atau cocok dengan kriteria Anda.</p>
+                        </div>
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <!-- TAMBAHKAN BAGIAN INI -->
-                <div class="col-12">
-                    <div class="alert alert-warning text-center">
-                        <h4>Tidak Ada Lowongan</h4>
-                        <p>Saat ini belum ada lowongan yang tersedia atau cocok dengan kriteria Anda.</p>
-                    </div>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <section class="py-5" id="pelatihan">
+        <div class="container">
+            <h2 class="text-center section-title">Pelatihan Terbaru</h2>
+            <div class="row g-4">
+                <?php if (!empty($trainings)): ?>
+                    <?php foreach ($trainings as $training): ?>
+                        <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+                            <div class="card job-card w-100">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title mb-1"><a href="#"><?= esc($training->title) ?></a></h5>
+                                    <h6 class="card-subtitle mb-2 text-muted"><?= esc($training->company_name) ?></h6>
+                                    <div class="mb-3 small">
+                                        <p class="job-detail-item">
+                                            <i class="bi bi-geo-alt-fill"></i>
+                                            <?= esc($training->location_name ?? 'Online') ?>
+                                        </p>
+                                        <p class="job-detail-item">
+                                            <i class="bi bi-calendar-event"></i>
+                                            Mulai: <?= date('d M Y', strtotime($training->start_date)) ?>
+                                        </p>
+                                        <p class="job-detail-item">
+                                            <i class="bi bi-tag-fill"></i>
+                                            <?= $training->is_paid ? 'Berbayar (Rp ' . number_format($training->cost, 0, ',', '.') . ')' : 'Gratis' ?>
+                                        </p>
+                                    </div>
+                                    <a href="#" class="btn btn-custom-green mt-auto">Lihat Detail Pelatihan</a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            <p>Belum ada pelatihan yang tersedia saat ini.</p>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
 
 <?= $this->endSection() ?>

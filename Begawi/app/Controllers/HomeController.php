@@ -6,6 +6,7 @@ namespace App\Controllers;
 use App\Models\JobModel;
 use App\Models\JobCategoryModel;
 use App\Models\LocationModel;
+use App\Models\TrainingModel;
 
 class HomeController extends BaseController
 {
@@ -15,13 +16,15 @@ class HomeController extends BaseController
         $jobModel = new JobModel();
         $categoryModel = new JobCategoryModel();
         $locationModel = new LocationModel();
+        $trainingModel = new TrainingModel();
 
         // 3. Siapkan data yang selalu ada di halaman utama
         $data = [
             'title'        => 'Selamat Datang di Begawi',
             'categories'   => $categoryModel->findAll(),
             'locations'    => $locationModel->findAll(),
-            'search_terms' => null, // Nilai default untuk pencarian
+            'search_terms' => null,
+            'training' => $trainingModel->getLatestTrainings(3), 
         ];
 
         // 4. Logika untuk mengisi data 'jobs' dan 'list_title'

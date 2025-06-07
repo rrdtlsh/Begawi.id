@@ -48,6 +48,20 @@ class TrainingModel extends Model
             'required' => 'Lokasi pelatihan wajib dipilih.'
         ]
     ];
+
+    public function getLatestTrainings(int $limit = 3)
+    {
+        return $this->select('
+                trainings.*, 
+                vendors.company_name, 
+                locations.name as location_name
+            ')
+            ->join('vendors', 'vendors.id = trainings.vendor_id', 'left')
+            ->join('locations', 'locations.id = trainings.location_id', 'left')
+            ->orderBy('trainings.created_at', 'DESC')
+            ->limit($limit)
+            ->get()->getResult();
+    }
 }
 
 ?>
