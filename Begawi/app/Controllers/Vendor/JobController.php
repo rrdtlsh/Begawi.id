@@ -60,9 +60,6 @@ class JobController extends BaseController
         return redirect()->to('/vendor/jobs')->with('success', 'Lowongan pekerjaan berhasil dibuat.');
     }
 
-    /**
-     * Menampilkan form untuk mengedit lowongan yang sudah ada.
-     */
     public function editJob($id = null)
     {
         $jobModel = new JobModel();

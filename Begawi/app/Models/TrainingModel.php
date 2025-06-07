@@ -52,8 +52,8 @@ class TrainingModel extends Model
     public function getLatestTrainings(int $limit = 3)
     {
         return $this->select('
-                trainings.*, 
-                vendors.company_name, 
+                trainings.*,
+                vendors.company_name,
                 locations.name as location_name
             ')
             ->join('vendors', 'vendors.id = trainings.vendor_id', 'left')
@@ -61,6 +61,18 @@ class TrainingModel extends Model
             ->orderBy('trainings.created_at', 'DESC')
             ->limit($limit)
             ->get()->getResult();
+    }
+
+    public function getPublishedTrainings(int $perPage = 9)
+    {
+        return $this->select('
+                        trainings.*,
+                        vendors.company_name as penyelenggara,
+                        vendors.company_logo_path
+                    ')
+            ->join('vendors', 'vendors.id = trainings.vendor_id', 'left')
+            ->orderBy('trainings.start_date', 'ASC')
+            ->paginate($perPage);
     }
 }
 
