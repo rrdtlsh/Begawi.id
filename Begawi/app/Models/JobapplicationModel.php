@@ -28,6 +28,7 @@ class JobApplicationModel extends Model
     {
         return $this->select('
                         job_applications.status,
+                        job_applications.applied_at,
                         jobs.title as job_title,
                         vendors.company_name,
                         vendors.company_logo_path
@@ -101,5 +102,25 @@ class JobApplicationModel extends Model
             ->where('job_applications.id', $applicationId)
             ->first();
     }
+
+    public function getApplicantDetail(int $applicationId)
+{
+    return $this->select('
+            job_applications.*,
+            users.fullname as jobseeker_name,
+            users.email as jobseeker_email,
+            jobseekers.phone as jobseeker_phone,
+            jobseekers.summary as jobseeker_summary,
+            locations.name as jobseeker_location,
+            jobs.title as job_title,
+            jobs.vendor_id
+        ')
+        ->join('jobseekers', 'jobseekers.id = job_applications.jobseeker_id')
+        ->join('users', 'users.id = jobseekers.user_id')
+        ->join('jobs', 'jobs.id = job_applications.job_id')
+        ->join('locations', 'locations.id = jobseekers.location_id', 'left')
+        ->where('job_applications.id', $applicationId)
+        ->first();
+}
 
 }
