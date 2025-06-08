@@ -52,7 +52,7 @@ class JobController extends BaseController
 
         // Ambil semua data dari form
         $postData = $this->request->getPost();
-        
+
         // =============================================================
         // PERBAIKAN: Bersihkan input gaji sebelum disimpan
         // =============================================================
@@ -118,11 +118,6 @@ class JobController extends BaseController
 
         // 2. Ambil semua data dari form
         $postData = $this->request->getPost();
-
-        // =============================================================
-        // PENGGABUNGAN LOGIKA: Bersihkan gaji & hanya update yang diisi
-        // =============================================================
-        
         // 3. Bersihkan input gaji terlebih dahulu
         if (isset($postData['salary_min'])) {
             $postData['salary_min'] = preg_replace('/[^0-9]/', '', $postData['salary_min']);
@@ -139,7 +134,7 @@ class JobController extends BaseController
                 $dataToUpdate[$key] = $value;
             }
         }
-        
+
         // 5. Lakukan update hanya jika ada data yang akan diupdate
         if (!empty($dataToUpdate)) {
             if (!$jobModel->update($id, $dataToUpdate)) {
@@ -172,7 +167,7 @@ class JobController extends BaseController
     public function showApplicants($jobId = null)
     {
         $jobModel = new JobModel();
-        $applicationModel = new JobApplicationModel();
+        $applicationModel = new \App\Models\JobApplicationModel();
         $vendorId = session()->get('profile_id');
 
         $job = $jobModel->where(['id' => $jobId, 'vendor_id' => $vendorId])->first();
@@ -180,41 +175,51 @@ class JobController extends BaseController
             return redirect()->to('vendor/dashboard')->with('error', 'Akses ditolak.');
         }
 
-        // 2. Ambil data pelamar menggunakan method dari JobApplicationModel
-        $applicants = $applicationModel->getApplicantsForJob($jobId);
-
         $data = [
             'title' => 'Daftar Pelamar: ' . esc($job->title),
             'job' => $job,
-            'applicants' => $applicants,
+            'applicants' => $applicationModel->getApplicantsForJob($jobId),
         ];
 
-        // 3. Muat view baru yang akan menampilkan daftar
         return view('vendor/jobs/applicants', $data);
     }
 
     public function updateApplicantStatus($applicationId)
     {
-        // 1. Validasi input
         $newStatus = $this->request->getPost('status');
         $allowedStatus = ['pending', 'reviewed', 'accepted', 'rejected'];
         if (!in_array($newStatus, $allowedStatus)) {
             return redirect()->back()->with('error', 'Status tidak valid.');
         }
 
-        // 2. Inisialisasi model
-        $applicationModel = new JobApplicationModel();
+        $applicationModel = new \App\Models\JobApplicationModel();
 
-        // 3. (PENTING) Verifikasi bahwa vendor berhak mengubah lamaran ini
-        //    Ini mencegah vendor lain mengubah status lamaran yang bukan miliknya.
-        $application = $applicationModel->getApplicationDetailsForEmail($applicationId);
-
-        if (!$application || $application->vendor_id != session()->get('profile_id')) {
+        // Verifikasi kepemilikan
+        $application = $applicationModel->find($applicationId);
+        $jobModel = new JobModel();
+        $job = $jobModel->find($application->job_id);
+        if ($job->vendor_id != session()->get('profile_id')) {
             return redirect()->back()->with('error', 'Akses ditolak.');
         }
 
-        $oldStatus = $application->status;
+        // Update status
+        $applicationModel->update($applicationId, ['status' => $newStatus]);
 
-        $updateResult = $applicationModel->update($applicationId, ['status' => $newStatus]);
+        // Kirim email JIKA statusnya 'accepted'
+        if ($newStatus === 'accepted') {
+            helper('email');
+            $appDetail = $applicationModel->getApplicationDetailsForEmail($applicationId);
+
+            $emailData = [
+                'jobseeker_name' => $appDetail->jobseeker_name,
+                'job_title' => $appDetail->job_title,
+                'company_name' => $appDetail->company_name,
+            ];
+            $body = view('emails/application_accepted_email', $emailData);
+
+            send_email($appDetail->jobseeker_email, $appDetail->jobseeker_name, 'Kabar Baik Lamaran Anda!', $body);
+        }
+
+        return redirect()->back()->with('success', 'Status pelamar berhasil diperbarui.');
     }
 }
