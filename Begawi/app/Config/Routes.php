@@ -76,8 +76,15 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     $routes->get('trainings/edit/(:num)', 'Vendor\TrainingController::editTraining/$1');
     $routes->post('trainings/update/(:num)', 'Vendor\TrainingController::updateTraining/$1');
     $routes->post('trainings/delete/(:num)', 'Vendor\TrainingController::deleteTraining/$1');
+<<<<<<< HEAD
     $routes->get('trainings/(:num)/participants', 'Vendor\TrainingController::showParticipants/$1');
     $routes->post('trainings/participants/(:num)/status', 'Vendor\TrainingController::updateParticipantStatus/$1');
+=======
+
+    // email
+    $routes->get('jobs/applicants/(:num)', 'Vendor\JobController::showApplicants/$1');
+    $routes->post('applicants/status/(:num)', 'Vendor\JobController::updateApplicantStatus/$1');
+>>>>>>> 3e599416c5633a77ec091d458f188b839f2543a6
 });
 
 
