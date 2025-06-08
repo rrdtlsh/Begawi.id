@@ -36,4 +36,19 @@ class TrainingApplicationModel extends Model
             ->orderBy('training_applications.enrolled_at', 'DESC')
             ->findAll($limit);
     }
+
+    public function getApplicantsForTraining(int $trainingId)
+    {
+        return $this->select('
+                        training_applications.*,
+                        users.fullname as jobseeker_name,
+                        users.email as jobseeker_email,
+                        jobseekers.phone as jobseeker_phone
+                    ')
+            ->join('jobseekers', 'jobseekers.id = training_applications.jobseeker_id', 'left')
+            ->join('users', 'users.id = jobseekers.user_id', 'left')
+            ->where('training_applications.training_id', $trainingId)
+            ->orderBy('training_applications.applied_at', 'ASC')
+            ->findAll();
+    }
 }

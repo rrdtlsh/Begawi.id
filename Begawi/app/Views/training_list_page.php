@@ -55,7 +55,8 @@
                         </h4>
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="btn btn-primary btn-block">Lihat Detail & Daftar</a>
+                                <a href="<?= site_url('pelatihan/detail/' . $training->id) ?>"
+                                    class="btn btn-primary btn-block">Lihat Detail</a>
                     </div>
                 </div>
             </div>

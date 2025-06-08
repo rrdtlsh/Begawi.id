@@ -20,9 +20,9 @@ $routes->get('/lowongan/detail/(:num)', 'JobPageController::detail/$1');
 
 // Rute untuk Halaman Daftar & Detail Pelatihan
 $routes->get('/pelatihan', 'TrainingPageController::index');
-$routes->post('/pelatihan', 'TrainingPageController::index'); // Menangani filter/pencarian
-// $routes->get('/pelatihan/detail/(:num)', 'TrainingPageController::detail/$1'); // (Ini bisa ditambahkan nanti)
-
+$routes->post('/pelatihan', 'TrainingPageController::index');
+$routes->get('/pelatihan/detail/(:num)', 'TrainingPageController::detail/$1'); // Aktifkan rute detail pelatihan// Menangani filter/pencarian
+$routes->get('/pelatihan/daftar/(:num)', 'TrainingApplicationController::processApplication/$1');
 
 // ===================================================================
 // RUTE AUTENTIKASI (Login, Register, Logout)
@@ -42,6 +42,7 @@ $routes->get('/logout', 'AuthController::logout');
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     // Rute untuk aksi bookmark (hanya jobseeker yang bisa)
     $routes->post('bookmark/toggle', 'BookmarkController::toggle');
+    $routes->post('daftar-pelatihan/apply/(:num)', 'TrainingApplicationController::apply/$1');
 });
 
 
@@ -88,10 +89,16 @@ $routes->group('jobseeker', ['filter' => 'auth'], function ($routes) {
 
     // Riwayat Lamaran & Pelatihan
     $routes->get('history', 'Jobseeker\HistoryController::index');
+
 });
 
 // --- RUTE LAMARAN PEKERJAAN (Memerlukan Login) ---
 $routes->group('lamar', ['filter' => 'auth'], function ($routes) {
     $routes->get('job/(:num)', 'JobApplicationController::showApplicationForm/$1');
     $routes->post('job/(:num)', 'JobApplicationController::submitApplication/$1');
+});
+
+$routes->group('daftar-pelatihan', ['filter' => 'auth'], function ($routes) {
+    // Akan menangani POST request ke /daftar-pelatihan/apply/2 (contoh)
+    $routes->post('apply/(:num)', 'TrainingApplicationController::apply/$1');
 });

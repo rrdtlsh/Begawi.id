@@ -140,4 +140,21 @@ class TrainingModel extends Model
             ->orderBy('trainings.start_date', 'ASC')
             ->paginate($perPage);
     }
+    //
+    public function getTrainingDetails(int $id)
+    {
+        return $this->select('
+                        trainings.*, 
+                        vendors.company_name as penyelenggara, 
+                        vendors.company_profile,
+                        vendors.company_logo_path,
+                        locations.name as location_name,
+                        job_categories.name as category_name
+                    ')
+            ->join('vendors', 'vendors.id = trainings.vendor_id', 'left')
+            ->join('locations', 'locations.id = trainings.location_id', 'left')
+            ->join('job_categories', 'job_categories.id = trainings.category_id', 'left')
+            ->where('trainings.id', $id)
+            ->first();
+    }
 }
