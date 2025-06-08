@@ -67,21 +67,22 @@ class JobApplicationModel extends Model
 
     public function getApplicantsForJob($jobId)
     {
-        // Asumsi tabel 'users' berisi 'name' dan 'email'.
-        return $this->select(
-            'job_applications.id as application_id,
-                job_applications.status,
-                job_applications.applied_at,
-                job_applications.resume_file_path,
-                users.fullname as jobseeker_name,
-                users.email as jobseeker_email'
-        )
-            // Hanya perlu join ke tabel users untuk mendapatkan nama & email
-            ->join('users', 'users.id = job_applications.jobseeker_id', 'left')
-            // JOIN ke jobseeker_profiles dihapus
+        return $this->select('
+                        job_applications.id as application_id,
+                        job_applications.status,
+                        job_applications.applied_at,
+                        job_applications.resume_file_path,
+                        users.fullname as jobseeker_name,
+                        users.email as jobseeker_email
+                    ')
+            // 1. Join ke tabel jobseekers
+            ->join('jobseekers', 'jobseekers.id = job_applications.jobseeker_id')
+            // 2. Dari jobseekers, join ke tabel users
+            ->join('users', 'users.id = jobseekers.user_id')
             ->where('job_applications.job_id', $jobId)
-            ->orderBy('job_applications.applied_at', 'DESC')
+            ->orderBy('job_applications.applied_at', 'ASC')
             ->findAll();
+
     }
 
     public function getApplicationDetailsForEmail($applicationId)
@@ -104,8 +105,8 @@ class JobApplicationModel extends Model
     }
 
     public function getApplicantDetail(int $applicationId)
-{
-    return $this->select('
+    {
+        return $this->select('
             job_applications.*,
             users.fullname as jobseeker_name,
             users.email as jobseeker_email,
@@ -115,12 +116,12 @@ class JobApplicationModel extends Model
             jobs.title as job_title,
             jobs.vendor_id
         ')
-        ->join('jobseekers', 'jobseekers.id = job_applications.jobseeker_id')
-        ->join('users', 'users.id = jobseekers.user_id')
-        ->join('jobs', 'jobs.id = job_applications.job_id')
-        ->join('locations', 'locations.id = jobseekers.location_id', 'left')
-        ->where('job_applications.id', $applicationId)
-        ->first();
-}
+            ->join('jobseekers', 'jobseekers.id = job_applications.jobseeker_id')
+            ->join('users', 'users.id = jobseekers.user_id')
+            ->join('jobs', 'jobs.id = job_applications.job_id')
+            ->join('locations', 'locations.id = jobseekers.location_id', 'left')
+            ->where('job_applications.id', $applicationId)
+            ->first();
+    }
 
 }
