@@ -85,24 +85,26 @@
                             <div class="form-group col-md-6">
                                 <label for="start_date">Tanggal & Waktu Mulai</label>
                                 <input type="datetime-local" name="start_date" class="form-control"
-                                    value="<?= old('start_date', isset($training->start_date) ? date('Y-m-d\TH:i', strtotime($training->start_date)) : '') ?>"
+                                    value="<?= old('start_date', isset($training->start_date) && $training->start_date ? date('Y-m-d\TH:i', strtotime($training->start_date)) : '') ?>"
                                     required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="end_date">Tanggal & Waktu Selesai (Opsional)</label>
                                 <input type="datetime-local" name="end_date" class="form-control"
-                                    value="<?= old('end_date', isset($training->end_date) ? date('Y-m-d\TH:i', strtotime($training->end_date)) : '') ?>">
+                                    value="<?= old('end_date', isset($training->end_date) && $training->end_date ? date('Y-m-d\TH:i', strtotime($training->end_date)) : '') ?>">
                                 <small class="form-text text-muted">Kosongkan jika tidak ada tanggal selesai
                                     pasti.</small>
+                                <small class="form-text text-muted">Jika hanya 1 hari, biarkan tanggal selesai sama
+                                    dengan tanggal mulai.</small>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="duration">Durasi Pelatihan (Jam)</label>
+
+                        <div class="form-group"> <label for="duration">Durasi Pelatihan (Jam)</label>
                             <input type="number" name="duration" class="form-control"
                                 placeholder="Contoh: 10 (untuk 10 jam)"
                                 value="<?= old('duration', $training->duration ?? '') ?>" required>
+                            <small class="form-text text-muted">Masukkan durasi dalam jam.</small>
                         </div>
-
                         <div class="form-group">
                             <label for="quota">Kuota Peserta (Opsional)</label>
                             <input type="number" name="quota" class="form-control" placeholder="Contoh: 20"

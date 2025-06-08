@@ -51,7 +51,7 @@ class JobApplicationController extends BaseController
 
         // Aturan validasi untuk form
         $rules = [
-            'cover_letter' => 'required|min_length[50]',
+            'cover_letter' => 'required',
             'resume' => [
                 'label' => 'File CV',
                 'rules' => 'uploaded[resume]|max_size[resume,2048]|ext_in[resume,pdf,doc,docx]',
