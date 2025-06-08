@@ -68,6 +68,7 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     $routes->post('jobs/delete/(:num)', 'Vendor\JobController::deleteJob/$1');
     $routes->get('jobs/(:num)/applicants', 'Vendor\JobController::showApplicants/$1');
     $routes->post('applicants/(:num)/status', 'Vendor\JobController::updateApplicantStatus/$1');
+    $routes->get('jobs/applicant/(:num)', 'Vendor\JobController::showApplicantDetail/$1');
 
     // CRUD Pelatihan (Trainings)
     $routes->get('trainings/new', 'Vendor\TrainingController::newTraining');
@@ -75,6 +76,8 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     $routes->get('trainings/edit/(:num)', 'Vendor\TrainingController::editTraining/$1');
     $routes->post('trainings/update/(:num)', 'Vendor\TrainingController::updateTraining/$1');
     $routes->post('trainings/delete/(:num)', 'Vendor\TrainingController::deleteTraining/$1');
+    $routes->get('trainings/(:num)/participants', 'Vendor\TrainingController::showParticipants/$1');
+    $routes->post('trainings/participants/(:num)/status', 'Vendor\TrainingController::updateParticipantStatus/$1');
 });
 
 
