@@ -93,7 +93,7 @@ class JobController extends BaseController
      */
     public function updateJob($id = null)
     {
-        $jobModel = new \App\Models\JobModel();
+        $jobModel = new JobModel();
         $vendorId = session()->get('profile_id');
 
         // Cek kepemilikan, sudah benar
@@ -101,7 +101,6 @@ class JobController extends BaseController
             return redirect()->to('/vendor/dashboard')->with('error', 'Akses ditolak.');
         }
 
-        // --- LOGIKA BARU UNTUK UPDATE FLEKSIBEL ---
 
         // 1. Ambil semua data yang dikirim dari form
         $allPostData = $this->request->getPost();
@@ -148,7 +147,7 @@ class JobController extends BaseController
         return redirect()->to('/vendor/dashboard')->with('success', 'Lowongan pekerjaan berhasil dihapus.');
     }
 
-        public function showApplicants($jobId = null)
+    public function showApplicants($jobId = null)
     {
         $jobModel = new JobModel();
         $applicationModel = new JobApplicationModel();
@@ -163,8 +162,8 @@ class JobController extends BaseController
         $applicants = $applicationModel->getApplicantsForJob($jobId);
 
         $data = [
-            'title'      => 'Daftar Pelamar: ' . esc($job->title),
-            'job'        => $job,
+            'title' => 'Daftar Pelamar: ' . esc($job->title),
+            'job' => $job,
             'applicants' => $applicants,
         ];
 
@@ -173,32 +172,32 @@ class JobController extends BaseController
     }
 
     public function updateApplicantStatus($applicationId)
-{
-    // 1. Validasi input
-    $newStatus = $this->request->getPost('status');
-    $allowedStatus = ['pending', 'reviewed', 'accepted', 'rejected'];
-    if (!in_array($newStatus, $allowedStatus)) {
-        return redirect()->back()->with('error', 'Status tidak valid.');
+    {
+        // 1. Validasi input
+        $newStatus = $this->request->getPost('status');
+        $allowedStatus = ['pending', 'reviewed', 'accepted', 'rejected'];
+        if (!in_array($newStatus, $allowedStatus)) {
+            return redirect()->back()->with('error', 'Status tidak valid.');
+        }
+
+        // 2. Inisialisasi model
+        $applicationModel = new JobApplicationModel();
+
+        // 3. (PENTING) Verifikasi bahwa vendor berhak mengubah lamaran ini
+        //    Ini mencegah vendor lain mengubah status lamaran yang bukan miliknya.
+        $application = $applicationModel
+            ->select('jobs.vendor_id')
+            ->join('jobs', 'jobs.id = job_applications.job_id')
+            ->find($applicationId);
+
+        if (!$application || $application->vendor_id != session()->get('profile_id')) {
+            return redirect()->back()->with('error', 'Akses ditolak.');
+        }
+
+        // 4. Update status di database
+        $applicationModel->update($applicationId, ['status' => $newStatus]);
+
+        // 5. Kembali ke halaman sebelumnya dengan pesan sukses
+        return redirect()->back()->with('success', 'Status pelamar berhasil diperbarui.');
     }
-
-    // 2. Inisialisasi model
-    $applicationModel = new \App\Models\JobApplicationModel();
-
-    // 3. (PENTING) Verifikasi bahwa vendor berhak mengubah lamaran ini
-    //    Ini mencegah vendor lain mengubah status lamaran yang bukan miliknya.
-    $application = $applicationModel
-        ->select('jobs.vendor_id')
-        ->join('jobs', 'jobs.id = job_applications.job_id')
-        ->find($applicationId);
-
-    if (!$application || $application->vendor_id != session()->get('profile_id')) {
-        return redirect()->back()->with('error', 'Akses ditolak.');
-    }
-
-    // 4. Update status di database
-    $applicationModel->update($applicationId, ['status' => $newStatus]);
-
-    // 5. Kembali ke halaman sebelumnya dengan pesan sukses
-    return redirect()->back()->with('success', 'Status pelamar berhasil diperbarui.');
-}
 }

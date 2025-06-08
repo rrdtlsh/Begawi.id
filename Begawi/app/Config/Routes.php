@@ -56,13 +56,13 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     $routes->get('profile/edit', 'Vendor\ProfileController::edit');
     $routes->post('profile/update', 'Vendor\ProfileController::update');
 
-    
+
     // CRUD Lowongan Pekerjaan (Jobs)
     $routes->get('jobs/new', 'Vendor\JobController::newJob');
     $routes->post('jobs/create', 'Vendor\JobController::createJob');
     $routes->get('jobs/edit/(:num)', 'Vendor\JobController::editJob/$1');
     $routes->post('jobs/update/(:num)', 'Vendor\JobController::updateJob/$1');
-    $routes->get('jobs/delete/(:num)', 'Vendor\JobController::deleteJob/$1');
+    $routes->post('jobs/delete/(:num)', 'Vendor\JobController::deleteJob/$1');
     $routes->get('jobs/(:num)/applicants', 'Vendor\JobController::showApplicants/$1');
     $routes->post('applicants/(:num)/status', 'Vendor\JobController::updateApplicantStatus/$1');
 
@@ -71,7 +71,7 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     $routes->post('trainings/create', 'Vendor\TrainingController::createTraining');
     $routes->get('trainings/edit/(:num)', 'Vendor\TrainingController::editTraining/$1');
     $routes->post('trainings/update/(:num)', 'Vendor\TrainingController::updateTraining/$1');
-    $routes->get('trainings/delete/(:num)', 'Vendor\TrainingController::deleteTraining/$1');
+    $routes->post('trainings/delete/(:num)', 'Vendor\TrainingController::deleteTraining/$1');
 });
 
 

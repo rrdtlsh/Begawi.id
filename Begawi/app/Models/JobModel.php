@@ -23,9 +23,81 @@ class JobModel extends Model
         'experience_level',
         'salary_min',
         'salary_max',
-        'application_deadline'
+        'application_deadline',
+        'contact_email',
+        'contact_phone'
     ];
     protected $useTimestamps = true;
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
+    protected $deletedField = 'deleted_at';
+
+    // *** ATURAN VALIDASI UNTUK PEMBUATAN BARU ***
+    protected $validationRules = [
+        'title' => 'required|min_length[5]|max_length[255]',
+        'category_id' => 'required|integer',
+        'location_id' => 'required|integer',
+        'description' => 'required',
+        'qualifications' => 'permit_empty|string', // Kualifikasi opsional saat ini, tapi bisa string
+        'application_instructions' => 'permit_empty|string', // Opsional
+        'job_type' => 'required|in_list[Full-time,Part-time,Contract,Internship,Freelance]',
+        'salary_min' => 'permit_empty|integer|less_than_equal_to[salary_max]',
+        'salary_max' => 'permit_empty|integer',
+        'application_deadline' => 'required',
+        'quota' => 'permit_empty|integer|greater_than_equal_to[1]',
+        'contact_email' => 'required|valid_email',
+        'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]', // Opsional
+    ];
+
+    protected $validationRulesUpdate = [
+        'title' => 'permit_empty|min_length[5]|max_length[255]', // TIDAK WAJIB
+        'category_id' => 'permit_empty|integer', // TIDAK WAJIB
+        'location_id' => 'permit_empty|integer', // TIDAK WAJIB
+        'description' => 'permit_empty', // TIDAK WAJIB
+        'qualifications' => 'permit_empty|string', // Kualifikasi opsional saat ini, tapi bisa string
+        'application_instructions' => 'permit_empty|string', // Opsional
+        'job_type' => 'permit_empty|in_list[Full-time,Part-time,Contract,Internship,Freelance]', // TIDAK WAJIB
+        'salary_min' => 'permit_empty|integer|less_than_equal_to[salary_max]',
+        'salary_max' => 'permit_empty|integer',
+        'application_deadline' => 'permit_empty|valid_date[Y-m-d H:i:s]|after_now', // TIDAK WAJIB
+        'quota' => 'permit_empty|integer|greater_than_equal_to[1]',
+        'contact_email' => 'permit_empty|valid_email', // TIDAK WAJIB
+        'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]', // Opsional
+    ];
+
+    protected $validationMessages = [
+        'title' => [
+            'required' => 'Judul lowongan wajib diisi.',
+            'max_length' => 'Judul maksimal {param} karakter.'
+        ],
+        'description' => [
+            'required' => 'Deskripsi lowongan wajib diisi.',
+        ],
+        'category_id' => [
+            'required' => 'Kategori wajib dipilih.',
+            'integer' => 'Kategori tidak valid.'
+        ],
+        'location_id' => [
+            'required' => 'Lokasi wajib dipilih.',
+            'integer' => 'Lokasi tidak valid.'
+        ],
+        'application_deadline' => [
+            'required' => 'Batas waktu lamaran wajib diisi.',
+            'valid_date' => 'Format batas waktu tidak valid.',
+            'after_now' => 'Batas waktu lamaran harus di masa depan.'
+        ],
+        'contact_email' => [
+            'required' => 'Email kontak wajib diisi.',
+            'valid_email' => 'Format email kontak tidak valid.'
+        ],
+        'salary_min' => [
+            'less_than_equal_to' => 'Gaji minimum tidak boleh lebih besar dari gaji maksimum.',
+            'integer' => 'Gaji minimum harus berupa angka.'
+        ],
+        'salary_max' => [
+            'integer' => 'Gaji maksimum harus berupa angka.'
+        ],
+    ];
 
     /**
      * Mengambil data lowongan terbaru untuk halaman utama.
@@ -33,7 +105,7 @@ class JobModel extends Model
     public function getLatestJobs(int $limit = 6)
     {
         return $this->select('
-                jobs.*, 
+                jobs.*,
                 vendors.company_name,
                 vendors.company_logo_path,
                 locations.name as location_name
@@ -42,7 +114,7 @@ class JobModel extends Model
             ->join('locations', 'locations.id = jobs.location_id', 'left')
             ->orderBy('jobs.created_at', 'DESC')
             ->limit($limit)
-            ->get()->getResult();
+            ->findAll();
     }
 
     /**
@@ -76,8 +148,8 @@ class JobModel extends Model
     public function getPublishedJobs($keyword = null, $location = null, $category = null)
     {
         $builder = $this->select('
-                            jobs.*, 
-                            vendors.company_name, 
+                            jobs.*,
+                            vendors.company_name,
                             vendors.company_logo_path,
                             locations.name as location_name
                         ')

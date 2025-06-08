@@ -12,6 +12,7 @@ class HomeController extends BaseController
 {
     public function index()
     {
+
         // 2. Buat instance dari setiap model
         $jobModel = new JobModel();
         $categoryModel = new JobCategoryModel();
@@ -20,20 +21,20 @@ class HomeController extends BaseController
 
         // 3. Siapkan data yang selalu ada di halaman utama
         $data = [
-            'title'        => 'Selamat Datang di Begawi',
-            'categories'   => $categoryModel->findAll(),
-            'locations'    => $locationModel->findAll(),
+            'title' => 'Selamat Datang di Begawi',
+            'categories' => $categoryModel->findAll(),
+            'locations' => $locationModel->findAll(),
             'search_terms' => null,
-            'training' => $trainingModel->getLatestTrainings(3), 
+            'trainings' => $trainingModel->getLatestTrainings(3),
         ];
 
         // 4. Logika untuk mengisi data 'jobs' dan 'list_title'
         if ($this->request->getMethod() === 'post') {
             // Jika ada PENCARIAN (metode POST)
-            $keyword  = $this->request->getPost('keyword');
+            $keyword = $this->request->getPost('keyword');
             $location = $this->request->getPost('location');
             $category = $this->request->getPost('category');
-            
+
             $data['jobs'] = $jobModel->searchJobs($keyword, $location, $category);
             $data['search_terms'] = ['keyword' => $keyword, 'location' => $location, 'category' => $category];
             $data['list_title'] = 'Hasil Pencarian'; // Judul untuk hasil pencarian
@@ -43,6 +44,7 @@ class HomeController extends BaseController
             $data['list_title'] = 'Lowongan Terbaru'; // Judul untuk halaman utama
         }
         return view('home', $data);
+
     }
 
     public function about()

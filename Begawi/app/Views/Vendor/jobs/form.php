@@ -65,10 +65,16 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="description">Deskripsi Lengkap (Tanggung Jawab, Kualifikasi, dll.)</label>
+                                <label for="description">Deskripsi Lengkap (Tanggung Jawab, dll.)</label>
                                 <textarea name="description" class="form-control" rows="5"
                                     placeholder="Jelaskan secara detail mengenai lowongan yang Anda tawarkan..."><?= old('description', $job->description ?? '') ?></textarea>
+
+
+                                <label for="qualifications">Kualifikasi (Syarat Pendidikan, Pengalaman, dll.)</label>
+                                <textarea name="qualifications" class="form-control" rows="5"
+                                    placeholder="Contoh: Pendidikan minimal S1, Pengalaman 2 tahun di bidang terkait, Menguasai Laravel & ReactJS."><?= old('qualifications', $job->qualifications ?? '') ?></textarea>
                             </div>
+
                             <hr>
 
                             <h5>Detail Lowongan Pekerjaan</h5>
@@ -107,38 +113,34 @@
                                 <input type="number" name="quota" class="form-control" placeholder="Contoh: 10"
                                     value="<?= old('quota', $job->quota ?? '') ?>">
                                 <small class="form-text text-muted">Kosongkan jika tidak ada batasan kuota.</small>
-                            </div>
-                            <!-- --- AKHIR PENAMBAHAN --- -->
-
-                            <div class="form-group">
-                                <label for="application_instructions">Cara Melamar</label>
-                                <textarea name="application_instructions" class="form-control" rows="3"
-                                    placeholder="Contoh: Kirim CV dan portofolio ke email@perusahaan.com dengan subjek 'Lamaran Backend Developer'"><?= old('application_instructions', $job->application_instructions ?? '') ?></textarea>
-                            </div>
-                            <hr>
-
-                            <h5>Informasi Kontak</h5>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="contact_email">Email Kontak</label>
-                                    <input type="email" name="contact_email" class="form-control"
-                                        placeholder="email.hrd@perusahaan.com"
-                                        value="<?= old('contact_email', $job->contact_email ?? '') ?>" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="contact_phone">Nomor Telepon Kontak (Opsional)</label>
-                                    <input type="text" name="contact_phone" class="form-control"
-                                        placeholder="08xxxxxxxxxx"
-                                        value="<?= old('contact_phone', $job->contact_phone ?? '') ?>">
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-success">Publikasikan Sekarang</button>
-                            <a href="/vendor/jobs" class="btn btn-secondary">Batal</a>
-                        </form>
+                            </div <div class="form-group">
+                            <label for="application_instructions">Cara Melamar</label>
+                            <textarea name="application_instructions" class="form-control" rows="3"
+                                placeholder="Contoh: Kirim CV dan portofolio ke email@perusahaan.com dengan subjek 'Lamaran Backend Developer'"><?= old('application_instructions', $job->application_instructions ?? '') ?></textarea>
                     </div>
+                    <hr>
+
+                    <h5>Informasi Kontak</h5>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="contact_email">Email Kontak</label>
+                            <input type="email" name="contact_email" class="form-control"
+                                placeholder="email.hrd@perusahaan.com"
+                                value="<?= old('contact_email', $job->contact_email ?? '') ?>" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="contact_phone">Nomor Telepon Kontak (Opsional)</label>
+                            <input type="text" name="contact_phone" class="form-control" placeholder="08xxxxxxxxxx"
+                                value="<?= old('contact_phone', $job->contact_phone ?? '') ?>">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Publikasikan Sekarang</button>
+                    <a href="/vendor/dashboard" class="btn btn-secondary">Batal</a>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 
