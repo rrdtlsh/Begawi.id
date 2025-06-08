@@ -1,27 +1,28 @@
-<!DOCTYPE html>
-<html lang="id">
+<?= $this->extend('layouts/main_layout') ?>
+
+<?= $this->section('content') ?>
 
 <head>
     <meta charset="UTF-8">
     <title><?= esc($title ?? 'Dashboard Saya') ?></title>
+    <!-- Bootstrap dan Font Awesome dari CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Bootstrap Icons untuk ikon pembeda -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <style>
-        .profile-pic {
-            height: 80px;
-            width: 80px;
-            border-radius: 50%;
+        .profile-card .img-thumbnail {
+            width: 120px;
+            height: 120px;
             object-fit: cover;
-            border: 3px solid #eee;
         }
-
         .card-header h6 {
             margin-bottom: 0;
             font-weight: 600;
         }
-
-        .list-group-item small {
-            color: #6c757d;
+        .list-group-item .badge {
+            font-size: 0.8em;
+            padding: .5em .75em;
         }
     </style>
 </head>
@@ -66,13 +67,12 @@
 
         <!-- KARTU PROFIL LENGKAP -->
         <?php if (!empty($profile)): ?>
-            <div class="card mb-4">
+            <div class="card mb-4 profile-card">
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-md-2 text-center">
                             <img src="<?= !empty($profile->profile_picture_path) ? '/uploads/avatars/' . esc($profile->profile_picture_path) : 'https://via.placeholder.com/120' ?>"
-                                alt="Foto Profil" class="img-thumbnail rounded-circle mb-3"
-                                style="width:120px; height:120px; object-fit:cover;">
+                                alt="Foto Profil" class="img-thumbnail rounded-circle mb-3">
                         </div>
                         <div class="col-md-7">
                             <h3><?= esc(session()->get('fullname')) ?></h3>
@@ -105,48 +105,57 @@
             </div>
         <?php endif; ?>
 
-        <!-- DAFTAR AKTIVITAS -->
+        <!-- DAFTAR AKTIVITAS (TELAH DIPERBARUI) -->
         <div class="row">
-            <div class="col-lg-7">
+            <div class="col-lg-12">
                 <div class="card mb-4">
-                    <div class="card-header">
-                        <h6><i class="fas fa-tasks"></i> Aktivitas Terakhir (Lamaran & Pelatihan)</h6>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6><i class="fas fa-tasks"></i> Aktivitas Terakhir</h6>
+                        <a href="/jobseeker/history" class="btn btn-sm btn-outline-primary">Lihat Semua Riwayat</a>
                     </div>
                     <div class="list-group list-group-flush">
-                        <?php if (empty($applications) && empty($training_apps)): ?>
+                        <?php if (empty($recent_history)): ?>
                             <div class="list-group-item text-center text-muted">Belum ada aktivitas.</div>
+                        <?php else: ?>
+                            <?php foreach (array_slice($recent_history, 0, 5) as $item): // Tampilkan maksimal 5 item ?>
+                                <div class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        
+                                        <!-- =============================================== -->
+                                        <!-- PERBAIKAN: Menampilkan detail lamaran/pelatihan -->
+                                        <!-- =============================================== -->
+                                        <h6 class="mb-1">
+                                            <?php if (isset($item->job_title)): // Ini adalah Lamaran Kerja ?>
+                                                <i class="bi bi-briefcase-fill text-primary" title="Lamaran Kerja"></i>
+                                                <span class="ml-2">Melamar di: <strong><?= esc($item->job_title) ?></strong></span>
+                                            <?php else: // Ini adalah Pendaftaran Pelatihan ?>
+                                                <i class="bi bi-easel-fill text-success" title="Pelatihan"></i>
+                                                <span class="ml-2">Mendaftar Pelatihan: <strong><?= esc($item->title) ?></strong></span>
+                                            <?php endif; ?>
+                                        </h6>
+                                        <small class="text-muted">
+                                            <?php
+                                                $date = isset($item->applied_at) ? $item->applied_at : $item->enrolled_at;
+                                                echo date('d M Y', strtotime($date));
+                                            ?>
+                                        </small>
+                                    </div>
+                                    <p class="mb-1" style="font-size: 0.9rem;">
+                                        <?php
+                                            $company = esc($item->company_name ?? $item->penyelenggara ?? 'N/A');
+                                            $status_class = ['pending' => 'warning', 'accepted' => 'success', 'approved' => 'success', 'rejected' => 'danger'];
+                                            $status_text = ($item->status === 'approved') ? 'Diterima' : ucfirst($item->status);
+                                        ?>
+                                        Di <?= $company ?>
+                                        <span class="badge badge-<?= $status_class[$item->status] ?? 'secondary' ?> float-right"><?= esc($status_text) ?></span>
+                                    </p>
+                                </div>
+                            <?php endforeach; ?>
                         <?php endif; ?>
-                        <?php if (!empty($applications)):
-                            foreach ($applications as $app): ?>
-                                <a href="/jobseeker/history" class="list-group-item list-group-item-action">...</a>
-                            <?php endforeach; endif; ?>
-                        <?php if (!empty($training_apps)):
-                            foreach ($training_apps as $app): ?>
-                                <a href="/jobseeker/history" class="list-group-item list-group-item-action">...</a>
-                            <?php endforeach; endif; ?>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h6><i class="fas fa-bookmark"></i> Postingan Disimpan</h6>
-                    </div>
-                    <div class="list-group list-group-flush">
-                        <?php if (empty($bookmarked_jobs) && empty($bookmarked_trainings)): ?>
-                            <div class="list-group-item text-center text-muted">Tidak ada postingan disimpan.</div>
-                        <?php endif; ?>
-                        <?php if (!empty($bookmarked_jobs)):
-                            foreach ($bookmarked_jobs as $bookmark): ?>
-                                <a href="#" class="list-group-item list-group-item-action">...</a>
-                            <?php endforeach; endif; ?>
-                        <?php if (!empty($bookmarked_trainings)):
-                            foreach ($bookmarked_trainings as $bookmark): ?>
-                                <a href="#" class="list-group-item list-group-item-action">...</a>
-                            <?php endforeach; endif; ?>
-                    </div>
-                </div>
-            </div>
+            <!-- KOLOM BOOKMARK SUDAH DIHAPUS -->
         </div>
     </div>
 
@@ -154,5 +163,4 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>
