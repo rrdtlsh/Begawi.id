@@ -17,7 +17,7 @@
                 <h5>Surat Lamaran (Cover Letter)</h5>
             </div>
             <div class="card-body">
-                <p style="white-space: pre-wrap;"><?= esc($applicant->cover_letter ?? 'Tidak ada surat lamaran.') ?></p>
+                <p style="white-space: pre-wrap;"><?= esc($applicant->notes ?? 'Tidak ada surat lamaran.') ?></p>
             </div>
         </div>
     </div>
@@ -34,7 +34,8 @@
                 <p><strong>Ringkasan Profil:</strong><br><?= esc($applicant->jobseeker_summary ?? 'Belum diisi.') ?></p>
                 <hr>
                 <div class="d-grid">
-                    <a href="<?= base_url('uploads/resumes/' . $applicant->resume_file_path) ?>" target="_blank" class="btn btn-primary">
+                    <a href="<?= base_url('uploads/resumes/' . $applicant->resume_file_path) ?>" target="_blank"
+                        class="btn btn-primary">
                         <i class="bi bi-download"></i> Unduh CV
                     </a>
                 </div>
@@ -46,7 +47,7 @@
             </div>
             <div class="card-body">
                 <?php if (!empty($applicant->skills)): ?>
-                    <?php foreach($applicant->skills as $skill): ?>
+                    <?php foreach ($applicant->skills as $skill): ?>
                         <span class="badge bg-secondary text-white me-1 mb-1"><?= esc($skill->name) ?></span>
                     <?php endforeach; ?>
                 <?php else: ?>

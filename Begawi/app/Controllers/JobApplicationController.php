@@ -73,7 +73,7 @@ class JobApplicationController extends BaseController
         $data = [
             'job_id' => $jobId,
             'jobseeker_id' => $jobseekerId,
-            'cover_letter' => $this->request->getPost('cover_letter'),
+            'notes' => $this->request->getPost('cover_letter'),
             'resume_file_path' => $newName,
             'status' => 'pending',
         ];
