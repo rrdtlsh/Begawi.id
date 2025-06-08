@@ -113,7 +113,7 @@
                                         Diposting: <?= date('j F Y', strtotime($job->created_at)) ?>
                                     </p>
                                 </div>
-                                <a href="#" class="btn btn-custom-green mt-auto">Lihat Detail</a>
+                                <a href="<?= site_url('lowongan/detail/' . $job->id) ?>" class="btn btn-custom-green mt-auto">Lihat Detail</a>
                             </div>
                         </div>
                     </div>
