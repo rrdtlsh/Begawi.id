@@ -106,32 +106,35 @@ class AuthController extends BaseController
             $jobseekerModel->save($jobseekerData);
             $jobseekerId = $jobseekerModel->getInsertID();
 
-            // Simpan skills ke tabel pivot
-            $selectedSkillId = $this->request->getPost('skills');
-            
-            if (!empty($selectedSkillId)) {
-                $skillsData = [
-                    'jobseeker_id' => $jobseekerId, 
-                    'skill_id' => $selectedSkillId
-                ];
+            $selectedSkills = $this->request->getPost('skills'); // Ini adalah sebuah array
+
+            if (!empty($selectedSkills) && is_array($selectedSkills)) {
+                $skillsData = [];
+                foreach ($selectedSkills as $skillId) {
+                    $skillsData[] = [
+                        'jobseeker_id' => $jobseekerId,
+                        'skill_id' => $skillId
+                    ];
+                }
                 $db = \Config\Database::connect();
-                $db->table('jobseeker_skills')->insert($skillsData);
+                $db->table('jobseeker_skills')->insertBatch($skillsData);
+            }
+            // Simpan skills ke tabel pivot
+            elseif ($role === 'vendor') {
+                $vendorModel = new VendorModel();
+                $vendorData = [
+                    'user_id' => $userId,
+                    'company_name' => $this->request->getPost('company_name'),
+                    'industry' => $this->request->getPost('industry'),
+                    'location_id' => $this->request->getPost('vendor_location_id'),
+                    'contact' => $this->request->getPost('contact'),
+                    'company_address' => $this->request->getPost('company_address'),
+                ];
+                $vendorModel->save($vendorData);
             }
 
-        } elseif ($role === 'vendor') {
-            $vendorModel = new VendorModel();
-            $vendorData = [
-                'user_id' => $userId,
-                'company_name' => $this->request->getPost('company_name'),
-                'industry' => $this->request->getPost('industry'),
-                'location_id' => $this->request->getPost('vendor_location_id'),
-                'contact' => $this->request->getPost('contact'),
-                'company_address' => $this->request->getPost('company_address'),
-            ];
-            $vendorModel->save($vendorData);
+            return redirect()->to('/login')->with('success', 'Registrasi berhasil! Silakan login.');
         }
-
-        return redirect()->to('/login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 
     /**

@@ -4,7 +4,7 @@
 
 <div class="registration-container">
     <div class="logo-begawi">Begaw<span>i</span></div>
-    
+
     <h2><?= esc($title ?? 'Registrasi Pengguna') ?></h2>
 
     <?php if (session()->get('errors')): ?>
@@ -19,53 +19,57 @@
     <?php endif; ?>
 
     <?= form_open('register/process') ?>
-        <input type="hidden" name="role" value="jobseeker">
+    <input type="hidden" name="role" value="jobseeker">
 
-        <div class="input-group">
-            <label for="fullname">Nama Lengkap</label>
-            <input type="text" id="fullname" name="fullname" placeholder="Masukkan nama lengkap Anda" value="<?= old('fullname') ?>" required>
-        </div>
+    <div class="input-group">
+        <label for="fullname">Nama Lengkap</label>
+        <input type="text" id="fullname" name="fullname" placeholder="Masukkan nama lengkap Anda"
+            value="<?= old('fullname') ?>" required>
+    </div>
 
-        <div class="input-group">
-            <label for="js_location_id">Domisili</label>
-            <select id="js_location_id" name="js_location_id" required>
-                <option value="" disabled selected>Pilih Domisili</option>
-                <?php foreach ($locations as $loc): ?>
-                    <option value="<?= $loc->id ?>" <?= old('js_location_id') == $loc->id ? 'selected' : '' ?>>
-                        <?= esc($loc->name) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+    <div class="input-group">
+        <label for="js_location_id">Domisili</label>
+        <select id="js_location_id" name="js_location_id" required>
+            <option value="" disabled selected>Pilih Domisili</option>
+            <?php foreach ($locations as $loc): ?>
+                <option value="<?= $loc->id ?>" <?= old('js_location_id') == $loc->id ? 'selected' : '' ?>>
+                    <?= esc($loc->name) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
 
-        <div class="input-group">
-            <label for="skills">Keahlian</label>
-            <select id="skills" name="skills" required>
-                <option value="" disabled selected>Pilih Keahlian Utama</option>
-                <?php foreach ($skills as $skill): ?>
-                    <option value="<?= $skill->id ?>" <?= old('skills') == $skill->id ? 'selected' : '' ?>>
-                        <?= esc($skill->name) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        
-        <div class="input-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="email@example.com" value="<?= old('email') ?>" required>
-        </div>
+    <div class="input-group">
+        <label for="skills">Keahlian</label>
+        <select id="skills" name="skills[]" class=" form-control" multiple required>
+            <option value="" disabled selected>Pilih Keahlian Utama</option>
+            <?php foreach ($skills as $skill): ?>
+                <option value="<?= $skill->id ?>" <?= old('skills') == $skill->id ? 'selected' : '' ?>>
+                    <?= esc($skill->name) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
 
-        <div class="input-group">
-            <label for="password">Kata Sandi</label>
-            <input type="password" id="password" name="password" placeholder="Buat kata sandi (minimal 8 karakter)" required>
-        </div>
+    <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="email@example.com" value="<?= old('email') ?>"
+            required>
+    </div>
 
-         <div class="input-group">
-            <label for="password_confirm">Konfirmasi Kata Sandi</label>
-            <input type="password" id="password_confirm" name="password_confirm" placeholder="Ulangi kata sandi Anda" required>
-        </div>
+    <div class="input-group">
+        <label for="password">Kata Sandi</label>
+        <input type="password" id="password" name="password" placeholder="Buat kata sandi (minimal 8 karakter)"
+            required>
+    </div>
 
-        <button type="submit" class="btn btn-primary">DAFTAR</button>
+    <div class="input-group">
+        <label for="password_confirm">Konfirmasi Kata Sandi</label>
+        <input type="password" id="password_confirm" name="password_confirm" placeholder="Ulangi kata sandi Anda"
+            required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">DAFTAR</button>
     <?= form_close() ?>
 
     <p class="login-link">
