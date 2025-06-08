@@ -52,19 +52,20 @@ class TrainingPageController extends BaseController
             if ($existingApplication) {
                 $isRegistered = true;
             }
-        }
-
-        if ($training->quota > 0 && !$isRegistered) { // Tambahan: Cek hanya jika belum terdaftar
+            if ($training->quota > 0 && !$isRegistered) { // Tambahan: Cek hanya jika belum terdaftar
             $applicantCount = $trainingApplicationModel->where('training_id', $id)->countAllResults();
             if ($applicantCount >= $training->quota) {
                 $isQuotaFull = true;
             }
         }
+        }
+
 
         $data = [
             'title' => esc($training->title),
             'training' => $training,
             'isRegistered' => $isRegistered,
+            'isQuotaFull' => $isQuotaFull,
         ];
 
         return view('training_detail_page', $data);

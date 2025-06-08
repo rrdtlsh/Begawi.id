@@ -23,7 +23,6 @@ class TrainingModel extends Model
         'start_date',
         'end_date',
         'duration',
-        // 'duration_type', // <<< HAPUS BARIS INI
         'quota'
     ];
 
@@ -156,5 +155,33 @@ class TrainingModel extends Model
             ->join('job_categories', 'job_categories.id = trainings.category_id', 'left')
             ->where('trainings.id', $id)
             ->first();
+    }
+
+    public function searchTrainings($keyword = null, $location = null, $category = null)
+    {
+        // Mulai membangun query dengan join ke tabel lain untuk mendapatkan info lengkap
+        $builder = $this->select('
+                trainings.*, 
+                vendors.company_name as penyelenggara, 
+                locations.name as location_name,
+                job_categories.name as category_name
+            ')
+            ->join('vendors', 'vendors.id = trainings.vendor_id', 'left')
+            ->join('locations', 'locations.id = trainings.location_id', 'left')
+            ->join('job_categories', 'job_categories.id = trainings.category_id', 'left');
+
+        // Tambahkan kondisi pencarian jika ada input
+        if ($keyword) {
+            $builder->like('trainings.title', $keyword);
+        }
+        if ($location) {
+            $builder->where('trainings.location_id', $location);
+        }
+        if ($category) {
+            $builder->where('trainings.category_id', $category);
+        }
+
+        // Urutkan dari yang terbaru dan ambil hasilnya
+        return $builder->orderBy('trainings.created_at', 'DESC')->findAll();
     }
 }

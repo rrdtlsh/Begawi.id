@@ -11,19 +11,16 @@
             background-color: #f8f9fa;
             color: #333;
         }
-
         .main-container {
             max-width: 1100px;
             margin: 40px auto;
         }
-
         .detail-card {
             background-color: #fff;
             border-radius: 15px;
             padding: 40px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
-
         .training-header .logo {
             width: 80px;
             height: 80px;
@@ -36,19 +33,15 @@
             font-weight: bold;
             border-radius: 12px;
         }
-
         .training-header-info h1 {
             font-weight: bold;
         }
-
         .training-header-meta {
             color: #777;
         }
-
         .training-header-meta span {
             margin-right: 20px;
         }
-
         .section-title {
             font-weight: bold;
             color: #0c392c;
@@ -56,28 +49,23 @@
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
-
         .summary-card {
             background-color: #f0f2f5;
             border-radius: 12px;
             padding: 20px;
         }
-
         .summary-card ul {
             list-style: none;
             padding-left: 0;
         }
-
         .summary-card ul li {
             padding: 8px 0;
             border-bottom: 1px solid #e0e0e0;
             font-size: 0.9rem;
         }
-
         .summary-card ul li:last-child {
             border-bottom: none;
         }
-
         .btn-register {
             background-color: #28a745;
             color: white;
@@ -85,7 +73,6 @@
             border-radius: 8px;
             padding: 12px;
         }
-
         .btn-register:hover {
             background-color: #218838;
         }
@@ -157,12 +144,22 @@
                     </div>
 
                     <div class="mt-4">
+                        <?php // ============================================================= ?>
+                        <?php // PERBAIKAN: Logika Tombol Pendaftaran Diperbarui ?>
+                        <?php // ============================================================= ?>
+
                         <?php if (session()->get('isLoggedIn') && session()->get('role') === 'jobseeker'): ?>
 
                             <?php if ($isRegistered): ?>
                                 <button class="btn btn-success btn-block" disabled>
                                     <i class="bi bi-check-circle-fill"></i> Anda Sudah Terdaftar
                                 </button>
+                            
+                            <?php elseif ($isQuotaFull): ?>
+                                <button class="btn btn-danger btn-block" disabled>
+                                    <i class="bi bi-x-circle-fill"></i> Kuota Penuh
+                                </button>
+
                             <?php else: ?>
                                 <form action="<?= site_url('daftar-pelatihan/apply/' . $training->id) ?>" method="post">
                                     <?= csrf_field() ?>
@@ -174,7 +171,7 @@
                             <?php endif; ?>
 
                         <?php elseif (!session()->get('isLoggedIn')): ?>
-                            <a href="/login?redirect=<?= current_url() ?>" class="btn btn-register btn-block">Login untuk
+                            <a href="/login?redirect=<?= urlencode(current_url()) ?>" class="btn btn-register btn-block">Login untuk
                                 Mendaftar</a>
                         <?php endif; ?>
                     </div>
