@@ -155,7 +155,7 @@
                                         <?= $training->is_paid ? 'Berbayar (Rp ' . number_format($training->cost, 0, ',', '.') . ')' : 'Gratis' ?>
                                     </p>
                                 </div>
-                                <a href="#" class="btn btn-custom-green mt-auto">Lihat Detail Pelatihan</a>
+                                <a href="<?= site_url('pelatihan/detail/' . $training->id) ?>" class="btn btn-custom-green mt-auto">Lihat Detail Pelatihan</a>
                             </div>
                         </div>
                     </div>

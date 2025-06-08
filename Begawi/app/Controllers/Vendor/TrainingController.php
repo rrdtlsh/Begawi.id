@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\TrainingModel;
 use App\Models\JobCategoryModel; // Digunakan untuk kategori pelatihan
 use App\Models\LocationModel;    // Digunakan untuk lokasi pelatihan
+use App\Models\TrainingApplicationModel; // Model untuk aplikasi pelatihan
 
 class TrainingController extends BaseController
 {
@@ -174,5 +175,67 @@ class TrainingController extends BaseController
 
         // Redirect ke dashboard dengan pesan sukses
         return redirect()->to('/vendor/dashboard')->with('success', 'Pelatihan berhasil dihapus.');
+    }
+
+    public function showParticipants($trainingId = null)
+    {
+        $trainingModel = new TrainingModel();
+        $applicationModel = new TrainingApplicationModel();
+        $vendorId = session()->get('profile_id');
+
+        // 1. Verifikasi kepemilikan pelatihan
+        $training = $trainingModel->where([
+            'id' => $trainingId,
+            'vendor_id' => $vendorId
+        ])->first();
+
+        if (!$training) {
+            return redirect()->to('/vendor/dashboard')->with('error', 'Pelatihan tidak ditemukan atau akses ditolak.');
+        }
+
+        // 2. Ambil data peserta
+        $participants = $applicationModel->getApplicantsForTraining($trainingId);
+
+        // 3. Siapkan data untuk view
+        $data = [
+            'title'        => 'Daftar Peserta: ' . esc($training->title),
+            'training'     => $training,
+            'participants' => $participants,
+        ];
+
+        // 4. Tampilkan view baru
+        return view('vendor/trainings/participants', $data);
+    }
+
+    /**
+     * Memproses pembaruan status peserta pelatihan.
+     */
+    public function updateParticipantStatus($applicationId)
+    {
+        // 1. Validasi input
+        $newStatus = $this->request->getPost('status');
+        $allowedStatus = ['pending', 'approved', 'rejected'];
+        if (!in_array($newStatus, $allowedStatus)) {
+            return redirect()->back()->with('error', 'Status tidak valid.');
+        }
+
+        // 2. Inisialisasi model
+        $applicationModel = new TrainingApplicationModel();
+
+        // 3. Verifikasi bahwa vendor berhak mengubah status ini
+        $application = $applicationModel
+            ->select('trainings.vendor_id')
+            ->join('trainings', 'trainings.id = training_applications.training_id')
+            ->find($applicationId);
+
+        if (!$application || $application->vendor_id != session()->get('profile_id')) {
+            return redirect()->back()->with('error', 'Akses ditolak.');
+        }
+
+        // 4. Update status di database
+        $applicationModel->update($applicationId, ['status' => $newStatus]);
+
+        // 5. Kembali ke halaman sebelumnya dengan pesan sukses
+        return redirect()->back()->with('success', 'Status peserta berhasil diperbarui.');
     }
 }

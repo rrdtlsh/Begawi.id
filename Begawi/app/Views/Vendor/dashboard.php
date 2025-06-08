@@ -99,7 +99,7 @@
                             <div class="mt-auto d-grid gap-2 d-sm-flex justify-content-center align-items-center">
                                 <a href="<?= site_url('vendor/trainings/edit/' . $training->id) ?>"
                                     class="btn btn-secondary btn-sm flex-fill">Kelola</a>
-                                <a href="#" class="btn btn-brand-green btn-sm flex-fill">Lihat Peserta</a>
+                                <a href="<?= site_url('vendor/trainings/' . $training->id . '/participants') ?>" class="btn btn-brand-green btn-sm flex-fill">Lihat Peserta</a>
                                 <form action="<?= site_url('vendor/trainings/delete/' . $training->id) ?>" method="post"
                                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus pelatihan ini?');">
                                     <button type="submit" class="btn btn-danger btn-sm">

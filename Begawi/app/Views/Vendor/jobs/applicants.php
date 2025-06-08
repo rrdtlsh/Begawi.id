@@ -7,7 +7,7 @@
         <i class="bi bi-arrow-left"></i> Kembali ke Dashboard
     </a>
     <h1 class="h3 mb-2">Daftar Pelamar</h1>
-    <p class="text-secondary">Untuk lowongan: <strong><?= esc($job->title) ?></strong></p>
+    <p class="text-secondary">Untuk lowongan: <strong><?= esc($job->title ?? 'Tidak Diketahui') ?></strong></p>
 </section>
 
 <section class="card">
@@ -19,8 +19,9 @@
                         <th scope="col">#</th>
                         <th scope="col">Nama Pelamar</th>
                         <th scope="col">Tanggal Melamar</th>
-                        <th scope="col">CV</th>
-                        <th scope="col" style="min-width: 200px;">Ubah Status</th>
+                        <!-- PERBAIKAN: Kolom Status dikembalikan -->
+                        <th scope="col">Status</th>
+                        <th scope="col" style="min-width: 340px;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,32 +30,45 @@
                             <tr>
                                 <th scope="row"><?= $index + 1 ?></th>
                                 <td>
-                                    <div><?= esc($applicant->jobseeker_name) ?></div>
-                                    <div class="small text-secondary"><?= esc($applicant->jobseeker_email) ?></div>
+                                    <div class="fw-bold"><?= esc($applicant->jobseeker_name ?? 'Data Peserta Hilang') ?></div>
+                                    <div class="small text-secondary"><?= esc($applicant->jobseeker_email ?? 'N/A') ?></div>
                                 </td>
                                 <td><?= date('d M Y, H:i', strtotime($applicant->applied_at)) ?></td>
                                 <td>
+                                    <!-- PERBAIKAN: Badge status sekarang di kolomnya sendiri -->
                                     <?php
-                                        // Logika untuk tombol Lihat CV
-                                        $resume_url = !empty($applicant->resume_file_path) ? base_url('uploads/resumes/' . $applicant->resume_file_path) : '#!';
-                                        $disabled_class = empty($applicant->resume_file_path) ? 'disabled' : '';
+                                        $status_class = [
+                                            'pending'  => 'bg-warning text-dark',
+                                            'reviewed' => 'bg-info text-white',
+                                            'accepted' => 'bg-success text-white',
+                                            'rejected' => 'bg-danger text-white',
+                                        ];
                                     ?>
-                                    <a href="<?= $resume_url ?>" target="_blank" class="btn btn-sm btn-outline-secondary <?= $disabled_class ?>" title="Lihat CV">
-                                        <i class="bi bi-file-earmark-person-fill"></i> Lihat
-                                    </a>
+                                    <span class="badge <?= $status_class[$applicant->status] ?? 'bg-secondary' ?> p-2"><?= ucfirst($applicant->status ?? 'N/A') ?></span>
                                 </td>
                                 <td>
-                                    <!-- Formulir untuk mengubah status lamaran -->
-                                    <form action="<?= site_url('vendor/applicants/' . $applicant->application_id . '/status') ?>" method="post" class="d-flex gap-2">
-                                        <?= csrf_field() ?>
-                                        <select name="status" class="form-select form-select-sm">
-                                            <option value="pending" <?= $applicant->status == 'pending' ? 'selected' : '' ?>>Menunggu</option>
-                                            <option value="reviewed" <?= $applicant->status == 'reviewed' ? 'selected' : '' ?>>Ditinjau</option>
-                                            <option value="accepted" <?= $applicant->status == 'accepted' ? 'selected' : '' ?>>Terima</option>
-                                            <option value="rejected" <?= $applicant->status == 'rejected' ? 'selected' : '' ?>>Tolak</option>
-                                        </select>
-                                        <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
-                                    </form>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <!-- Tombol Aksi Lainnya -->
+                                        <a href="<?= site_url('vendor/jobs/applicant/' . $applicant->application_id) ?>" class="btn btn-sm btn-light border" title="Lihat Detail Pelamar">
+                                            Detail
+                                        </a>
+
+                                        <a href="<?= base_url('uploads/resumes/' . ($applicant->resume_file_path ?? '')) ?>" target="_blank" class="btn btn-sm btn-light border" title="Lihat CV">
+                                            CV
+                                        </a>
+                                        
+                                        <!-- Form untuk mengubah status -->
+                                        <form action="<?= site_url('vendor/applicants/' . $applicant->application_id . '/status') ?>" method="post" class="d-flex gap-1 ms-auto">
+                                            <?= csrf_field() ?>
+                                            <select name="status" class="form-select form-select-sm" style="width: 110px;">
+                                                <option value="pending" <?= ($applicant->status ?? '') == 'pending' ? 'selected' : '' ?>>Pending</option>
+                                                <option value="reviewed" <?= ($applicant->status ?? '') == 'reviewed' ? 'selected' : '' ?>>Reviewed</option>
+                                                <option value="accepted" <?= ($applicant->status ?? '') == 'accepted' ? 'selected' : '' ?>>Accept</option>
+                                                <option value="rejected" <?= ($applicant->status ?? '') == 'rejected' ? 'selected' : '' ?>>Reject</option>
+                                            </select>
+                                            <button type="submit" class="btn btn-sm btn-primary">Ubah</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

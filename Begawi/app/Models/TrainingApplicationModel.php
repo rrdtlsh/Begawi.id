@@ -48,7 +48,30 @@ class TrainingApplicationModel extends Model
             ->join('jobseekers', 'jobseekers.id = training_applications.jobseeker_id', 'left')
             ->join('users', 'users.id = jobseekers.user_id', 'left')
             ->where('training_applications.training_id', $trainingId)
-            ->orderBy('training_applications.applied_at', 'ASC')
+            ->orderBy('training_applications.enrolled_at', 'ASC')
             ->findAll();
+    }
+
+    public function getStatusCountsByJobseeker($jobseekerId)
+    {
+        $result = $this->select('status, COUNT(id) as count')
+            ->where('jobseeker_id', $jobseekerId)
+            ->groupBy('status')
+            ->findAll();
+
+        // Siapkan array dengan semua kemungkinan status
+        $counts = [
+            'pending'  => 0,
+            'approved' => 0, // Gunakan 'approved' sesuai status pelatihan
+            'rejected' => 0,
+        ];
+
+        // Isi array dengan hasil hitungan dari database
+        foreach ($result as $row) {
+            if (array_key_exists($row->status, $counts)) {
+                $counts[$row->status] = (int) $row->count;
+            }
+        }
+        return $counts;
     }
 }

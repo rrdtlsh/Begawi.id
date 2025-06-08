@@ -48,4 +48,20 @@ class JobSeekerModel extends Model
         $profile->skills = $skills;
         return $profile;
     }
+
+    public function getJobseekerSkills(int $jobseekerId)
+    {
+        // Pastikan ada ID yang valid sebelum menjalankan query
+        if ($jobseekerId <= 0) {
+            return [];
+        }
+
+        // Query ke tabel pivot 'jobseeker_skills'
+        return $this->db->table('jobseeker_skills')
+            ->select('skills.id, skills.name')
+            ->join('skills', 'skills.id = jobseeker_skills.skill_id')
+            ->where('jobseeker_skills.jobseeker_id', $jobseekerId)
+            ->get()
+            ->getResultObject();
+    }
 }
