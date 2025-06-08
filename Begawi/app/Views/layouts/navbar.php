@@ -23,7 +23,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Perusahaan</a>
+                    <a class="nav-link" href="<?= site_url('/vendor') ?>">Perusahaan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= site_url('/about') ?>">Tentang Kami</a>

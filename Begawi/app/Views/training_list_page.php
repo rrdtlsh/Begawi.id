@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+<!--begawi-->
 
 <head>
     <meta charset="UTF-8">
@@ -55,8 +56,8 @@
                         </h4>
                     </div>
                     <div class="card-footer">
-                                <a href="<?= site_url('pelatihan/detail/' . $training->id) ?>"
-                                    class="btn btn-primary btn-block">Lihat Detail</a>
+                        <a href="<?= site_url('pelatihan/detail/' . $training->id) ?>"
+                            class="btn btn-primary btn-block">Lihat Detail</a>
                     </div>
                 </div>
             </div>

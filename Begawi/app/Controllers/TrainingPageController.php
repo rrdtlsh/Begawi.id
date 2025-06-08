@@ -41,6 +41,7 @@ class TrainingPageController extends BaseController
 
         // Cek apakah user sudah terdaftar di pelatihan ini
         $isRegistered = false;
+        $isQuotaFull = false;
         if (session()->get('isLoggedIn') && session()->get('role') === 'jobseeker') {
             $trainingApplicationModel = new TrainingApplicationModel();
             $jobseekerId = session()->get('profile_id');
@@ -50,6 +51,13 @@ class TrainingPageController extends BaseController
                 ->first();
             if ($existingApplication) {
                 $isRegistered = true;
+            }
+        }
+
+        if ($training->quota > 0 && !$isRegistered) { // Tambahan: Cek hanya jika belum terdaftar
+            $applicantCount = $trainingApplicationModel->where('training_id', $id)->countAllResults();
+            if ($applicantCount >= $training->quota) {
+                $isQuotaFull = true;
             }
         }
 

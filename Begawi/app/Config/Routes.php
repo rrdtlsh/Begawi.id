@@ -35,7 +35,9 @@ $routes->get('/login', 'AuthController::login');
 $routes->post('/login/process', 'AuthController::processLogin');
 $routes->get('/logout', 'AuthController::logout');
 
-
+//rute untuk halaman perusahaann
+$routes->get('/vendor', 'VendorPageController::index');
+$routes->get('/vendor/detail/(:num)', 'VendorPageController::detail/$1');
 // ===================================================================
 // RUTE UMUM YANG MEMERLUKAN LOGIN (Filter 'auth')
 // ===================================================================
