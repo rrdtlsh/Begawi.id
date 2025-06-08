@@ -112,10 +112,6 @@
 
                             <div class="form-group">
                                 <label for="application_instructions">Cara Melamar</label>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="application_instructions">Cara Melamar</label>
                                 <textarea name="application_instructions" class="form-control" rows="3"
                                     placeholder="Contoh: Kirim CV dan portofolio ke email@perusahaan.com dengan subjek 'Lamaran Backend Developer'"><?= old('application_instructions', $job->application_instructions ?? '') ?></textarea>
                             </div>

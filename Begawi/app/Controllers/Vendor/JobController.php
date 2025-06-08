@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\JobModel;
 use App\Models\JobCategoryModel;
 use App\Models\LocationModel;
+use App\Models\JobApplicationModel;
 
 class JobController extends BaseController
 {
@@ -57,7 +58,7 @@ class JobController extends BaseController
         }
 
         // PERBAIKAN: Redirect ke /vendor/jobs (plural)
-        return redirect()->to('/vendor/jobs')->with('success', 'Lowongan pekerjaan berhasil dibuat.');
+        return redirect()->to('/vendor/dashboard')->with('success', 'Lowongan pekerjaan berhasil dibuat.');
     }
 
     public function editJob($id = null)
@@ -97,7 +98,7 @@ class JobController extends BaseController
 
         // Cek kepemilikan, sudah benar
         if (!$jobModel->where(['id' => $id, 'vendor_id' => $vendorId])->first()) {
-            return redirect()->to('/vendor/jobs')->with('error', 'Akses ditolak.');
+            return redirect()->to('/vendor/dashboard')->with('error', 'Akses ditolak.');
         }
 
         // --- LOGIKA BARU UNTUK UPDATE FLEKSIBEL ---
@@ -125,7 +126,7 @@ class JobController extends BaseController
         }
         // --- AKHIR LOGIKA BARU ---
 
-        return redirect()->to('/vendor/jobs')->with('success', 'Lowongan pekerjaan berhasil diperbarui.');
+        return redirect()->to('/vendor/dashboard')->with('success', 'Lowongan pekerjaan berhasil diperbarui.');
     }
 
     /**
@@ -140,10 +141,64 @@ class JobController extends BaseController
 
         if (!$job) {
             // PERBAIKAN: Redirect ke /vendor/jobs (plural)
-            return redirect()->to('/vendor/jobs')->with('error', 'Lowongan pekerjaan tidak ditemukan.');
+            return redirect()->to('/vendor/dashboard')->with('error', 'Lowongan pekerjaan tidak ditemukan.');
         }
         $jobModel->delete($id);
 
-        return redirect()->to('/vendor/jobs')->with('success', 'Lowongan pekerjaan berhasil dihapus.');
+        return redirect()->to('/vendor/dashboard')->with('success', 'Lowongan pekerjaan berhasil dihapus.');
     }
+
+        public function showApplicants($jobId = null)
+    {
+        $jobModel = new JobModel();
+        $applicationModel = new JobApplicationModel();
+        $vendorId = session()->get('profile_id');
+
+        $job = $jobModel->where(['id' => $jobId, 'vendor_id' => $vendorId])->first();
+        if (!$job) {
+            return redirect()->to('vendor/dashboard')->with('error', 'Akses ditolak.');
+        }
+
+        // 2. Ambil data pelamar menggunakan method dari JobApplicationModel
+        $applicants = $applicationModel->getApplicantsForJob($jobId);
+
+        $data = [
+            'title'      => 'Daftar Pelamar: ' . esc($job->title),
+            'job'        => $job,
+            'applicants' => $applicants,
+        ];
+
+        // 3. Muat view baru yang akan menampilkan daftar
+        return view('vendor/jobs/applicants', $data);
+    }
+
+    public function updateApplicantStatus($applicationId)
+{
+    // 1. Validasi input
+    $newStatus = $this->request->getPost('status');
+    $allowedStatus = ['pending', 'reviewed', 'accepted', 'rejected'];
+    if (!in_array($newStatus, $allowedStatus)) {
+        return redirect()->back()->with('error', 'Status tidak valid.');
+    }
+
+    // 2. Inisialisasi model
+    $applicationModel = new \App\Models\JobApplicationModel();
+
+    // 3. (PENTING) Verifikasi bahwa vendor berhak mengubah lamaran ini
+    //    Ini mencegah vendor lain mengubah status lamaran yang bukan miliknya.
+    $application = $applicationModel
+        ->select('jobs.vendor_id')
+        ->join('jobs', 'jobs.id = job_applications.job_id')
+        ->find($applicationId);
+
+    if (!$application || $application->vendor_id != session()->get('profile_id')) {
+        return redirect()->back()->with('error', 'Akses ditolak.');
+    }
+
+    // 4. Update status di database
+    $applicationModel->update($applicationId, ['status' => $newStatus]);
+
+    // 5. Kembali ke halaman sebelumnya dengan pesan sukses
+    return redirect()->back()->with('success', 'Status pelamar berhasil diperbarui.');
+}
 }

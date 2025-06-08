@@ -63,4 +63,24 @@ class JobApplicationModel extends Model
         }
         return $counts;
     }
+
+    public function getApplicantsForJob($jobId)
+    {
+        // Asumsi tabel 'users' berisi 'name' dan 'email'.
+        return $this->select(
+                'job_applications.id as application_id, 
+                job_applications.status, 
+                job_applications.applied_at,
+                job_applications.resume_file_path, 
+                users.fullname as jobseeker_name,
+                users.email as jobseeker_email'
+            )
+            // Hanya perlu join ke tabel users untuk mendapatkan nama & email
+            ->join('users', 'users.id = job_applications.jobseeker_id', 'left')
+            // JOIN ke jobseeker_profiles dihapus
+            ->where('job_applications.job_id', $jobId)
+            ->orderBy('job_applications.applied_at', 'DESC')
+            ->findAll();
+    }
+
 }

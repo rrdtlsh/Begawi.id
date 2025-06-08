@@ -56,12 +56,15 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     $routes->get('profile/edit', 'Vendor\ProfileController::edit');
     $routes->post('profile/update', 'Vendor\ProfileController::update');
 
+    
     // CRUD Lowongan Pekerjaan (Jobs)
     $routes->get('jobs/new', 'Vendor\JobController::newJob');
     $routes->post('jobs/create', 'Vendor\JobController::createJob');
     $routes->get('jobs/edit/(:num)', 'Vendor\JobController::editJob/$1');
     $routes->post('jobs/update/(:num)', 'Vendor\JobController::updateJob/$1');
     $routes->get('jobs/delete/(:num)', 'Vendor\JobController::deleteJob/$1');
+    $routes->get('jobs/(:num)/applicants', 'Vendor\JobController::showApplicants/$1');
+    $routes->post('applicants/(:num)/status', 'Vendor\JobController::updateApplicantStatus/$1');
 
     // CRUD Pelatihan (Trainings)
     $routes->get('trainings/new', 'Vendor\TrainingController::newTraining');

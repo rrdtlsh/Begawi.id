@@ -55,7 +55,7 @@ class TrainingController extends BaseController
             return redirect()->back()->withInput()->with('errors', $trainingModel->errors());
         }
 
-        return redirect()->to('/vendor/trainings')->with('success', 'Pelatihan berhasil ditambahkan.');
+        return redirect()->to('/vendor/dashboard')->with('success', 'Pelatihan berhasil ditambahkan.');
     }
 
     /**
@@ -69,7 +69,7 @@ class TrainingController extends BaseController
         $training = $trainingModel->where(['id' => $id, 'vendor_id' => $vendorId])->first();
 
         if (!$training) {
-            return redirect()->to('/vendor/trainings')->with('error', 'Pelatihan tidak ditemukan atau Anda tidak memiliki akses.');
+            return redirect()->to('/vendor/dashboard')->with('error', 'Pelatihan tidak ditemukan atau Anda tidak memiliki akses.');
         }
 
         $categoryModel = new JobCategoryModel();
@@ -93,7 +93,7 @@ class TrainingController extends BaseController
         $vendorId = session()->get('profile_id');
 
         if (!$trainingModel->where(['id' => $id, 'vendor_id' => $vendorId])->first()) {
-            return redirect()->to('/vendor/trainings')->with('error', 'Akses ditolak.');
+            return redirect()->to('/vendor/dashboard')->with('error', 'Akses ditolak.');
         }
 
         $data = $this->request->getPost();
@@ -109,7 +109,7 @@ class TrainingController extends BaseController
             return redirect()->back()->withInput()->with('errors', $trainingModel->errors());
         }
 
-        return redirect()->to('/vendor/trainings')->with('success', 'Pelatihan berhasil diperbarui.');
+        return redirect()->to('/vendor/dashboard')->with('success', 'Pelatihan berhasil diperbarui.');
     }
 
     /**
@@ -121,12 +121,12 @@ class TrainingController extends BaseController
         $vendorId = session()->get('profile_id');
 
         if (!$trainingModel->where(['id' => $id, 'vendor_id' => $vendorId])->first()) {
-            return redirect()->to('/vendor/trainings')->with('error', 'Akses ditolak.');
+            return redirect()->to('/vendor/dashboard')->with('error', 'Akses ditolak.');
         }
 
         $trainingModel->delete($id);
 
-        return redirect()->to('/vendor/trainings')->with('success', 'Pelatihan berhasil dihapus.');
+        return redirect()->to('/vendor/dashboard')->with('success', 'Pelatihan berhasil dihapus.');
     }
 }
 ?>
