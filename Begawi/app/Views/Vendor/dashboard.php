@@ -31,8 +31,8 @@
     </section>
     <?php endif; ?>
 
-    <!-- Postingan Anda -->
-    <section>
+    <!-- Pekerjaan Anda -->
+    <section class="mb-5">
         <h2 class="h4 fw-bold mb-4">Pekerjaan Anda</h2>
         <div class="row g-4">
             
@@ -47,65 +47,69 @@
                                 <p class="mb-1"><strong>Tipe:</strong> <?= esc($job->job_type) ?></p>
                                 <p class="mb-0"><strong>Diposting:</strong> <?= date('d M Y', strtotime($job->created_at)) ?></p>
                             </div>
-                            <div class="mt-auto d-grid gap-2 d-sm-flex">
+                            <div class="mt-auto d-grid gap-2 d-sm-flex justify-content-center align-items-center">
                                 <a href="<?= site_url('vendor/jobs/edit/' . $job->id) ?>" class="btn btn-secondary btn-sm flex-fill">Kelola</a>
                                 <a href="<?= site_url('vendor/jobs/' . $job->id . '/applicants') ?>" class="btn btn-brand-green btn-sm flex-fill">Lihat Pelamar</a>
-
-                                <form action="<?= site_url('vendor/jobs/delete/' . $job->id) ?>" method="post" onsubmit="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?');" class="d-inline">
-                                <button type="submit" class="btn btn-danger btn-sm w-100">
-                                    <i class="bi bi-trash3-fill"></i>
-                                </button>
+                                <form action="<?= site_url('vendor/jobs/delete/' . $job->id) ?>" method="post" onsubmit="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?');">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                </form>
                             </div>
-
                         </div>
                     </div>
                 </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <div class="col-12"><p>Anda belum memposting lowongan apapun.</p></div>
+                <!-- PERBAIKAN: Pesan ini sekarang dibungkus dalam card agar sama -->
+                <div class="col-12">
+                     <div class="card">
+                        <div class="card-body text-center text-secondary">
+                            <p class="mb-0">Anda belum memposting lowongan kerja apapun.</p>
+                        </div>
+                    </div>
+                </div>
             <?php endif; ?>
+        </div>
+    </section>
 
-            <section>
-    <h2 class="h4 fw-bold mb-4">Pelatihan Anda</h2>
-    <div class="row g-4">
-        
-        <?php if (!empty($trainings)): ?>
-            <?php foreach ($trainings as $training): ?>
-            <div class="col-md-6 col-xl-4">
-                <div class="card h-100">
-                    <div class="card-body posting-card d-flex flex-column">
-                        <h3 class="h6 card-title fw-bold mb-2"><?= esc($training->title) ?></h3>
-                        <div class="text-secondary small mb-4">
-                            <p class="mb-1"><strong>Mulai:</strong> <?= date('d M Y', strtotime($training->start_date)) ?></p>
-                            <p class="mb-0"><strong>Status:</strong> <?= $training->is_paid ? 'Berbayar' : 'Gratis' ?></p>
-                        </div>
-
-                        <div class="mt-auto d-grid gap-2 d-sm-flex">
-                            <a href="<?= site_url('vendor/trainings/edit/' . $training->id) ?>" class="btn btn-secondary btn-sm flex-fill">Kelola</a>
-                            <a href="#" class="btn btn-brand-green btn-sm flex-fill">Lihat Peserta</a>
-                            
-                            <form action="<?= site_url('vendor/trainings/delete/' . $training->id) ?>" method="post" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pelatihan ini?');">
-                                <button type="submit" class="btn btn-danger btn-sm">
-                                    <i class="bi bi-trash3-fill"></i>
-                                </button>
-                            </form>
-                            
+    <!-- Pelatihan Anda -->
+    <section>
+        <h2 class="h4 fw-bold mb-4">Pelatihan Anda</h2>
+        <div class="row g-4">
+            <?php if (!empty($trainings)): ?>
+                <?php foreach ($trainings as $training): ?>
+                <div class="col-md-6 col-xl-4">
+                    <div class="card h-100">
+                        <div class="card-body posting-card d-flex flex-column">
+                            <h3 class="h6 card-title fw-bold mb-2"><?= esc($training->title) ?></h3>
+                            <div class="text-secondary small mb-4">
+                                <p class="mb-1"><strong>Mulai:</strong> <?= date('d M Y', strtotime($training->start_date)) ?></p>
+                                <p class="mb-0"><strong>Status:</strong> <?= $training->is_paid ? 'Berbayar' : 'Gratis' ?></p>
+                            </div>
+                            <div class="mt-auto d-grid gap-2 d-sm-flex justify-content-center align-items-center">
+                                <a href="<?= site_url('vendor/trainings/edit/' . $training->id) ?>" class="btn btn-secondary btn-sm flex-fill">Kelola</a>
+                                <a href="#" class="btn btn-brand-green btn-sm flex-fill">Lihat Peserta</a>
+                                <form action="<?= site_url('vendor/trainings/delete/' . $training->id) ?>" method="post" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pelatihan ini?');">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <div class="col-12">
-                 <div class="card">
-                    <div class="card-body text-center text-secondary">
-                        <p class="mb-0">Anda belum memposting pelatihan apapun.</p>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="col-12">
+                     <div class="card">
+                        <div class="card-body text-center text-secondary">
+                            <p class="mb-0">Anda belum memposting pelatihan apapun.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php endif; ?>
-
-    </div>
-</section>
+            <?php endif; ?>
+        </div>
+    </section>
 
 <?= $this->endSection() ?>
