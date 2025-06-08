@@ -39,17 +39,17 @@
         </div>
 
         <div class="input-group">
-            <label for="skill_id">Keahlian</label>
-            <select id="skill_id" name="skill_id" required>
+            <label for="skills">Keahlian</label>
+            <select id="skills" name="skills" required>
                 <option value="" disabled selected>Pilih Keahlian Utama</option>
                 <?php foreach ($skills as $skill): ?>
-                     <option value="<?= $skill->id ?>" <?= old('skill_id') == $skill->id ? 'selected' : '' ?>>
+                    <option value="<?= $skill->id ?>" <?= old('skills') == $skill->id ? 'selected' : '' ?>>
                         <?= esc($skill->name) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
         </div>
-
+        
         <div class="input-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="email@example.com" value="<?= old('email') ?>" required>

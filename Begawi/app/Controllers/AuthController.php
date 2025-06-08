@@ -107,14 +107,15 @@ class AuthController extends BaseController
             $jobseekerId = $jobseekerModel->getInsertID();
 
             // Simpan skills ke tabel pivot
-            $selectedSkills = $this->request->getPost('skills');
-            if (!empty($selectedSkills)) {
-                $skillsData = [];
-                foreach ($selectedSkills as $skillId) {
-                    $skillsData[] = ['jobseeker_id' => $jobseekerId, 'skill_id' => $skillId];
-                }
+            $selectedSkillId = $this->request->getPost('skills');
+            
+            if (!empty($selectedSkillId)) {
+                $skillsData = [
+                    'jobseeker_id' => $jobseekerId, 
+                    'skill_id' => $selectedSkillId
+                ];
                 $db = \Config\Database::connect();
-                $db->table('jobseeker_skills')->insertBatch($skillsData);
+                $db->table('jobseeker_skills')->insert($skillsData);
             }
 
         } elseif ($role === 'vendor') {
