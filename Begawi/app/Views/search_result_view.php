@@ -56,7 +56,7 @@
                     <div class="col-12">
                         <div class="alert alert-warning text-center">
                             <h4>Pencarian Tidak Ditemukan</h4>
-                            <p>Maaf, tidak ada lowongan yang cocok dengan kriteria pencarian Anda.</p>
+                            <p>Maaf, tidak ada lowongan atau pelatihan yang cocok dengan kriteria pencarian Anda.</p>
                         </div>
                     </div>
                 <?php endif; ?>
