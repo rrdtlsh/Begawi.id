@@ -63,7 +63,7 @@ class TrainingApplicationModel extends Model
         // Siapkan array dengan semua kemungkinan status
         $counts = [
             'pending' => 0,
-            'accepted' => 0, // Gunakan 'approved' sesuai status pelatihan
+            'accepted' => 0,
             'rejected' => 0,
         ];
 
