@@ -33,7 +33,7 @@ class JobApplicationController extends BaseController
             'profile' => $profile, // Kirim data profil ke view
         ];
 
-        return view('job_application_form', $data);
+        return view('jobseeker\application\job_application_form', $data);
     }
 
     /**

@@ -3,7 +3,7 @@
 <?= $this->section('content') ?>
 <div class="container mt-4">
     <div class="chatbot-container-wrapper"> <div class="chatbot-header">
-            <h2 class="text-white">ChatBot AI</h2>
+            <h2 class="text-white">ChatBot Begawi</h2>
         </div>
         <div class="chatbot-body">
             <div id="chat-container" class="chat-messages-area">

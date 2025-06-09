@@ -57,6 +57,6 @@ class DashboardController extends BaseController
         ];
 
         // Pastikan nama view sudah benar ('dashboard_page' atau 'dashboard')
-        return view('jobseeker/dashboard', $data);
+        return view('jobseeker/profile/dashboard', $data);
     }
 }

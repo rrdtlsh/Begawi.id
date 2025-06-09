@@ -245,7 +245,7 @@
                 <p>Saat ini tidak ada pelatihan dari perusahaan ini.</p>
             <?php endif; ?>
 
-            <a href="<?= site_url('/') ?>" class="btn btn-back">Kembali</a>
+            <a href="<?= site_url('/home') ?>" class="btn btn-back">Kembali</a>
 
         <?php else: ?>
             <div class="alert alert-warning">Profil perusahaan tidak ditemukan.</div>

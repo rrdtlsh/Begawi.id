@@ -18,7 +18,7 @@ class AuthController extends BaseController
 
     public function register()
     {
-        return view('register_choice_page');
+        return view('auth/register_choice_page');
     }
 
     public function registerJobseeker()
@@ -30,7 +30,7 @@ class AuthController extends BaseController
             'locations' => $locationModel->findAll(),
             'skills' => $skillModel->findAll(),
         ];
-        return view('register_jobseeker_page', $data);
+        return view('auth/register_jobseeker_page', $data);
     }
 
     public function registerVendor()
@@ -40,7 +40,7 @@ class AuthController extends BaseController
             'title' => 'Registrasi Vendor',
             'locations' => $locationModel->findAll(),
         ];
-        return view('register_vendor_page', $data);
+        return view('auth/register_vendor_page', $data);
     }
 
     public function processRegister()
@@ -140,7 +140,7 @@ class AuthController extends BaseController
     // ... (method login, processLogin, logout) ...
     public function login()
     {
-        return view('login_page');
+        return view('auth/login_page');
     }
 
     public function processLogin()

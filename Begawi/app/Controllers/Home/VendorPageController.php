@@ -20,7 +20,7 @@ class VendorPageController extends BaseController
             'vendors' => $vendorModel->getPublishedVendors(12),
             'pager' => $vendorModel->pager,
         ];
-        return view('vendor_list_page', $data);
+        return view('guest/vendor_list_page', $data);
     }
 
     /**
@@ -48,6 +48,6 @@ class VendorPageController extends BaseController
             'vendor' => $vendor,
             'jobs' => $jobs,
         ];
-        return view('vendor_detail_page', $data);
+        return view('guest/vendor_detail_page', $data);
     }
 }

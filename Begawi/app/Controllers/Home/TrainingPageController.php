@@ -21,7 +21,7 @@ class TrainingPageController extends BaseController
             'trainings' => $trainingModel->getPublishedTrainings(9),
             'pager' => $trainingModel->pager,
         ];
-        return view('training_list_page', $data);
+        return view('guest/training_list_page', $data);
     }
 
     /**
@@ -68,6 +68,6 @@ class TrainingPageController extends BaseController
             'isQuotaFull' => $isQuotaFull,
         ];
 
-        return view('training_detail_page', $data);
+        return view('guest/training_detail_page', $data);
     }
 }
