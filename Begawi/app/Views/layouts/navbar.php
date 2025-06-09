@@ -34,7 +34,7 @@
 
 
                 <?php if (session()->get('isLoggedIn')): ?>
-                    <a href="/chatbot" class="nav-icon-link">
+                    <a href="/jobseeker/chatbot" class="nav-icon-link">
                         <i class="bi bi-robot nav-icon-item"></i>
                         <span class="nav-icon-text">ChatBot AI</span>
                     </a>
