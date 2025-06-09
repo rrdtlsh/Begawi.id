@@ -140,7 +140,7 @@ Dashboard Admin
                         'rgba(78, 115, 223, 0.7)',  // Biru
                         'rgba(246, 194, 62, 0.7)'   // Kuning
                     ],
-                    borderColor: [
+                    borderColoAr: [
                         'rgba(78, 115, 223, 1)',
                         'rgba(246, 194, 62, 1)'
                     ],
