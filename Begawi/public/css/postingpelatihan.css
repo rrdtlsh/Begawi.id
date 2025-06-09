@@ -1,0 +1,137 @@
+/* form-pelatihan.css */
+/* CSS ini mengadaptasi gaya visual dari gambar ke dalam struktur Bootstrap Card */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary-green: #2a5c0f;
+    --border-grey: #dce1e6;
+    --text-dark: #333333;
+    --text-light: #6c757d;
+    --bg-white: #ffffff;
+    --bg-light: #f8f9fa;
+    --placeholder-text: #adb5bd;
+    --btn-secondary-bg: #e9ecef;
+}
+
+body {
+    background-color: var(--bg-light); /* Latar belakang abu-abu muda agar card menonjol */
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Menyesuaikan Card agar terlihat lebih modern */
+.card {
+    border: 1px solid var(--border-grey);
+    border-radius: 12px; /* Sudut lebih tumpul */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Shadow yang lembut */
+    overflow: hidden; /* Memastikan sudut tumpul diterapkan ke header */
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid var(--border-grey);
+    padding: 1.5rem;
+}
+
+.card-header h3 {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Menargetkan <h5> sebagai judul bagian form */
+.card-body h5 {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--primary-green);
+    margin-top: 20px;
+    margin-bottom: 25px;
+    border-left: 4px solid var(--primary-green);
+    padding-left: 15px;
+}
+
+.card-body h5:first-child {
+    margin-top: 0;
+}
+
+/* Style untuk semua input, select, dan textarea */
+.form-control {
+    border-radius: 6px;
+    border: 1px solid var(--border-grey);
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-green);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(42, 92, 15, 0.15); /* Efek 'glow' yang halus */
+}
+
+.form-control::placeholder {
+    color: var(--placeholder-text);
+}
+
+/* Penyesuaian untuk Select (Dropdown) */
+select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+}
+
+/* Garis pemisah antar bagian */
+hr {
+    border-top: 1px solid #eee;
+    margin: 2.5rem 0;
+}
+
+/* Grup Tombol di bawah */
+.button-group {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* Override style tombol Bootstrap */
+.btn {
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+/* Tombol Publikasikan */
+.btn.btn-success {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn.btn-success:hover {
+    background-color: #214a0c; /* Sedikit lebih gelap saat hover */
+    border-color: #214a0c;
+}
+
+/* Tombol Batal */
+.btn.btn-secondary {
+    background-color: var(--btn-secondary-bg);
+    color: var(--text-dark);
+    border: 1px solid var(--border-grey);
+}
+
+.btn.btn-secondary:hover {
+    background-color: #dce1e6;
+}

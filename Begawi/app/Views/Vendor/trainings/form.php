@@ -1,6 +1,11 @@
-<?= $this->extend('layouts/main_layout') ?>
-
-<?= $this->section('content') ?>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Pelatihan</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<body>
 
 <div class="container mt-5 mb-5">
     <div class="row justify-content-center">
@@ -92,24 +97,23 @@
                                 <label for="end_date">Tanggal & Waktu Selesai (Opsional)</label>
                                 <input type="datetime-local" name="end_date" class="form-control"
                                     value="<?= old('end_date', isset($training->end_date) && $training->end_date ? date('Y-m-d\TH:i', strtotime($training->end_date)) : '') ?>">
-                                <small class="form-text text-muted">Kosongkan jika tidak ada tanggal selesai
-                                    pasti.</small>
-                                <small class="form-text text-muted">Jika hanya 1 hari, biarkan tanggal selesai sama
-                                    dengan tanggal mulai.</small>
+                                <small class="form-text text-muted">Kosongkan jika tidak ada tanggal selesai pasti.</small>
                             </div>
                         </div>
 
-                        <div class="form-group"> <label for="duration">Durasi Pelatihan (Jam)</label>
+                        <div class="form-group">
+                            <label for="duration">Durasi Pelatihan (Jam)</label>
                             <input type="number" name="duration" class="form-control"
                                 placeholder="Contoh: 10 (untuk 10 jam)"
-                                value="<?= old('duration', $training->duration ?? '') ?>" required>
+                                value="<?= old('duration', $training->duration ?? '') ?>" min="0" required>
                             <small class="form-text text-muted">Masukkan durasi dalam jam.</small>
                         </div>
+
                         <div class="form-group">
                             <label for="quota">Kuota Peserta (Opsional)</label>
                             <input type="number" name="quota" class="form-control" placeholder="Contoh: 20"
-                                value="<?= old('quota', $training->quota ?? '') ?>">
-                            <small class="form-text text-muted">Kosongkan jika tidak ada batasan kuota.</small>
+                                value="<?= old('quota', $training->quota ?? '') ?>" min="0">
+                            <small class="form-text text-muted">Kuota tidak boleh negatif. Kosongkan jika tidak ada batasan kuota.</small>
                         </div>
 
                         <hr>
@@ -138,4 +142,5 @@
     </div>
 </div>
 
-<?= $this->endSection() ?>
+</body>
+</html>

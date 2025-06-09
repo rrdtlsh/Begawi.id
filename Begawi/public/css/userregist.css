@@ -174,14 +174,49 @@ body {
   border: none;
 }
 
+/* === Tombol Registrasi yang Dipercantik === */
 .btn-primary {
-  background-color: var(--sasirangan-green-medium);
-  color: var(--neutral-white);
-  margin-top: 20px;
+    /* 1. Mengatur layout untuk ikon dan teks (jika ada) */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Jarak antara teks dan ikon */
+
+    /* 2. Warna dan Gradien */
+    background: linear-gradient(135deg, var(--sasirangan-green-medium), var(--sasirangan-green-dark));
+    color: var(--neutral-white);
+
+    /* 3. Tipografi */
+    font-weight: 600;
+    text-transform: uppercase; /* Membuat teks menjadi kapital semua */
+    letter-spacing: 0.5px; /* Memberi sedikit nafas pada teks */
+    
+    /* 4. Bentuk dan Bayangan */
+    border: none;
+    border-radius: 8px; /* Radius sudut yang sudah ada */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+    /* 5. Transisi agar animasi halus */
+    transition: all 0.3s ease-in-out;
 }
 
 .btn-primary:hover {
-  background-color: var(--sasirangan-green-dark);
+    /* Efek saat pointer di atas tombol */
+    transform: translateY(-3px); /* Tombol sedikit terangkat */
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.btn-primary:active {
+    /* Efek saat tombol di-klik */
+    transform: translateY(0px); /* Tombol kembali ke posisi semula */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Bayangan kembali normal */
+}
+
+/* State untuk aksesibilitas (saat dipilih dengan keyboard) */
+.btn-primary:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(93, 139, 47, 0.5); /* Efek glow hijau konsisten */
 }
 
 .login-link {
@@ -280,4 +315,10 @@ body {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+.registration-container .input-group {
+    display: flex;
+    flex-direction: column; /* Memaksa item di dalamnya (label, input) tersusun ke bawah */
+    align-items: flex-start; /* Meratakan item ke kiri */
 }

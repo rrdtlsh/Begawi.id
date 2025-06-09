@@ -40,11 +40,11 @@
     </div>
 
     <div class="input-group">
-        <label for="skills">Keahlian</label> 
-        <select id="skills" name="skills[]" class=" form-control" required>
+        <label for="skill_id">Keahlian Utama</label> 
+        <select id="skill_id" name="skill_id" required>
             <option value="" disabled selected>Pilih Keahlian Utama</option>
             <?php foreach ($skills as $skill): ?>
-                <option value="<?= $skill->id ?>" <?= old('skills') == $skill->id ? 'selected' : '' ?>>
+                <option value="<?= $skill->id ?>" <?= old('skill_id') == $skill->id ? 'selected' : '' ?>>
                     <?= esc($skill->name) ?>
                 </option>
             <?php endforeach; ?>
