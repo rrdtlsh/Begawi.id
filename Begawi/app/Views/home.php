@@ -4,51 +4,57 @@
 
 <header class="hero-section text-center">
     <div class="container">
-        <h1 class="display-4 fw-bold mb-3">Temukan Pekerjaan Impianmu</h1>
-        <p class="lead mb-5">Platform pencarian kerja terpercaya di Kalimantan Selatan.</p>
+        <h1 class="display-4 fw-bold mb-3">Temukan Peluang Karirmu</h1>
+        <p class="lead mb-5">Platform terpercaya untuk pekerjaan dan pelatihan di Kalimantan Selatan.</p>
 
-        <!-- Mengisi bagian yang tadinya kosong -->
-        <div class="search-form-card col-lg-10 mx-auto">
-            <form class="row g-3 align-items-end" action="<?= site_url('search/jobs') ?>" method="post">
+        <div class="search-form-card col-lg-11 mx-auto">
+            
+            <!-- Form ini sekarang SELALU mengirim ke 'search/process' -->
+            <form class="row g-3 align-items-end" action="<?= site_url('search/process') ?>" method="post">
+                <?= csrf_field() ?>
 
-                <!-- Input Kata Kunci -->
-                <div class="col-md-4 text-start">
-                    <label for="job-title" class="form-label">Judul Pekerjaan/Kata Kunci</label>
-                    <input type="text" class="form-control form-control-lg" id="job-title" name="keyword"
-                        placeholder="Contoh: Web Developer">
-                </div>
-
-                <!-- Dropdown Lokasi (Dinamis) -->
-                <div class="col-md-3 text-start">
-                    <label for="location" class="form-label">Lokasi</label>
-                    <select class="form-select form-select-lg" id="location" name="location">
-                        <option selected value="">Pilih Lokasi</option>
-                        <?php if (!empty($locations)): ?>
-                            <?php foreach ($locations as $loc): ?>
-                                <option value="<?= $loc->id ?>"><?= esc($loc->name) ?></option>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
+                <!-- Dropdown untuk memilih Tipe Pencarian -->
+                <div class="col-lg text-start">
+                    <label for="search_type" class="form-label fw-bold">Saya mencari...</label>
+                    <select class="form-control form-control-lg" id="search_type" name="search_type">
+                        <option value="jobs" selected>Pekerjaan</option>
+                        <option value="trainings">Pelatihan</option>
                     </select>
                 </div>
 
-                <!-- Dropdown Kategori (Dinamis) -->
-                <div class="col-md-3 text-start">
-                    <label for="category" class="form-label">Kategori</label>
-                    <select class="form-select form-select-lg" id="category" name="category">
-                        <option selected value="">Semua Kategori</option>
-                        <?php if (!empty($categories)): ?>
-                            <?php foreach ($categories as $cat): ?>
-                                <option value="<?= $cat->id ?>"><?= esc($cat->name) ?></option>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
+                <!-- Input Kata Kunci -->
+                <div class="col-lg-4 text-start">
+                    <label for="keyword" class="form-label fw-bold">Judul/Kata Kunci</label>
+                    <input type="text" class="form-control form-control-lg" id="keyword" name="keyword"
+                        placeholder="Contoh: Web Developer">
+                </div>
+
+                <!-- Dropdown Lokasi -->
+                <div class="col-lg text-start">
+                    <label for="location" class="form-label fw-bold">Lokasi</label>
+                    <select class="form-control form-control-lg" id="location" name="location">
+                        <option value="">Semua Lokasi</option>
+                        <?php if (!empty($locations)): foreach ($locations as $loc): ?>
+                            <option value="<?= $loc->id ?>"><?= esc($loc->name) ?></option>
+                        <?php endforeach; endif; ?>
+                    </select>
+                </div>
+
+                <!-- Dropdown Kategori -->
+                <div class="col-lg text-start">
+                    <label for="category" class="form-label fw-bold">Kategori</label>
+                    <select class="form-control form-control-lg" id="category" name="category">
+                        <option value="">Semua Kategori</option>
+                        <?php if (!empty($categories)): foreach ($categories as $cat): ?>
+                            <option value="<?= $cat->id ?>"><?= esc($cat->name) ?></option>
+                        <?php endforeach; endif; ?>
                     </select>
                 </div>
 
                 <!-- Tombol Cari -->
-                <div class="col-md-2 d-grid">
-                    <button type="submit" class="btn btn-custom-green btn-lg btn-search">
-                        <i class="bi bi-search me-2"></i>Cari
-                    </button>
+                <div class="col-lg-auto d-grid">
+                     <label class="form-label d-none d-md-block">&nbsp;</label>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Cari</button>
                 </div>
             </form>
         </div>

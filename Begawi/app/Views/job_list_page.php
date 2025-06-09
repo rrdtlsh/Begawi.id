@@ -55,7 +55,7 @@
                                 </li>
                                 <li>
                                     <i class="bi bi-calendar-check-fill"></i>
-                                    <span>Diposting: <?= date('j M Y', strtotime($job->publish_date)) ?></span>
+                                    <span>Diposting: <?= date('j M Y', strtotime($job->created_at)) ?></span>
                                 </li>
                             </ul>
                         </div>

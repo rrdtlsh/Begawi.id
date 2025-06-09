@@ -31,12 +31,13 @@
             </ul>
 
             <div class="d-flex align-items-center gap-3">
-                <a href="/chatbot" class="nav-icon-link">
-                    <i class="bi bi-robot nav-icon-item"></i>
-                    <span class="nav-icon-text">ChatBot AI</span>
-                </a>
+
 
                 <?php if (session()->get('isLoggedIn')): ?>
+                    <a href="/chatbot" class="nav-icon-link">
+                        <i class="bi bi-robot nav-icon-item"></i>
+                        <span class="nav-icon-text">ChatBot AI</span>
+                    </a>
                     <a href="/jobseeker/dashboard" class="nav-icon-link">
                         <i class="bi bi-person-circle nav-icon-item"></i>
                         <span class="nav-icon-text">Profile</span>

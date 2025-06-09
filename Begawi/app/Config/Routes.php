@@ -11,21 +11,18 @@ use CodeIgniter\Router\RouteCollection;
 // ===================================================================
 
 // ---- route navbar ---
+$routes->get('/', 'HomeController::index');
+$routes->get('/about', 'HomeController::about');
+$routes->post('/search/process', 'SearchController::process');
+
 $routes->get('/jobs', 'JobPageController::index'); 
 $routes->get('/trainings', 'TrainingPageController::index');
 $routes->get('/companies', 'VendorPageController::index');
 
-$routes->get('/', 'HomeController::index');
-$routes->post('/search/jobs', 'SearchController::jobs');
-$routes->get('/about', 'HomeController::about');
-
-// Rute untuk Halaman Daftar & Detail Lowongan (Pekerjaan)
-$routes->get('/lowongan', 'JobPageController::index');
 $routes->post('/lowongan', 'JobPageController::index'); // Menangani filter/pencarian
 $routes->get('/lowongan/detail/(:num)', 'JobPageController::detail/$1');
 
 // Rute untuk Halaman Daftar & Detail Pelatihan
-$routes->get('/pelatihan', 'TrainingPageController::index');
 $routes->post('/pelatihan', 'TrainingPageController::index');
 $routes->get('/pelatihan/detail/(:num)', 'TrainingPageController::detail/$1'); // Aktifkan rute detail pelatihan// Menangani filter/pencarian
 $routes->get('/pelatihan/daftar/(:num)', 'TrainingApplicationController::processApplication/$1');
@@ -44,15 +41,6 @@ $routes->get('/logout', 'AuthController::logout');
 //rute untuk halaman perusahaann
 $routes->get('/vendor', 'VendorPageController::index');
 $routes->get('/vendor/detail/(:num)', 'VendorPageController::detail/$1');
-// ===================================================================
-// RUTE UMUM YANG MEMERLUKAN LOGIN (Filter 'auth')
-// ===================================================================
-$routes->group('', ['filter' => 'auth'], function ($routes) {
-    // Rute untuk aksi bookmark (hanya jobseeker yang bisa)
-    $routes->post('bookmark/toggle', 'BookmarkController::toggle');
-    $routes->post('daftar-pelatihan/apply/(:num)', 'TrainingApplicationController::apply/$1');
-});
-
 
 // ===================================================================
 // RUTE KHUSUS VENDOR (Memerlukan Login & Peran Vendor)
@@ -104,6 +92,9 @@ $routes->group('jobseeker', ['filter' => 'auth'], function ($routes) {
 
     // Riwayat Lamaran & Pelatihan
     $routes->get('history', 'Jobseeker\HistoryController::index');
+
+    $routes->get('chatbot', 'ChatbotController::index');
+    $routes->post('chatbot/ask', 'ChatbotController::ask');
 
 });
 
