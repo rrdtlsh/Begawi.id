@@ -16,16 +16,15 @@ $routes->get('/about', 'Home\HomePageController::about');
 $routes->get('/home', 'Home\HomePageController::index'); // Rute tombol kembali
 
 // Rute Pencarian Publik
+$routes->get('/search/process', 'Home\SearchController::process'); // Halaman pencarian
 $routes->post('/search/process', 'Home\SearchController::process');
 
 // Rute Halaman Daftar & Detail Lowongan Pekerjaan
 $routes->get('/jobs', 'Home\JobPageController::index');
-$routes->post('/lowongan', 'Home\JobPageController::index'); // Menangani filter/pencarian
 $routes->get('/lowongan/detail/(:num)', 'Home\JobPageController::detail/$1');
 
 // Rute Halaman Daftar & Detail Pelatihan
 $routes->get('/trainings', 'Home\TrainingPageController::index');
-$routes->post('/pelatihan', 'Home\TrainingPageController::index'); // Menangani filter/pencarian
 $routes->get('/pelatihan/detail/(:num)', 'Home\TrainingPageController::detail/$1');
 
 // Rute Halaman Daftar & Detail Perusahaan/Vendor

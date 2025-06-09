@@ -7,6 +7,7 @@ use App\Models\JobModel;
 use App\Models\JobCategoryModel;
 use App\Models\LocationModel;
 use App\Models\JobApplicationModel;
+use App\Models\JobSeekerModel;
 
 class JobController extends BaseController
 {
@@ -167,7 +168,7 @@ class JobController extends BaseController
     public function showApplicants($jobId = null)
     {
         $jobModel = new JobModel();
-        $applicationModel = new \App\Models\JobApplicationModel();
+        $applicationModel = new JobApplicationModel();
         $vendorId = session()->get('profile_id');
 
         $job = $jobModel->where(['id' => $jobId, 'vendor_id' => $vendorId])->first();
@@ -192,7 +193,7 @@ class JobController extends BaseController
             return redirect()->back()->with('error', 'Status tidak valid.');
         }
 
-        $applicationModel = new \App\Models\JobApplicationModel();
+        $applicationModel = new JobApplicationModel();
 
         // Verifikasi kepemilikan
         $application = $applicationModel->find($applicationId);
@@ -225,8 +226,8 @@ class JobController extends BaseController
 
     public function showApplicantDetail($applicationId)
 {
-    $applicationModel = new \App\Models\JobApplicationModel();
-    $jobseekerModel = new \App\Models\JobseekerModel(); // Untuk mengambil skills
+    $applicationModel = new JobApplicationModel();
+    $jobseekerModel = new JobseekerModel(); // Untuk mengambil skills
     $vendorId = session()->get('profile_id');
 
     // 1. Ambil detail lamaran dari model

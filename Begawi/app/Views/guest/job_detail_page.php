@@ -88,21 +88,27 @@
                                 <i class="bi bi-cursor-fill"></i> Lamar dari Web Ini
                             </a>
                         <?php endif; ?>
+
+                        <?php
+                            $contact_email = $job->contact_email ?? 'karir@ciptasolusi.com';
+                            $email_subject = 'Lamaran: ' . ($job->title ?? 'Web Developer');
+                        ?>
+                        <a href="mailto:<?= esc($contact_email) ?>?subject=<?= rawurlencode($email_subject) ?>" class="btn btn-apply-email btn-block text-center mt-2">
+                            <i class="bi bi-envelope"></i> Lamar Via Email 
+                        </a>
                     <?php else: ?>
                         <a href="/login?redirect=<?= function_exists('current_url') ? current_url() : '' ?>" class="btn btn-apply btn-block text-center">
-                           <i class="bi bi-cursor-fill"></i> Lamar dari Web Ini
+                            <i class="bi bi-cursor-fill"></i> Lamar dari Web Ini
+                        </a>
+                        <?php
+                            $contact_email = $job->contact_email ?? 'karir@ciptasolusi.com';
+                            $email_subject = 'Lamaran: ' . ($job->title ?? 'Web Developer');
+                        ?>
+                        <a href="/login?redirect=<?= function_exists('current_url') ? current_url() : '' ?>" class="btn btn-apply-email btn-block text-center mt-2">
+                            <i class="bi bi-envelope"></i> Lamar Via Email
                         </a>
                     <?php endif; ?>
-
-                    <?php 
-                        $contact_email = $job->contact_email ?? 'karir@ciptasolusi.com';
-                        $email_subject = 'Lamaran: ' . ($job->title ?? 'Web Developer');
-                    ?>
-                    <a href="mailto:<?= esc($contact_email) ?>?subject=<?= rawurlencode($email_subject) ?>" class="btn btn-apply-email btn-block text-center mt-2">
-                        <i class="bi bi-envelope"></i> Lamar Via Email
-                    </a>
                 </div>
-
             </div>
         </div>
     </div>
