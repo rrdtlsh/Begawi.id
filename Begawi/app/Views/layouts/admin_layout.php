@@ -138,24 +138,6 @@
                                 Dashboard
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fas fa-briefcase fa-fw me-2"></i>
-                                Kelola Lowongan
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fas fa-users fa-fw me-2"></i>
-                                Kelola Pengguna
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fas fa-tags fa-fw me-2"></i>
-                                Kelola Kategori
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </nav>
