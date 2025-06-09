@@ -3,7 +3,7 @@
 <?= $this->section('content') ?>
 
 <div class="registration-container">
-    <div class="logo-begawi">Begaw<span>i</span></div>
+    <div class="logo-begawi">Begawi<span>i</span></div>
 
     <h2><?= esc($title ?? 'Registrasi Pengguna') ?></h2>
 
@@ -12,9 +12,7 @@
             <strong>Gagal melakukan registrasi. Mohon periksa kembali isian Anda:</strong>
             <ul>
                 <?php foreach (session()->get('errors') as $error): ?>
-                    <li><?= esc($error) ?></li>
-                <?php endforeach; ?>
-            </ul>
+                    <li><?= esc($error) ?></lnd <?php endforeach; ?> </ul>
         </div>
     <?php endif; ?>
 

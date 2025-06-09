@@ -69,17 +69,15 @@ class JobController extends BaseController
         $job = $jobModel->where(['id' => $id, 'vendor_id' => $vendorId])->first();
 
         if (!$job) {
-            // PERBAIKAN: Redirect ke /vendor/jobs (plural)
             return redirect()->to('/vendor/jobs')->with('error', 'Lowongan pekerjaan tidak ditemukan.');
         }
 
-        // --- LOGIKA DILENGKAPI ---
         $jobCategoryModel = new JobCategoryModel();
         $locationModel = new LocationModel();
 
         $data = [
             'title' => 'Edit Lowongan Pekerjaan',
-            'job' => $job, // Mengirim data lowongan yang akan diedit ke view
+            'job' => $job,
             'categories' => $jobCategoryModel->findAll(),
             'locations' => $locationModel->findAll(),
         ];

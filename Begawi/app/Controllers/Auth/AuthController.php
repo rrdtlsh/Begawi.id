@@ -97,7 +97,7 @@ class AuthController extends BaseController
             ]
         ];
 
-        if (!$this->validate($validationRules)) {
+        if (!$this->validate($validationRules, $validationMessages)) {
             $redirectUrl = ($role === 'vendor') ? '/register/vendor' : '/register/jobseeker';
             return redirect()->to($redirectUrl)->withInput()->with('errors', $this->validator->getErrors());
         }

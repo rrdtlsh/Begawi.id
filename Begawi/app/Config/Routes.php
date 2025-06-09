@@ -6,17 +6,15 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-//===================================================================
 // RUTE PUBLIK (Bisa diakses siapa saja tanpa login)
-//===================================================================
 
 // Rute Halaman Utama & Navigasi
 $routes->get('/', 'Home\HomePageController::index');
 $routes->get('/about', 'Home\HomePageController::about');
-$routes->get('/home', 'Home\HomePageController::index'); // Rute tombol kembali
+$routes->get('/home', 'Home\HomePageController::index');
 
 // Rute Pencarian Publik
-$routes->get('/search/process', 'Home\SearchController::process'); // Halaman pencarian
+$routes->get('/search/process', 'Home\SearchController::process');
 $routes->post('/search/process', 'Home\SearchController::process');
 
 // Rute Halaman Daftar & Detail Lowongan Pekerjaan
@@ -29,24 +27,19 @@ $routes->get('/pelatihan/detail/(:num)', 'Home\TrainingPageController::detail/$1
 
 // Rute Halaman Daftar & Detail Perusahaan/Vendor
 $routes->get('/companies', 'Home\VendorPageController::index');
-$routes->get('/vendor', 'Home\VendorPageController::index'); // Alias untuk '/companies' atau daftar vendor umum
+$routes->get('/vendor', 'Home\VendorPageController::index');
 $routes->get('/vendor/detail/(:num)', 'Home\VendorPageController::detail/$1');
 
-//===================================================================
 // RUTE AUTENTIKASI (Pendaftaran, Login, Logout)
-//===================================================================
-$routes->get('/register', 'Auth\AuthController::register'); // Halaman pilihan peran
-$routes->get('/register/jobseeker', 'Auth\AuthController::registerJobseeker'); // Form pendaftaran jobseeker
-$routes->get('/register/vendor', 'Auth\AuthController::registerVendor'); // Form pendaftaran vendor
-$routes->post('/register/process', 'Auth\AuthController::processRegister'); // Proses pendaftaran
+$routes->get('/register', 'Auth\AuthController::register');
+$routes->get('/register/jobseeker', 'Auth\AuthController::registerJobseeker');
+$routes->get('/register/vendor', 'Auth\AuthController::registerVendor');
+$routes->post('/register/process', 'Auth\AuthController::processRegister');
 $routes->get('/login', 'Auth\AuthController::login');
 $routes->post('/login/process', 'Auth\AuthController::processLogin');
 $routes->get('/logout', 'Auth\AuthController::logout');
 
-
-//===================================================================
 // RUTE KHUSUS VENDOR (Memerlukan Login & Peran Vendor)
-//===================================================================
 $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     // Dashboard Vendor
     $routes->get('dashboard', 'Vendor\DashboardController::index');
@@ -80,9 +73,7 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
 });
 
 
-//===================================================================
 // RUTE KHUSUS JOBSEEKER (Memerlukan Login & Peran Jobseeker)
-//===================================================================
 $routes->group('jobseeker', ['filter' => 'auth'], function ($routes) {
     // Dashboard Jobseeker
     $routes->get('dashboard', 'Jobseeker\DashboardController::index');
@@ -99,10 +90,7 @@ $routes->group('jobseeker', ['filter' => 'auth'], function ($routes) {
     $routes->post('chatbot/ask', 'Jobseeker\ChatbotController::ask');
 });
 
-
-//===================================================================
 // RUTE LAMARAN/PENDAFTARAN (Memerlukan Login, Umumnya Jobseeker)
-//===================================================================
 $routes->group('lamar', ['filter' => 'auth'], function ($routes) {
     $routes->get('job/(:num)', 'Vendor\JobApplicationController::showApplicationForm/$1');
     $routes->post('job/(:num)', 'Vendor\JobApplicationController::submitApplication/$1');
@@ -113,9 +101,7 @@ $routes->group('daftar-pelatihan', ['filter' => 'auth'], function ($routes) {
 });
 
 
-//===================================================================
 // RUTE KHUSUS ADMIN (Memerlukan Login & Peran Admin)
-//===================================================================
 $routes->group('admin', ['filter' => 'admin'], function ($routes) {
     // Dasbor Admin
     $routes->get('dashboard', 'Admin\DashboardController::index');
