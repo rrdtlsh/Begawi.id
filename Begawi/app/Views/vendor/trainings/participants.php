@@ -9,7 +9,6 @@
     <h1 class="h3 mb-2">Daftar Peserta</h1>
     <p class="text-secondary">Untuk pelatihan: <strong><?= esc($training->title ?? 'Tidak Diketahui') ?></strong></p>
 </section>
-
 <section class="card">
     <div class="card-body">
         <div class="table-responsive">
@@ -71,5 +70,4 @@
         </div>
     </div>
 </section>
-
 <?= $this->endSection() ?>
