@@ -33,7 +33,7 @@ class JobModel extends Model
 
     // *** ATURAN VALIDASI UNTUK PEMBUATAN BARU ***
     protected $validationRules = [
-        'title' => 'required|min_length[5]|max_length[255]',
+        'title' => 'required|max_length[255]',
         'category_id' => 'required|integer',
         'location_id' => 'required|integer',
         'description' => 'required',
@@ -49,7 +49,7 @@ class JobModel extends Model
     ];
 
     protected $validationRulesUpdate = [
-        'title' => 'permit_empty|min_length[5]|max_length[255]', // TIDAK WAJIB
+        'title' => 'permit_empty|max_length[255]', // TIDAK WAJIB
         'category_id' => 'permit_empty|integer', // TIDAK WAJIB
         'location_id' => 'permit_empty|integer', // TIDAK WAJIB
         'description' => 'permit_empty', // TIDAK WAJIB
