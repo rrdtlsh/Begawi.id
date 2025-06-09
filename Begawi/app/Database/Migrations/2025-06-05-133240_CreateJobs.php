@@ -47,6 +47,11 @@ class CreateJobs extends Migration
                 'null' => true,
                 'comment' => 'Kuota maksimal pelamar'
             ],
+            'qualifications' => [
+                'type' => 'TEXT',
+                'null' => true,
+                'comment' => 'Kualifikasi yang dibutuhkan untuk pekerjaan ini'
+            ],
             'contact_email' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,

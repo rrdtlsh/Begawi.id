@@ -23,10 +23,6 @@ class CreateVendors extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 255
             ],
-            'company_email' => [
-                'type' => 'VARCHAR',
-                'constraint' => 100
-            ],
             'location_id' => [
                 'type' => 'INT',
                 'unsigned' => true,
@@ -53,11 +49,6 @@ class CreateVendors extends Migration
             'contact' => [
                 'type' => 'VARCHAR',
                 'constraint' => 50,
-                'null' => true
-            ],
-            'website' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
                 'null' => true
             ],
             'created_at' => ['type' => 'TIMESTAMP', 'null' => true],
