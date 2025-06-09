@@ -55,9 +55,9 @@
                                     Detail
                                 </a>
 
-                                <a href="<?= base_url('uploads/resumes/' . ($applicant->resume_file_path ?? '')) ?>"
-                                    target="_blank" class="btn btn-sm btn-light border" title="Lihat CV">
-                                    CV
+                                <a href="<?= base_url('uploads/resumes/' . $applicant->resume_file_path) ?>"
+                                    target="_blank" class="btn btn-sm btn-light border" title="Unduh CV Pelamar">
+                                    Unduh CV
                                 </a>
 
                                 <!-- Form untuk mengubah status -->
