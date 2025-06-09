@@ -60,11 +60,11 @@
                     </tr>
                     <?php endforeach; ?>
                     <?php else: ?>
-                        <tr>
-                            <td colspan="4" class="text-center text-secondary py-4">
-                                Belum ada peserta yang mendaftar untuk pelatihan ini.
-                            </td>
-                        </tr>
+                    <tr>
+                        <td colspan="4" class="text-center text-secondary py-4">
+                            Belum ada peserta yang mendaftar untuk pelatihan ini.
+                        </td>
+                    </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
