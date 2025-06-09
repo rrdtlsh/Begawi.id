@@ -28,14 +28,14 @@ class HistoryController extends BaseController
         // 1. Hitung status dari lamaran kerja
         $jobStatusCounts = $jobAppModel->getStatusCountsByJobseeker($jobseekerId);
 
+
         // 2. Hitung status dari pendaftaran pelatihan
         $trainingStatusCounts = $trainingAppModel->getStatusCountsByJobseeker($jobseekerId);
 
         // 3. Gabungkan hasil hitungan dari keduanya
         $totalStatusCounts = [
             'pending' => ($jobStatusCounts['pending'] ?? 0) + ($trainingStatusCounts['pending'] ?? 0),
-            // Gabungkan 'accepted' dari jobs dan 'approved' dari trainings ke dalam 'Diterima'
-            'accepted' => ($jobStatusCounts['accepted'] ?? 0) + ($trainingStatusCounts['approved'] ?? 0), 
+            'accepted' => ($jobStatusCounts['accepted'] ?? 0) + ($trainingStatusCounts['approved'] ?? 0),
             'rejected' => ($jobStatusCounts['rejected'] ?? 0) + ($trainingStatusCounts['rejected'] ?? 0),
         ];
 
@@ -43,19 +43,20 @@ class HistoryController extends BaseController
         $applications = $jobAppModel->getHistoryByJobseeker($jobseekerId, null);
         $trainings = $trainingAppModel->getHistoryByJobseeker($jobseekerId, null);
         $history = array_merge($applications, $trainings);
-        
+
         // Logika sorting (sudah benar)
         usort($history, function ($a, $b) {
             $dateA = isset($a->applied_at) ? $a->applied_at : ($a->enrolled_at ?? null);
             $dateB = isset($b->applied_at) ? $b->applied_at : ($b->enrolled_at ?? null);
-            if ($dateA === null || $dateB === null) return 0;
+            if ($dateA === null || $dateB === null)
+                return 0;
             return strtotime($dateB) <=> strtotime($dateA);
         });
 
         $data = [
             'title' => 'Status Lamaran & Pelatihan',
             // Kirim data hitungan total yang sudah digabung ke view
-            'statusCounts' => $totalStatusCounts, 
+            'statusCounts' => $totalStatusCounts,
             'history' => $history,
         ];
 

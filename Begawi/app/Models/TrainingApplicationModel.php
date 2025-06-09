@@ -25,11 +25,11 @@ class TrainingApplicationModel extends Model
     public function getHistoryByJobseeker($jobseekerId, $limit = 5)
     {
         return $this->select('
-                        trainings.title, 
-                        training_applications.status, 
-                        training_applications.enrolled_at,
-                        vendors.company_name as penyelenggara
-                    ')
+                            trainings.title, 
+                            training_applications.status, 
+                            training_applications.enrolled_at,
+                            vendors.company_name as penyelenggara
+                        ')
             ->join('trainings', 'trainings.id = training_applications.training_id')
             ->join('vendors', 'vendors.id = trainings.vendor_id', 'left') // left join jika ada pelatihan tanpa vendor
             ->where('training_applications.jobseeker_id', $jobseekerId)
@@ -40,17 +40,18 @@ class TrainingApplicationModel extends Model
     public function getApplicantsForTraining(int $trainingId)
     {
         return $this->select('
-                        training_applications.*,
-                        users.fullname as jobseeker_name,
-                        users.email as jobseeker_email,
-                        jobseekers.phone as jobseeker_phone
-                    ')
+                            training_applications.*,
+                            users.fullname as jobseeker_name,
+                            users.email as jobseeker_email,
+                            jobseekers.phone as jobseeker_phone
+                        ')
             ->join('jobseekers', 'jobseekers.id = training_applications.jobseeker_id', 'left')
             ->join('users', 'users.id = jobseekers.user_id', 'left')
             ->where('training_applications.training_id', $trainingId)
             ->orderBy('training_applications.enrolled_at', 'ASC')
             ->findAll();
     }
+
 
     public function getStatusCountsByJobseeker($jobseekerId)
     {
@@ -61,8 +62,8 @@ class TrainingApplicationModel extends Model
 
         // Siapkan array dengan semua kemungkinan status
         $counts = [
-            'pending'  => 0,
-            'approved' => 0, // Gunakan 'approved' sesuai status pelatihan
+            'pending' => 0,
+            'accepted' => 0, // Gunakan 'approved' sesuai status pelatihan
             'rejected' => 0,
         ];
 
