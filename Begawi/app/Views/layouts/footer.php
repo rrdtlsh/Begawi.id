@@ -3,13 +3,12 @@
 <footer class="footer py-5">
     <div class="container">
         <div class="row">
-            <!-- Kolom Logo (lebar tetap) -->
+            
             <div class="col-lg-4 mb-4 mb-lg-0">
                 <img src="<?= base_url('images/Logo_Begawi.png') ?>" alt="Logo Begawi" class="logo-footer mb-3" style="height: 100px;">
                 <p>Platform penyedia jasa terpercaya di Banjarmasin.</p>
             </div>
             
-            <!-- Kolom Tautan Cepat (dilebarkan menjadi 4) -->
             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                 <h5>Tautan Cepat</h5>
                 <ul class="list-unstyled">

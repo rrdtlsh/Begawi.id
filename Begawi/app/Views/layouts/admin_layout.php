@@ -15,18 +15,14 @@
     <?= $this->renderSection('styles') ?>
 
     <style>
-        /* =================================
-           Gaya Kustom untuk Admin Layout
-           ================================= */
         body {
             font-family: 'Poppins', sans-serif;
             font-size: .9rem;
-            background-color: #f8f9fa; /* Warna dasar body */
+            background-color: #f8f9fa; 
         }
 
-        /* --- Header --- */
         .navbar-custom {
-            background-color: #0c392c; /* Hijau Tua dari referensi */
+            background-color: #0c392c; 
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
@@ -44,16 +40,15 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* --- Sidebar --- */
         .sidebar {
             position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
             z-index: 100;
-            padding: 56px 0 0; /* Tinggi navbar */
+            padding: 56px 0 0; 
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-            background-color: #ffffff; /* Latar putih bersih */
+            background-color: #ffffff; 
             border-right: 1px solid #dee2e6;
         }
 
@@ -66,14 +61,13 @@
             overflow-y: auto;
         }
         
-        /* --- Menu Navigasi di Sidebar --- */
         .sidebar .nav-link {
             font-weight: 500;
-            color: #495057; /* Warna teks menu */
+            color: #495057; 
             padding: 12px 20px;
             display: flex;
             align-items: center;
-            border-left: 4px solid transparent; /* Indikator aktif tersembunyi */
+            border-left: 4px solid transparent; 
             transition: all 0.3s ease;
         }
 
@@ -84,15 +78,15 @@
         }
 
         .sidebar .nav-link:hover {
-            background-color: #f0f4f3; /* Latar hover hijau sangat lembut */
+            background-color: #f0f4f3; 
             color: #215546;
-            border-left-color: #b3a522; /* Aksen emas saat hover */
+            border-left-color: #b3a522; 
         }
 
         .sidebar .nav-link.active {
-            background-color: rgba(33, 85, 70, 0.1); /* Latar aktif hijau transparan */
-            border-left-color: #215546; /* Indikator aktif hijau tua */
-            color: #215546; /* Teks aktif lebih gelap */
+            background-color: rgba(33, 85, 70, 0.1); 
+            border-left-color: #215546; 
+            color: #215546; 
             font-weight: 600;
         }
 
@@ -100,10 +94,8 @@
             color: #215546;
         }
 
-        /* --- Area Konten Utama --- */
         .main-content {
             padding-top: 24px;
-            /* Gradient background yang sama dengan dashboard untuk konsistensi */
             background: linear-gradient(135deg, #f0f4f3, #fdfcf7);
             min-height: 100vh;
         }
@@ -154,17 +146,13 @@
     <?= $this->renderSection('scripts') ?>
 
     <script>
-        // Script sederhana untuk mengatur class 'active' pada menu sidebar
-        // berdasarkan URL saat ini.
         document.addEventListener("DOMContentLoaded", function() {
             const currentPath = window.location.pathname;
             const navLinks = document.querySelectorAll('.sidebar .nav-link');
 
             navLinks.forEach(link => {
-                // Hapus 'active' dari semua link terlebih dahulu
                 link.classList.remove('active');
                 
-                // Tambahkan 'active' jika href link cocok dengan path URL
                 if (link.getAttribute('href') === currentPath) {
                     link.classList.add('active');
                 }

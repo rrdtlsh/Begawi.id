@@ -10,7 +10,6 @@
                 <p class="lead text-muted mb-5">Pertama-tama, apa tujuan Anda di sini?</p>
 
                 <div class="row">
-                    <!-- Kotak Pilihan untuk Pencari Kerja -->
                     <div class="col-md-5 mb-4">
                         <div class="p-5 border rounded-3 h-100 d-flex flex-column">
                             <h2>Saya Pencari Kerja</h2>
@@ -19,12 +18,10 @@
                         </div>
                     </div>
 
-                    <!-- Pemisah "ATAU" -->
                     <div class="col-md-2 d-flex align-items-center justify-content-center">
                         <div class="divider-container w-100">ATAU</div>
                     </div>
 
-                    <!-- Kotak Pilihan untuk Penyedia Jasa -->
                     <div class="col-md-5 mb-4">
                         <div class="p-5 border rounded-3 h-100 d-flex flex-column">
                             <h2>Saya Penyedia Jasa</h2>

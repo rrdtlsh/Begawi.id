@@ -92,7 +92,6 @@ Dashboard Admin
 <script>
     document.addEventListener("DOMContentLoaded", function () {
 
-        // --- GRAFIK 1: PERBANDINGAN PENGGUNA (VENDOR VS JOBSEEKER) ---
         const ctxUsers = document.getElementById('userComparisonChart').getContext('2d');
         new Chart(ctxUsers, {
             type: 'bar',
@@ -105,8 +104,8 @@ Dashboard Admin
                         <?= esc($total_jobseekers) ?>
                     ],
                     backgroundColor: [
-                        'rgba(28, 200, 138, 0.7)',  // Hijau
-                        'rgba(54, 185, 204, 0.7)'   // Biru-Muda
+                        'rgba(28, 200, 138, 0.7)',  
+                        'rgba(54, 185, 204, 0.7)'   
                     ],
                     borderColor: [
                         'rgba(28, 200, 138, 1)',
@@ -116,15 +115,13 @@ Dashboard Admin
                 }]
             },
             options: {
-                indexAxis: 'y', // Membuat bar menjadi horizontal agar lebih mudah dibaca
+                indexAxis: 'y', 
                 maintainAspectRatio: true,
                 scales: { x: { beginAtZero: true, ticks: { precision: 0 } } },
                 plugins: { legend: { display: false } }
             }
         });
 
-
-        // --- GRAFIK 2: PERBANDINGAN KONTEN (JOBS VS TRAININGS) ---
         const ctxContent = document.getElementById('contentComparisonChart').getContext('2d');
         new Chart(ctxContent, {
             type: 'bar',
@@ -137,8 +134,8 @@ Dashboard Admin
                         <?= esc($total_trainings) ?>
                     ],
                     backgroundColor: [
-                        'rgba(78, 115, 223, 0.7)',  // Biru
-                        'rgba(246, 194, 62, 0.7)'   // Kuning
+                        'rgba(78, 115, 223, 0.7)',  
+                        'rgba(246, 194, 62, 0.7)'   
                     ],
                     borderColoAr: [
                         'rgba(78, 115, 223, 1)',
@@ -148,7 +145,7 @@ Dashboard Admin
                 }]
             },
             options: {
-                indexAxis: 'y', // Membuat bar menjadi horizontal
+                indexAxis: 'y', 
                 maintainAspectRatio: true,
                 scales: { x: { beginAtZero: true, ticks: { precision: 0 } } },
                 plugins: { legend: { display: false } }

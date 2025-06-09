@@ -11,7 +11,6 @@
         <h2 class="mt-2">Masuk ke Begawi</h2>
     </div>
 
-    <!-- Menampilkan pesan sukses atau error dari session -->
     <?php if (session()->getFlashdata('success')): ?>
         <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
     <?php endif; ?>

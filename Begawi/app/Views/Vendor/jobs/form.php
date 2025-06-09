@@ -69,11 +69,10 @@
                 
                 <div class="row">
                     <div class="col-md-6">
-                         <div class="form-group">
+                        <div class="form-group">
                             <label for="job_type">Tipe Pekerjaan</label>
                             <select name="job_type" id="job_type" class="form-control" required>
                                 <?php
-                                // Mengubah array menjadi asosiatif: 'nilai_untuk_database' => 'teks_untuk_tampilan'
                                 $job_types = [
                                     'Full-time'  => 'Penuh Waktu (Full-time)',
                                     'Part-time'  => 'Paruh Waktu (Part-time)',
@@ -92,7 +91,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                         <div class="form-group">
+                        <div class="form-group">
                             <label for="salary_min">Gaji Minimum (Opsional)</label>
                             <input type="text" name="salary_min" id="salary_min" class="form-control" placeholder="1.000.000" value="<?= old('salary_min', $job->salary_min ?? '') ?>">
                         </div>
@@ -112,7 +111,7 @@
                             <input type="date" name="application_deadline" id="application_deadline" class="form-control" value="<?= old('application_deadline', isset($job->application_deadline) ? date('Y-m-d', strtotime($job->application_deadline)) : '') ?>" required>
                         </div>
                     </div>
-                     <div class="col-md-6">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="quota">Kuota Peserta (Opsional)</label>
                             <input type="number" name="quota" id="quota" class="form-control" placeholder="Contoh: 20" value="<?= old('quota', $job->quota ?? '') ?>">

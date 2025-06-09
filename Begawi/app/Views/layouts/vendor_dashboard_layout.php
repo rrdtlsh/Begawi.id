@@ -25,11 +25,11 @@
     <!-- Sidebar Menu -->
     <aside class="sidebar d-flex flex-column p-3" id="sidebar">
         <div class="text-center mb-4">
-           <a href="<?= site_url('vendor/dashboard') ?>">
+        <a href="<?= site_url('vendor/dashboard') ?>">
                 <img src="<?= base_url('images/Logo_Begawi.png') ?>" 
-                     onerror="this.onerror=null;this.src='https://placehold.co/200x80/2A5C0F/ffffff?text=BEGAWI';" 
-                     alt="Logo Begawi" style="height: 98px; object-fit: contain;">
-           </a>
+                    onerror="this.onerror=null;this.src='https://placehold.co/200x80/2A5C0F/ffffff?text=BEGAWI';" 
+                    alt="Logo Begawi" style="height: 98px; object-fit: contain;">
+        </a>
         </div>
         <nav class="nav sidebar-nav flex-column">
             <a class="nav-link" href="<?= site_url('home') ?>">
@@ -50,7 +50,7 @@
                     <li><a class="dropdown-item" href="<?= site_url('vendor/trainings/new') ?>">Pelatihan</a></li>
                 </ul>
             </div>
-             <a class="nav-link" href="<?= site_url('vendor/profile/edit') ?>"><i class="bi bi-person-circle"></i><span>Edit Profil</span></a>
+            <a class="nav-link" href="<?= site_url('vendor/profile/edit') ?>"><i class="bi bi-person-circle"></i><span>Edit Profil</span></a>
         </nav>
         <div class="mt-auto p-3">
             <a href="<?= site_url('logout') ?>" class="btn logout-btn w-100 d-flex align-items-center justify-content-center">

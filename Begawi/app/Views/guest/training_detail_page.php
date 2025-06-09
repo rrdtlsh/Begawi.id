@@ -88,7 +88,7 @@
                             </form>
                         <?php endif; ?>
                     <?php elseif (!session()->get('isLoggedIn')): ?>
-                         <a href="/login?redirect=<?= urlencode(current_url(true)) ?>" class="btn btn-register btn-block">
+                        <a href="/login?redirect=<?= urlencode(current_url(true)) ?>" class="btn btn-register btn-block">
                             <i class="bi bi-box-arrow-in-right"></i> Login untuk Mendaftar
                         </a>
                     <?php endif; ?>

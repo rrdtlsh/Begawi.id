@@ -35,7 +35,6 @@
                         </td>
                         <td><?= date('d M Y, H:i', strtotime($applicant->applied_at)) ?></td>
                         <td>
-                            <!-- PERBAIKAN: Badge status sekarang di kolomnya sendiri -->
                             <?php
                                     $status_class = [
                                         'pending' => 'bg-warning text-dark',
@@ -49,7 +48,6 @@
                         </td>
                         <td>
                             <div class="d-flex align-items-center gap-2">
-                                <!-- Tombol Aksi Lainnya -->
                                 <a href="<?= site_url('vendor/jobs/applicant/' . $applicant->application_id) ?>"
                                     class="btn btn-sm btn-light border" title="Lihat Detail Pelamar">
                                     Detail
@@ -60,7 +58,6 @@
                                     Unduh CV
                                 </a>
 
-                                <!-- Form untuk mengubah status -->
                                 <form
                                     action="<?= site_url('vendor/applicants/' . $applicant->application_id . '/status') ?>"
                                     method="post" class="d-flex gap-1 ms-auto">

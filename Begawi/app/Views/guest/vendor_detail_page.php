@@ -193,7 +193,7 @@
                 <?php foreach ($jobs as $job): ?>
                     <div class="col-md-6 d-flex align-items-stretch">
                         <div class="card job-card w-100">
-                             <div class="card-body d-flex flex-column">
+                            <div class="card-body d-flex flex-column">
                                 <div class="d-flex align-items-start mb-3">
                                     <div class="company-logo me-3"><?= esc(substr($vendor->company_name, 0, 2)) ?></div>
                                     <div>
@@ -217,12 +217,12 @@
             <?php endif; ?>
 
             <h4 class="section-title">Pelatihan Tersedia</h4>
-             <?php if (!empty($trainings)): ?>
+            <?php if (!empty($trainings)): ?>
                 <div class="row">
                 <?php foreach ($trainings as $training): ?>
                     <div class="col-md-6 d-flex align-items-stretch">
-                         <div class="card job-card w-100">
-                             <div class="card-body d-flex flex-column">
+                        <div class="card job-card w-100">
+                            <div class="card-body d-flex flex-column">
                                 <div class="d-flex align-items-start mb-3">
                                     <div class="company-logo me-3"><?= esc(substr($vendor->company_name, 0, 2)) ?></div>
                                     <div>

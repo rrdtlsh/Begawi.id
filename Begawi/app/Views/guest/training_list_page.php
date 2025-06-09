@@ -15,7 +15,6 @@
                         
                         <div class="card-header-new">
                             <?php
-                                // Logika untuk membuat avatar inisial penyelenggara
                                 $organizerName = $training->penyelenggara ?? 'Umum';
                                 $words = explode(' ', $organizerName);
                                 $initials = '';
