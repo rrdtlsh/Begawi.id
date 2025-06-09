@@ -1,5 +1,4 @@
-<?php 
-// app/Controllers/Jobseeker/ChatbotController.php
+<?php
 
 namespace App\Controllers\Jobseeker;
 
@@ -10,16 +9,15 @@ use GuzzleHttp\Exception\RequestException;
 class ChatbotController extends BaseController
 {
     protected $client;
-    protected $MetaApiUrl = 'https://openrouter.ai/api/v1/chat/completions'; 
-    protected $apiKey; // Ganti dengan API key Anda
+    protected $MetaApiUrl = 'https://openrouter.ai/api/v1/chat/completions';
+    protected $apiKey;
 
     public function __construct()
     {
         $this->client = new Client();
 
         $this->apiKey = getenv('OPENROUTER_API_KEY');
-        
-        // Pastikan hanya jobseeker yang bisa mengakses
+
         if (!session()->get('is_jobseeker')) {
             return redirect()->to('/login')->with('error', 'Hanya jobseeker yang dapat mengakses fitur ini');
         }
@@ -46,8 +44,8 @@ class ChatbotController extends BaseController
         }
 
         $question = $this->request->getPost('question');
-        
-                try {
+
+        try {
             $response = $this->client->post($this->MetaApiUrl, [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $this->apiKey,
@@ -87,7 +85,7 @@ class ChatbotController extends BaseController
                     'max_tokens' => 1000,
                     'frequency_penalty' => 0,
                     'presence_penalty' => 0,
-                    'response_format' => [ 'type' => 'text' ],
+                    'response_format' => ['type' => 'text'],
                     'stop' => null,
                     'stream' => false,
                     'stream_options' => null,
@@ -99,13 +97,11 @@ class ChatbotController extends BaseController
                 ]
             ]);
 
-            $responseBodyString = $response->getBody()->getContents(); // Ambil string body
-            $body = json_decode($responseBodyString, true); // Decode ke array
-            
-            // --- Tambahkan logging ini ---
+            $responseBodyString = $response->getBody()->getContents();
+            $body = json_decode($responseBodyString, true);
+
             log_message('debug', 'OpenRouter API Raw Response Body: ' . $responseBodyString);
             log_message('debug', 'OpenRouter API Decoded Body: ' . print_r($body, true));
-            // --- End logging tambahan ---
 
             $answer = $body['choices'][0]['message']['content'] ?? 'Maaf, saya tidak bisa memproses permintaan Anda saat ini.';
 
@@ -115,16 +111,15 @@ class ChatbotController extends BaseController
             ]);
 
         } catch (RequestException $e) {
-            // Ini adalah catch block yang sudah kita perbarui sebelumnya
-            log_message('error', 'API RequestException: ' . $e->getMessage()); 
-            
+            log_message('error', 'API RequestException: ' . $e->getMessage());
+
             if ($e->hasResponse()) {
                 $responseBody = $e->getResponse()->getBody()->getContents();
                 $statusCode = $e->getResponse()->getStatusCode();
-                
+
                 log_message('error', 'API Response Status Code: ' . $statusCode);
                 log_message('error', 'API Response Body: ' . $responseBody);
-                
+
                 $errorData = json_decode($responseBody, true);
                 if (json_last_error() === JSON_ERROR_NONE && isset($errorData['error']['message'])) {
                     $errorMessageFromAPI = $errorData['error']['message'];
@@ -141,9 +136,7 @@ class ChatbotController extends BaseController
                 'status' => 'error',
                 'message' => 'Maaf, terjadi kesalahan saat menghubungi layanan chatbot. Silakan coba lagi nanti.'
             ]);
-        }
-
-        catch (RequestException $e) {
+        } catch (RequestException $e) {
             log_message('error', 'DeepSeek API Error: ' . $e->getMessage());
             return $this->response->setJSON([
                 'status' => 'error',

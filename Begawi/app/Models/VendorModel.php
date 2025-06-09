@@ -10,14 +10,12 @@ class VendorModel extends Model
     protected $primaryKey = 'id';
     protected $returnType = 'object';
     protected $useSoftDeletes = true;
-
-    // --- PASTIKAN FIELD INI LENGKAP ---
     protected $allowedFields = [
         'user_id',
         'company_name',
         'company_email',
         'location_id',
-        'company_address', // Tambahkan ini
+        'company_address',
         'company_profile',
         'company_logo_path',
         'industry',

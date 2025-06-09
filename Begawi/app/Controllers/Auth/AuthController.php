@@ -48,21 +48,54 @@ class AuthController extends BaseController
         $role = $this->request->getPost('role');
         $userModel = new UserModel();
 
-        // Aturan validasi
         $validationRules = [
             'email' => 'required|valid_email|is_unique[users.email]',
             'password' => 'required|min_length[8]',
             'password_confirm' => 'required|matches[password]'
         ];
         if ($role === 'jobseeker') {
-            $validationRules['fullname'] = 'required|min_length[3]';
+            $validationRules['fullname'] = 'required';
             $validationRules['js_location_id'] = 'required';
             $validationRules['skills'] = 'required';
         } elseif ($role === 'vendor') {
-            $validationRules['company_name'] = 'required|min_length[3]';
+            $validationRules['company_name'] = 'required';
             $validationRules['vendor_location_id'] = 'required';
             $validationRules['contact'] = 'required';
         }
+
+        $validationMessages = [
+            'email' => [
+                'required' => 'Alamat email wajib diisi.',
+                'valid_email' => 'Format email tidak valid.',
+                'is_unique' => 'Email ini sudah terdaftar. Silakan gunakan email lain.'
+            ],
+            'password' => [
+                'required' => 'Kata sandi wajib diisi.',
+                'min_length' => 'Kata sandi minimal harus 8 karakter.'
+            ],
+            'password_confirm' => [
+                'required' => 'Konfirmasi kata sandi wajib diisi.',
+                'matches' => 'Konfirmasi kata sandi tidak cocok dengan kata sandi.'
+            ],
+            'fullname' => [
+                'required' => 'Nama lengkap wajib diisi.',
+            ],
+            'js_location_id' => [
+                'required' => 'Domisili wajib dipilih.'
+            ],
+            'skills' => [
+                'required' => 'Keahlian utama wajib dipilih.'
+            ],
+            'company_name' => [
+                'required' => 'Nama perusahaan wajib diisi.'
+            ],
+            'vendor_location_id' => [
+                'required' => 'Domisili usaha wajib dipilih.'
+            ],
+            'contact' => [
+                'required' => 'Nomor kontak wajib diisi.'
+            ]
+        ];
 
         if (!$this->validate($validationRules)) {
             $redirectUrl = ($role === 'vendor') ? '/register/vendor' : '/register/jobseeker';
@@ -72,7 +105,6 @@ class AuthController extends BaseController
         $db = \Config\Database::connect();
         $db->transStart();
 
-        // 1. Simpan data user
         $userFullname = ($role === 'vendor') ? $this->request->getPost('company_name') : $this->request->getPost('fullname');
         $userData = [
             'fullname' => $userFullname,
@@ -87,9 +119,6 @@ class AuthController extends BaseController
         }
         $userId = $userModel->getInsertID();
 
-        // =============================================================
-        // PERBAIKAN STRUKTUR LOGIKA: if/elseif sekarang sejajar
-        // =============================================================
         if ($role === 'jobseeker') {
             $jobseekerModel = new JobseekerModel();
             $jobseekerData = [
@@ -114,10 +143,10 @@ class AuthController extends BaseController
             $vendorData = [
                 'user_id' => $userId,
                 'company_name' => $this->request->getPost('company_name'),
-                'industry' => $this->request->getPost('industry'), // Pastikan field ini ada di form Anda
+                'industry' => $this->request->getPost('industry'),
                 'location_id' => $this->request->getPost('vendor_location_id'),
                 'contact' => $this->request->getPost('contact'),
-                'company_address' => $this->request->getPost('company_address'), // Pastikan field ini ada di form Anda
+                'company_address' => $this->request->getPost('company_address'),
             ];
             if (!$vendorModel->save($vendorData)) {
                 $db->transRollback();
@@ -125,7 +154,6 @@ class AuthController extends BaseController
             }
         }
 
-        // Selesaikan transaksi jika semua berhasil
         $db->transComplete();
 
         if ($db->transStatus() === false) {
@@ -133,11 +161,9 @@ class AuthController extends BaseController
             return redirect()->to('/register/jobseeker')->withInput()->with('error', 'Terjadi kesalahan pada database, registrasi gagal.');
         }
 
-        // Redirect terakhir, berada di luar semua kondisi if/else
         return redirect()->to('/login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 
-    // ... (method login, processLogin, logout) ...
     public function login()
     {
         return view('auth/login_page');

@@ -31,37 +31,36 @@ class JobModel extends Model
     protected $updatedField = 'updated_at';
     protected $deletedField = 'deleted_at';
 
-    // *** ATURAN VALIDASI UNTUK PEMBUATAN BARU ***
     protected $validationRules = [
         'title' => 'required|max_length[255]',
         'category_id' => 'required|integer',
         'location_id' => 'required|integer',
         'description' => 'required',
-        'qualifications' => 'permit_empty|string', // Kualifikasi opsional saat ini, tapi bisa string
-        'application_instructions' => 'permit_empty|string', // Opsional
+        'qualifications' => 'permit_empty|string',
+        'application_instructions' => 'permit_empty|string',
         'job_type' => 'required|in_list[Full-time,Part-time,Contract,Internship,Freelance]',
         'salary_min' => 'permit_empty|integer|less_than_equal_to[salary_max]',
         'salary_max' => 'permit_empty|integer',
         'application_deadline' => 'required',
         'quota' => 'permit_empty|integer|greater_than_equal_to[1]',
         'contact_email' => 'required|valid_email',
-        'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]', // Opsional
+        'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]',
     ];
 
     protected $validationRulesUpdate = [
-        'title' => 'permit_empty|max_length[255]', // TIDAK WAJIB
-        'category_id' => 'permit_empty|integer', // TIDAK WAJIB
-        'location_id' => 'permit_empty|integer', // TIDAK WAJIB
-        'description' => 'permit_empty', // TIDAK WAJIB
-        'qualifications' => 'permit_empty|string', // Kualifikasi opsional saat ini, tapi bisa string
-        'application_instructions' => 'permit_empty|string', // Opsional
-        'job_type' => 'permit_empty|in_list[Full-time,Part-time,Contract,Internship,Freelance]', // TIDAK WAJIB
+        'title' => 'permit_empty|max_length[255]',
+        'category_id' => 'permit_empty|integer',
+        'location_id' => 'permit_empty|integer',
+        'description' => 'permit_empty',
+        'qualifications' => 'permit_empty|string',
+        'application_instructions' => 'permit_empty|string',
+        'job_type' => 'permit_empty|in_list[Full-time,Part-time,Contract,Internship,Freelance]',
         'salary_min' => 'permit_empty|integer|less_than_equal_to[salary_max]',
         'salary_max' => 'permit_empty|integer',
-        'application_deadline' => 'permit_empty|valid_date[Y-m-d H:i:s]|after_now', // TIDAK WAJIB
+        'application_deadline' => 'permit_empty|valid_date[Y-m-d H:i:s]|after_now',
         'quota' => 'permit_empty|integer|greater_than_equal_to[1]',
-        'contact_email' => 'permit_empty|valid_email', // TIDAK WAJIB
-        'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]', // Opsional
+        'contact_email' => 'permit_empty|valid_email',
+        'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]',
     ];
 
     protected $validationMessages = [
@@ -98,9 +97,6 @@ class JobModel extends Model
         ],
     ];
 
-    /**
-     * Mengambil data lowongan terbaru untuk halaman utama.
-     */
     public function getLatestJobs(int $limit = 6)
     {
         return $this->select('
@@ -116,10 +112,6 @@ class JobModel extends Model
             ->findAll();
     }
 
-    /**
-     * Method untuk menangani logika pencarian.
-     * INI ADALAH METHOD YANG DIBUTUHKAN SAAT ANDA MENEKAN "CARI".
-     */
     public function searchJobs($keyword, $locationId, $categoryId)
     {
         $builder = $this->select('
@@ -155,7 +147,6 @@ class JobModel extends Model
             ->join('vendors', 'vendors.id = jobs.vendor_id')
             ->join('locations', 'locations.id = jobs.location_id', 'left');
 
-        // Filter berdasarkan kata kunci
         if ($keyword) {
             $builder->groupStart();
             $builder->like('jobs.title', $keyword);
@@ -163,17 +154,13 @@ class JobModel extends Model
             $builder->groupEnd();
         }
 
-        // Filter berdasarkan lokasi
         if ($location) {
             $builder->where('jobs.location_id', $location);
         }
 
-        // Filter berdasarkan kategori
         if ($category) {
             $builder->where('jobs.category_id', $category);
         }
-
-        // KEMBALIKAN BUILDER-NYA, JANGAN JALANKAN findAll() DI SINI
         return $builder->orderBy('jobs.created_at', 'DESC');
     }
 

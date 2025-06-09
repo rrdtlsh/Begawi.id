@@ -5,22 +5,17 @@ namespace App\Controllers\Vendor;
 use App\Controllers\BaseController;
 use App\Models\JobApplicationModel;
 use App\Models\JobseekerModel;
-use App\Models\JobModel; // <-- Pastikan JobModel dipanggil di sini
+use App\Models\JobModel;
 
 class JobApplicationController extends BaseController
 {
-    /**
-     * Menampilkan halaman form lamaran pekerjaan.
-     */
     public function showApplicationForm($jobId)
     {
-        // ... (kode pengecekan session tetap sama) ...
 
         $jobModel = new JobModel();
-        $jobseekerModel = new JobseekerModel(); // Panggil JobseekerModel
+        $jobseekerModel = new JobseekerModel();
 
         $job = $jobModel->getJobDetails($jobId);
-        // Ambil data profil untuk mendapatkan nomor telepon
         $profile = $jobseekerModel->where('user_id', session()->get('user_id'))->first();
 
         if (!$job) {
@@ -30,18 +25,14 @@ class JobApplicationController extends BaseController
         $data = [
             'title' => 'Lamar Posisi: ' . $job->title,
             'job' => $job,
-            'profile' => $profile, // Kirim data profil ke view
+            'profile' => $profile,
         ];
 
         return view('jobseeker\application\job_application_form', $data);
     }
 
-    /**
-     * Memproses dan menyimpan data dari form lamaran.
-     */
     public function submitApplication($jobId)
     {
-        // Keamanan: Hanya jobseeker yang boleh mengirim lamaran
         if (session()->get('role') !== 'jobseeker') {
             return redirect()->back()->with('error', 'Akses tidak sah.');
         }
@@ -49,7 +40,6 @@ class JobApplicationController extends BaseController
         $applicationModel = new JobApplicationModel();
         $jobseekerId = session()->get('profile_id');
 
-        // Aturan validasi untuk form
         $rules = [
             'cover_letter' => 'required',
             'resume' => [
@@ -62,12 +52,10 @@ class JobApplicationController extends BaseController
             return redirect()->to('/lamar/job/' . $jobId)->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        // Proses upload file CV
         $resumeFile = $this->request->getFile('resume');
         $newName = $resumeFile->getRandomName();
         $resumeFile->move('uploads/resumes', $newName);
 
-        // Siapkan data untuk disimpan
         $data = [
             'job_id' => $jobId,
             'jobseeker_id' => $jobseekerId,
@@ -76,15 +64,10 @@ class JobApplicationController extends BaseController
             'status' => 'pending',
         ];
 
-        // Simpan data ke database
         if ($applicationModel->save($data)) {
-            // Jika berhasil, arahkan kembali ke halaman detail dengan pesan sukses
             return redirect()->to('/lowongan/detail/' . $jobId)->with('success', 'Lamaran Anda berhasil terkirim!');
         } else {
-            // Jika gagal, kembali ke form dengan pesan error
             return redirect()->back()->with('error', 'Gagal mengirim lamaran. Silakan coba lagi.');
         }
     }
-
-    // Fungsi applyJob() yang lama sudah kita hapus karena tidak digunakan lagi
 }

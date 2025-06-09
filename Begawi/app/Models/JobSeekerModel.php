@@ -4,7 +4,6 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-// Nama kelas lebih baik diseragamkan menjadi JobseekerModel (s kecil)
 class JobSeekerModel extends Model
 {
     protected $table = 'jobseekers';
@@ -26,7 +25,6 @@ class JobSeekerModel extends Model
     protected $updatedField = 'updated_at';
     protected $deletedField = 'deleted_at';
 
-    // FUNGSI INI SUDAH BENAR DAN TETAP DIPERLUKAN
     public function getProfileByUserId(int $userId)
     {
         $profile = $this->select('jobseekers.*, locations.name as location_name')
@@ -51,12 +49,10 @@ class JobSeekerModel extends Model
 
     public function getJobseekerSkills(int $jobseekerId)
     {
-        // Pastikan ada ID yang valid sebelum menjalankan query
         if ($jobseekerId <= 0) {
             return [];
         }
 
-        // Query ke tabel pivot 'jobseeker_skills'
         return $this->db->table('jobseeker_skills')
             ->select('skills.id, skills.name')
             ->join('skills', 'skills.id = jobseeker_skills.skill_id')

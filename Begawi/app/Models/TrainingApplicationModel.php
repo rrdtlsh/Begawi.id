@@ -17,7 +17,6 @@ class TrainingApplicationModel extends Model
         'status',
     ];
 
-    // Menggunakan timestamps dengan nama kolom custom
     protected $useTimestamps = true;
     protected $createdField = 'enrolled_at';
     protected $updatedField = 'updated_at';
@@ -60,14 +59,12 @@ class TrainingApplicationModel extends Model
             ->groupBy('status')
             ->findAll();
 
-        // Siapkan array dengan semua kemungkinan status
         $counts = [
             'pending' => 0,
             'accepted' => 0,
             'rejected' => 0,
         ];
 
-        // Isi array dengan hasil hitungan dari database
         foreach ($result as $row) {
             if (array_key_exists($row->status, $counts)) {
                 $counts[$row->status] = (int) $row->count;

@@ -4,7 +4,7 @@ namespace App\Controllers\Home;
 
 use App\Controllers\BaseController;
 use App\Models\TrainingModel;
-use App\Models\TrainingApplicationModel; // Panggil model aplikasi
+use App\Models\TrainingApplicationModel;
 
 class TrainingPageController extends BaseController
 {
@@ -24,17 +24,12 @@ class TrainingPageController extends BaseController
         return view('guest/training_list_page', $data);
     }
 
-    /**
-     * Menampilkan halaman detail untuk satu pelatihan.
-     */
     public function detail($id = null)
     {
         $trainingModel = new TrainingModel();
 
-        // --- PERBAIKAN: Gunakan fungsi baru dari model ---
         $training = $trainingModel->getTrainingDetails($id);
 
-        // Jika pelatihan tidak ditemukan, tampilkan halaman 404
         if (!$training) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
@@ -52,12 +47,12 @@ class TrainingPageController extends BaseController
             if ($existingApplication) {
                 $isRegistered = true;
             }
-            if ($training->quota > 0 && !$isRegistered) { // Tambahan: Cek hanya jika belum terdaftar
-            $applicantCount = $trainingApplicationModel->where('training_id', $id)->countAllResults();
-            if ($applicantCount >= $training->quota) {
-                $isQuotaFull = true;
+            if ($training->quota > 0 && !$isRegistered) { // tambahan: logika cek kuota dan apakah sudah terdafatar
+                $applicantCount = $trainingApplicationModel->where('training_id', $id)->countAllResults();
+                if ($applicantCount >= $training->quota) {
+                    $isQuotaFull = true;
+                }
             }
-        }
         }
 
 

@@ -11,7 +11,6 @@ class JobPageController extends BaseController
 {
     public function __construct()
     {
-        // Memuat Text Helper (untuk word_limiter) dan URL Helper (untuk site_url)
         helper(['text', 'url']);
     }
     public function index()
@@ -46,13 +45,11 @@ class JobPageController extends BaseController
         $jobModel = new JobModel();
         $job = $jobModel->getJobDetails($id);
 
-        // Jika lowongan dengan ID tersebut tidak ada, tampilkan halaman 404
         if (!$job) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
         $hasApplied = false;
-        // Cek apakah user sudah melamar, HANYA jika dia adalah jobseeker yang login
         if (session()->get('isLoggedIn') && session()->get('role') === 'jobseeker') {
             $appModel = new JobApplicationModel();
             $jobseekerId = session()->get('profile_id');
@@ -69,7 +66,7 @@ class JobPageController extends BaseController
         $data = [
             'title' => $job->title,
             'job' => $job,
-            'hasApplied' => $hasApplied, // Kirim status lamaran (true/false) ke view
+            'hasApplied' => $hasApplied,
         ];
         return view('guest/job_detail_page', $data);
     }

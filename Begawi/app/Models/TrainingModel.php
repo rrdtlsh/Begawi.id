@@ -29,7 +29,6 @@ class TrainingModel extends Model
     protected $useTimestamps = true;
     protected $deletedField = 'deleted_at';
 
-    // Aturan validasi untuk CREATE (pembuatan baru)
     protected $validationRules = [
         'title' => 'required|max_length[255]',
         'category_id' => 'required|is_natural_no_zero',
@@ -39,14 +38,12 @@ class TrainingModel extends Model
         'registration_instructions' => 'required',
         'contact_email' => 'required|valid_email',
         'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]',
-        'start_date' => 'required', // <<< PASTIKAN TANGGAL MULAI DI MASA DEPAN
+        'start_date' => 'required',
         'end_date' => 'permit_empty',
-        'duration' => 'required|integer|greater_than[0]', // <<< KEMBALIKAN KE INTEGER
-        // 'duration_type'             => 'required|in_list[jam,hari]', // <<< HAPUS BARIS INI
+        'duration' => 'required|integer|greater_than[0]',
         'quota' => 'permit_empty|integer|greater_than_equal_to[1]',
     ];
 
-    // Aturan validasi untuk UPDATE (edit)
     protected $validationRulesUpdate = [
         'title' => 'permit_empty|max_length[255]',
         'category_id' => 'permit_empty|is_natural_no_zero',
@@ -58,7 +55,7 @@ class TrainingModel extends Model
         'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]',
         'start_date' => 'permit_empty',
         'end_date' => 'permit_empty|after_field[start_date]',
-        'duration' => 'permit_empty|integer|greater_than[0]', // <<< KEMBALIKAN KE INTEGER
+        'duration' => 'permit_empty|integer|greater_than[0]',
         'quota' => 'permit_empty|integer|greater_than_equal_to[1]',
     ];
 

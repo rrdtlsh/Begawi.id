@@ -9,7 +9,6 @@ use App\Models\LocationModel;
 
 class ProfileController extends BaseController
 {
-    // Fungsi edit() sudah benar, tugasnya menampilkan form dengan data yang ada
     public function edit()
     {
         $vendorModel = new VendorModel();
@@ -29,7 +28,6 @@ class ProfileController extends BaseController
         return view('vendor/profile/form', $data);
     }
 
-    // Fungsi update() ini sudah menangani validasi, update data, dan upload logo
     public function update()
     {
         $userModel = new UserModel();

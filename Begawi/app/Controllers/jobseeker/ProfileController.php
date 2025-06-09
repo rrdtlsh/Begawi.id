@@ -10,9 +10,6 @@ use App\Models\SkillModel;
 
 class ProfileController extends BaseController
 {
-    /**
-     * Menampilkan halaman form untuk mengedit profil jobseeker.
-     */
     public function edit()
     {
         $jobseekerModel = new JobseekerModel();
@@ -36,9 +33,6 @@ class ProfileController extends BaseController
         return view('jobseeker/profile/form', $data);
     }
 
-    /**
-     * Memproses data dari form edit profil secara fleksibel.
-     */
     public function update()
     {
         $userModel = new UserModel();
@@ -48,10 +42,9 @@ class ProfileController extends BaseController
         $userId = session()->get('user_id');
         $jobseekerId = session()->get('profile_id');
 
-        // Aturan validasi yang lebih fleksibel
         $rules = [
-            'fullname' => 'required|min_length[3]', // Nama tetap wajib
-            'location_id' => 'required|is_natural_no_zero', // Domisili tetap wajib
+            'fullname' => 'required|min_length[3]',
+            'location_id' => 'required|is_natural_no_zero',
             'profile_picture' => [
                 'label' => 'Foto Profil',
                 'rules' => 'is_image[profile_picture]|max_size[profile_picture,1024]',
@@ -66,10 +59,8 @@ class ProfileController extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        // --- UPDATE DATA PENGGUNA (TABEL USERS) ---
         $userModel->update($userId, ['fullname' => $this->request->getPost('fullname')]);
 
-        // --- UPDATE DATA PROFIL (TABEL JOBSEEKERS) ---
         $jobseekerData = [
             'location_id' => $this->request->getPost('location_id'),
             'phone' => $this->request->getPost('phone'),
@@ -100,11 +91,8 @@ class ProfileController extends BaseController
 
         $jobseekerModel->update($jobseekerId, $jobseekerData);
 
-        // --- UPDATE DATA KEAHLIAN (TABEL PIVOT) ---
         $selectedSkills = $this->request->getPost('skills');
-        // Selalu hapus semua skill lama milik user ini
         $db->table('jobseeker_skills')->delete(['jobseeker_id' => $jobseekerId]);
-        // Jika pengguna memilih skill baru (tidak kosong), masukkan ke database
         if (!empty($selectedSkills)) {
             $skillsData = [];
             foreach ($selectedSkills as $skillId) {

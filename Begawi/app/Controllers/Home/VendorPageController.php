@@ -9,9 +9,6 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 class VendorPageController extends BaseController
 {
-    /**
-     * Menampilkan halaman daftar semua perusahaan.
-     */
     public function index()
     {
         $vendorModel = new VendorModel();
@@ -23,22 +20,17 @@ class VendorPageController extends BaseController
         return view('guest/vendor_list_page', $data);
     }
 
-    /**
-     * Menampilkan halaman detail satu perusahaan.
-     */
     public function detail($vendorId = null)
     {
         $vendorModel = new VendorModel();
         $jobModel = new JobModel();
 
-        // Menggunakan FUNGSI YANG SAMA, hanya beda kriteria
         $vendor = $vendorModel->getProfileById($vendorId);
 
         if (!$vendor) {
             throw PageNotFoundException::forPageNotFound();
         }
 
-        // Ambil semua lowongan aktif dari perusahaan ini
         $jobs = $jobModel->where('vendor_id', $vendorId)
             ->orderBy('created_at', 'DESC')
             ->findAll();
