@@ -10,12 +10,14 @@ use GuzzleHttp\Exception\RequestException;
 class ChatbotController extends BaseController
 {
     protected $client;
-    protected $deepseekApiUrl = 'https://openrouter.ai/api/v1/chat/completions'; 
-    protected $apiKey = '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'; // Ganti dengan API key Anda
+    protected $MetaApiUrl = 'https://openrouter.ai/api/v1/chat/completions'; 
+    protected $apiKey; // Ganti dengan API key Anda
 
     public function __construct()
     {
         $this->client = new Client();
+
+        $this->apiKey = getenv('OPENROUTER_API_KEY');
         
         // Pastikan hanya jobseeker yang bisa mengakses
         if (!session()->get('is_jobseeker')) {
@@ -46,7 +48,7 @@ class ChatbotController extends BaseController
         $question = $this->request->getPost('question');
         
                 try {
-            $response = $this->client->post($this->deepseekApiUrl, [
+            $response = $this->client->post($this->MetaApiUrl, [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $this->apiKey,
                     'Content-Type' => 'application/json',
@@ -63,6 +65,7 @@ class ChatbotController extends BaseController
                             - Membantu dalam pengembangan karir, termasuk identifikasi skill dan peluang.
                             - Memberikan panduan praktis untuk penulisan CV dan resume yang menarik.
                             - Menyiapkan pengguna untuk wawancara kerja yang sukses, termasuk tips dan simulasi.
+                            - Jangan menjawab diluar konteks pekerjaan, dunia kerja, dan pelatihan yang berkaitan dengan pekerjaan. Mohon tolak secara halus untuk pertanyaan diluar konteks tersebut seperti Maaf, saya tidak dapat membantu dengan pertanyaan tersebut karena topiknya tidak terkait dengan dunia karir atau pekerjaan. Jika Anda memiliki pertanyaan tentang strategi pencarian kerja, pengembangan karir, atau tips wawancara, saya dengan senang hati membantu.
 
                             Saat memberikan informasi yang berbentuk daftar, langkah-langkah, atau poin-poin penting, mohon **gunakan format daftar berpoin (bullet points)** atau **daftar bernomor (numbered lists) dengan jelas (Markdown)** agar mudah dibaca dan dipahami. Pastikan setiap poin disajikan secara terpisah dan rapi. Hindari paragraf panjang untuk daftar.
 
