@@ -14,6 +14,8 @@ class JobApplicationController extends BaseController
      */
     public function showApplicationForm($jobId)
     {
+        // ... (kode pengecekan session tetap sama) ...
+
         $jobModel = new JobModel();
         $jobseekerModel = new JobseekerModel(); // Panggil JobseekerModel
 
@@ -31,7 +33,7 @@ class JobApplicationController extends BaseController
             'profile' => $profile, // Kirim data profil ke view
         ];
 
-        return view('job_application_form', $data);
+        return view('jobseeker\application\job_application_form', $data);
     }
 
     /**

@@ -38,7 +38,7 @@ class JobPageController extends BaseController
                 'category' => $category,
             ]
         ];
-        return view('job_list_page', $data);
+        return view('guest/job_list_page', $data);
     }
 
     public function detail($id = null)
@@ -71,7 +71,7 @@ class JobPageController extends BaseController
             'job' => $job,
             'hasApplied' => $hasApplied, // Kirim status lamaran (true/false) ke view
         ];
-        return view('job_detail_page', $data);
+        return view('guest/job_detail_page', $data);
     }
 }
 ?>

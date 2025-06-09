@@ -59,6 +59,6 @@ class SearchController extends BaseController
         $data['search_action'] = site_url('search/process');
 
         // 4. Tampilkan hasilnya di view search_result_view
-        return view('search_result_view', $data);
+        return view('guest/search_result_view', $data);
     }
 }

@@ -60,6 +60,6 @@ class HistoryController extends BaseController
             'history' => $history,
         ];
 
-        return view('jobseeker/history_page', $data);
+        return view('jobseeker/dashboard/history_page', $data);
     }
 }

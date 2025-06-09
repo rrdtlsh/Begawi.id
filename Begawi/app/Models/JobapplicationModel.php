@@ -19,13 +19,11 @@ class JobApplicationModel extends Model
         'notes',
     ];
 
+    // Menggunakan timestamps
     protected $useTimestamps = true;
     protected $createdField = 'applied_at';
     protected $updatedField = 'updated_at';
 
-    /*
-    Mendapatkan riwayat lamaran pekerjaan berdasarkan ID jobseeker
-     */
     public function getHistoryByJobseeker($jobseekerId)
     {
         return $this->select('
@@ -42,10 +40,6 @@ class JobApplicationModel extends Model
             ->findAll();
     }
 
-    /*
-    Mendapatkan jumlah lamaran berdasarkan status untuk jobseeker tertentu
-     */
-
     public function getStatusCountsByJobseeker($jobseekerId)
     {
         $result = $this->select('status, COUNT(id) as count')
@@ -60,6 +54,7 @@ class JobApplicationModel extends Model
         ];
 
         foreach ($result as $row) {
+            // Ubah nama status agar cocok dengan desain (accepted -> Diterima, dll)
             if ($row->status === 'pending')
                 $counts['pending'] = $row->count;
             if ($row->status === 'accepted')
@@ -70,12 +65,8 @@ class JobApplicationModel extends Model
         return $counts;
     }
 
-    /*Mendapatkan daftar pelamar untuk sebuah lowongan pekerjaan
-    Digunakan di halaman detail lowongan pekerjaan oleh vendor
-    */
     public function getApplicantsForJob($jobId)
     {
-
         return $this->select('
                         job_applications.id as application_id,
                         job_applications.status,
@@ -84,15 +75,16 @@ class JobApplicationModel extends Model
                         users.fullname as jobseeker_name,
                         users.email as jobseeker_email
                     ')
+            // 1. Join ke tabel jobseekers
             ->join('jobseekers', 'jobseekers.id = job_applications.jobseeker_id')
+            // 2. Dari jobseekers, join ke tabel users
             ->join('users', 'users.id = jobseekers.user_id')
             ->where('job_applications.job_id', $jobId)
             ->orderBy('job_applications.applied_at', 'ASC')
             ->findAll();
+
     }
 
-    /* Mendapatkan detail lamaran untuk email notifikasi
-     Digunakan saat status lamaran diubah menjadi 'accepted' */
     public function getApplicationDetailsForEmail($applicationId)
     {
         return $this->select('
@@ -112,8 +104,6 @@ class JobApplicationModel extends Model
             ->first();
     }
 
-    //Mendapatkan detail pelamar untuk ditampilkan di halaman detail lamaran
-    // Digunakan di halaman detail lamaran oleh vendor
     public function getApplicantDetail(int $applicationId)
     {
         return $this->select('

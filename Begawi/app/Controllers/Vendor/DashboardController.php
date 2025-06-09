@@ -45,6 +45,6 @@ class DashboardController extends BaseController
         ];
 
         // 5. Menampilkan view dashboard
-        return view('vendor/dashboard', $data);
+        return view('vendor/profile/dashboard', $data);
     }
 }

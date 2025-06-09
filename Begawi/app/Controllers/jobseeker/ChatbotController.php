@@ -27,7 +27,7 @@ class ChatbotController extends BaseController
 
     public function index()
     {
-        return view('chatbot_page');
+        return view('jobseeker\chatbot\chatbot_page');
     }
 
     public function ask()

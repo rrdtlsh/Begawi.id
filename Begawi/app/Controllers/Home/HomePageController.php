@@ -43,7 +43,7 @@ class HomePageController extends BaseController
             $data['jobs'] = $jobModel->getLatestJobs(6);
             $data['list_title'] = 'Lowongan Terbaru'; // Judul untuk halaman utama
         }
-        return view('home', $data);
+        return view('guest/home', $data);
 
     }
 
@@ -53,6 +53,6 @@ class HomePageController extends BaseController
             'title' => 'Tentang Begawi'
         ];
 
-        return view('about_us_view', $data);
+        return view('guest/about_us_view', $data);
     }
 }
