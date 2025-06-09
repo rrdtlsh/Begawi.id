@@ -31,7 +31,7 @@ class TrainingModel extends Model
 
     // Aturan validasi untuk CREATE (pembuatan baru)
     protected $validationRules = [
-        'title' => 'required|min_length[5]|max_length[255]',
+        'title' => 'required|max_length[255]',
         'category_id' => 'required|is_natural_no_zero',
         'location_id' => 'required|is_natural_no_zero',
         'description' => 'required',
@@ -48,7 +48,7 @@ class TrainingModel extends Model
 
     // Aturan validasi untuk UPDATE (edit)
     protected $validationRulesUpdate = [
-        'title' => 'permit_empty|min_length[5]|max_length[255]',
+        'title' => 'permit_empty|max_length[255]',
         'category_id' => 'permit_empty|is_natural_no_zero',
         'location_id' => 'permit_empty|is_natural_no_zero',
         'description' => 'permit_empty',
@@ -65,7 +65,6 @@ class TrainingModel extends Model
     protected $validationMessages = [
         'title' => [
             'required' => 'Judul pelatihan wajib diisi.',
-            'min_length' => 'Judul minimal 5 karakter.',
             'max_length' => 'Judul maksimal 255 karakter.'
         ],
         'category_id' => [
@@ -104,10 +103,6 @@ class TrainingModel extends Model
             'integer' => 'Durasi harus berupa angka bulat.',
             'greater_than' => 'Durasi harus lebih besar dari 0.'
         ],
-        // 'duration_type' => [ // <<< HAPUS PESAN VALIDASI INI
-        //     'required' => 'Tipe durasi wajib dipilih.',
-        //     'in_list' => 'Tipe durasi tidak valid (pilih Jam atau Hari).'
-        // ],
         'quota' => [
             'integer' => 'Kuota harus berupa angka bulat.',
             'greater_than_equal_to' => 'Kuota tidak boleh negatif.'
