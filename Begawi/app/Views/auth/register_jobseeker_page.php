@@ -24,7 +24,7 @@
     <div class="input-group">
         <label for="fullname">Nama Lengkap</label>
         <input type="text" id="fullname" name="fullname" placeholder="Masukkan nama lengkap Anda"
-            value="<?= old('fullname') ?>" required>
+            value="<?= esc(old('fullname')) ?>" required>
     </div>
 
     <div class="input-group">
@@ -32,7 +32,7 @@
         <select id="js_location_id" name="js_location_id" required>
             <option value="" disabled selected>Pilih Domisili</option>
             <?php foreach ($locations as $loc): ?>
-                <option value="<?= $loc->id ?>" <?= old('js_location_id') == $loc->id ? 'selected' : '' ?>>
+                <option value="<?= esc($loc->id) ?>" <?= old('js_location_id') == $loc->id ? 'selected' : '' ?>>
                     <?= esc($loc->name) ?>
                 </option>
             <?php endforeach; ?>
@@ -40,11 +40,11 @@
     </div>
 
     <div class="input-group">
-        <label for="skill_id">Keahlian Utama</label> 
+        <label for="skill_id">Keahlian Utama</label>
         <select id="skill_id" name="skills" required>
             <option value="" disabled selected>Pilih Keahlian Utama</option>
             <?php foreach ($skills as $skill): ?>
-                <option value="<?= $skill->id ?>" <?= old('skills') == $skill->id ? 'selected' : '' ?>>
+                <option value="<?= esc($skill->id) ?>" <?= old('skills') == $skill->id ? 'selected' : '' ?>>
                     <?= esc($skill->name) ?>
                 </option>
             <?php endforeach; ?>
@@ -53,7 +53,7 @@
 
     <div class="input-group">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="email@example.com" value="<?= old('email') ?>"
+        <input type="email" id="email" name="email" placeholder="email@example.com" value="<?= esc(old('email')) ?>"
             required>
     </div>
 

@@ -59,8 +59,6 @@ class JobApplicationController extends BaseController
         ];
 
         if (!$this->validate($rules)) {
-            // Jika validasi gagal, kembali ke form dengan pesan error
-            // Perbaikan redirect: kembali ke halaman form lamaran, bukan halaman generik
             return redirect()->to('/lamar/job/' . $jobId)->withInput()->with('errors', $this->validator->getErrors());
         }
 

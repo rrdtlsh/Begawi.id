@@ -3,6 +3,7 @@
 <?= $this->section('content') ?>
 
 <div class="form-container">
+
     <div class="text-center mb-4">
         <a href="<?= site_url('/') ?>" class="text-decoration-none">
             <div class="logo-begawi">Begaw<span>i</span></div>
@@ -19,17 +20,19 @@
     <?php endif; ?>
 
     <?= form_open('login/process') ?>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com" value="<?= old('email') ?>" required />
-        </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com"
+            value="<?= old('email') ?>" required />
+    </div>
 
-        <div class="mb-3">
-            <label for="password" class="form-label">Kata Sandi</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan kata sandi" required />
-        </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Kata Sandi</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan kata sandi"
+            required />
+    </div>
 
-        <button type="submit" class="btn btn-primary w-100">MASUK</button>
+    <button type="submit" class="btn btn-primary w-100">MASUK</button>
     <?= form_close() ?>
 
     <p class="signup-link">

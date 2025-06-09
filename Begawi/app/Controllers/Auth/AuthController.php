@@ -178,6 +178,7 @@ class AuthController extends BaseController
             'isLoggedIn' => true,
         ];
         session()->set($sessionData);
+        session()->regenerate();
 
         if ($user->role === 'vendor') {
             return redirect()->to('/vendor/dashboard');
