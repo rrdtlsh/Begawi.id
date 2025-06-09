@@ -49,7 +49,7 @@
                     <label for="profile_picture">Foto Profil</label>
                     <?php if (!empty($profile->profile_picture_path)): ?>
                         <img src="<?= base_url('uploads/avatars/' . esc($profile->profile_picture_path)) ?>"
-                             alt="Foto saat ini" class="img-thumbnail mb-2" width="120">
+                            alt="Foto saat ini" class="img-thumbnail mb-2" width="120">
                     <?php endif; ?>
                     <input type="file" name="profile_picture" id="profile_picture" class="form-control-file">
                     <small class="form-text">Format: JPG, PNG. Maks: 1MB.</small>
@@ -58,13 +58,13 @@
                 <div class="form-group">
                     <label for="fullname">Nama Lengkap</label>
                     <input type="text" id="fullname" name="fullname" class="form-control"
-                           value="<?= old('fullname', $profile->user_fullname ?? session()->get('fullname') ?? '') ?>" required>
+                        value="<?= old('fullname', $profile->user_fullname ?? session()->get('fullname') ?? '') ?>" required>
                 </div>
 
                 <div class="form-group">
                     <label for="phone">Nomor Telepon</label>
                     <input type="tel" id="phone" name="phone" class="form-control"
-                           value="<?= old('phone', $profile->phone ?? '') ?>" placeholder="Contoh: 08123456789">
+                        value="<?= old('phone', $profile->phone ?? '') ?>" placeholder="Contoh: 08123456789">
                 </div>
 
                 <div class="form-group">

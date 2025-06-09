@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title><?= esc($title ?? 'Riwayat Lamaran') ?></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Menambahkan link ke Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <style>
     .status-card {
@@ -69,7 +68,6 @@
         padding: .5em .8em;
     }
 
-    /* Style baru untuk metadata */
     .item-metadata {
         display: flex;
         font-size: 0.8rem;
@@ -81,7 +79,6 @@
         display: flex;
         align-items: center;
         margin-right: 15px;
-        /* Jarak antara tipe dan tanggal */
     }
 
     .item-metadata .date-label {
@@ -92,7 +89,6 @@
 </head>
 
 <body style="background-color: #f8f9fa;">
-    <!-- Salin Navbar dari halaman dashboard Anda -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">...</nav>
 
     <div class="container my-4">
@@ -131,25 +127,23 @@
                         class="text-muted"><?= esc($item->company_name ?? 'Oleh: ' . ($item->penyelenggara ?? 'N/A')) ?></small>
 
                     <div class="item-metadata">
-                        <?php if (isset($item->job_title)): // Ini adalah Lamaran Kerja ?>
+                        <?php if (isset($item->job_title)): ?>
                         <div class="type-label">
                             <i class="bi bi-briefcase-fill mr-1"></i>
                             Lamaran Kerja
                         </div>
                         <div class="date-label">
                             <i class="bi bi-calendar3 mr-1"></i>
-                            <?php // PERBAIKAN: Menambahkan pengecekan sebelum menampilkan tanggal ?>
                             Diajukan:
                             <?= isset($item->applied_at) ? date('d M Y', strtotime($item->applied_at)) : 'N/A' ?>
                         </div>
-                        <?php else: // Ini adalah Pendaftaran Pelatihan ?>
+                        <?php else:  ?>
                         <div class="type-label">
                             <i class="bi bi-easel-fill mr-1"></i>
                             Pelatihan
                         </div>
                         <div class="date-label">
                             <i class="bi bi-calendar3 mr-1"></i>
-                            <?php // PERBAIKAN: Menambahkan pengecekan sebelum menampilkan tanggal ?>
                             Didaftar:
                             <?= isset($item->enrolled_at) ? date('d M Y', strtotime($item->enrolled_at)) : 'N/A' ?>
                         </div>

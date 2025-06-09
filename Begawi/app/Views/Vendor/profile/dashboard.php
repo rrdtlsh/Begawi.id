@@ -2,7 +2,6 @@
 
 <?= $this->section('content') ?>
 
-<!-- Profil Perusahaan -->
 <?php if (!empty($vendor)): ?>
     <section class="card profile-card mb-4">
         <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center">
@@ -35,12 +34,10 @@
     </section>
 <?php endif; ?>
 
-<!-- Pekerjaan Anda -->
 <section class="mb-5">
     <h2 class="h4 fw-bold mb-4">Pekerjaan Anda</h2>
     <div class="row g-4">
 
-        <!-- Daftar Lowongan -->
         <?php if (!empty($jobs)): ?>
             <?php foreach ($jobs as $job): ?>
                 <div class="col-md-6 col-xl-4">
@@ -69,7 +66,6 @@
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <!-- PERBAIKAN: Pesan ini sekarang dibungkus dalam card agar sama -->
             <div class="col-12">
                 <div class="card">
                     <div class="card-body text-center text-secondary">
@@ -81,7 +77,6 @@
     </div>
 </section>
 
-<!-- Pelatihan Anda -->
 <section>
     <h2 class="h4 fw-bold mb-4">Pelatihan Anda</h2>
     <div class="row g-4">

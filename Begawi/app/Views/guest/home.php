@@ -23,7 +23,7 @@
                 <div class="col-lg-4 text-start">
                     <label for="keyword" class="form-label fw-bold">Judul/Kata Kunci</label>
                     <input type="text" class="form-control form-control-lg" id="keyword" name="keyword"
-                           placeholder="Contoh: Web Developer">
+                        placeholder="Contoh: Web Developer">
                 </div>
 
                 <div class="col-lg text-start">
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="col-lg text-start">
-                     <label for="category" class="form-label fw-bold">Kategori</label>
+                    <label for="category" class="form-label fw-bold">Kategori</label>
                     <select class="form-select form-select-lg" id="category" name="category">
                         <option value="">Semua Kategori</option>
                         <?php if (!empty($categories)): foreach ($categories as $cat): ?>
@@ -67,7 +67,7 @@
                     <h5>Keuangan</h5>
                 </a>
             </div>
-             <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                 <a href="#" class="d-block p-3 category-card text-center">
                     <div class="category-card-icon"><i class="bi bi-cart3" style="font-size: 2.5rem;"></i></div>
                     <h5>Keuangan</h5>
@@ -113,7 +113,7 @@
                             <div class="card-body d-flex flex-column">
                                 <div class="d-flex align-items-start mb-3">
                                     <img src="<?= esc($job->company_logo_path ?? 'https://placehold.co/60x60/A1C349/FFFFFF?text=' . substr(esc($job->company_name), 0, 2) ) ?>"
-                                         alt="Logo Perusahaan" class="company-logo me-3">
+                                        alt="Logo Perusahaan" class="company-logo me-3">
                                     <div>
                                         <h5 class="card-title mb-1"><a href="#"><?= esc($job->title) ?></a></h5>
                                         <h6 class="card-subtitle mb-2 text-muted"><?= esc($job->company_name) ?></h6>
@@ -147,7 +147,7 @@
                             <div class="card-body d-flex flex-column">
                                 <div class="d-flex align-items-start mb-3">
                                     <img src="<?= esc($training->company_logo_path ?? 'https://placehold.co/60x60/F8DE3D/333333?text=' . substr(esc($training->company_name), 0, 2)) ?>"
-                                         alt="Logo Penyelenggara" class="company-logo me-3">
+                                        alt="Logo Penyelenggara" class="company-logo me-3">
                                     <div>
                                         <h5 class="card-title mb-1"><a href="#"><?= esc($training->title) ?></a></h5>
                                         <h6 class="card-subtitle mb-2 text-muted"><?= esc($training->company_name) ?></h6>
@@ -163,7 +163,7 @@
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                 <div class="col-12"><div class="alert alert-info text-center"><p>Belum ada pelatihan yang tersedia saat ini.</p></div></div>
+                <div class="col-12"><div class="alert alert-info text-center"><p>Belum ada pelatihan yang tersedia saat ini.</p></div></div>
             <?php endif; ?>
         </div>
     </div>

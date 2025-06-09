@@ -96,29 +96,28 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
-/* Reset atau styling dasar */
+
 body {
-    background-color: #f0f2f5; /* Latar belakang halaman umum */
+    background-color: #f0f2f5; 
 }
 
 .container.mt-4 {
-    max-width: 700px; /* Lebar maksimal container */
+    max-width: 700px; 
 }
 
-/* Styling utama wrapper chatbot (sesuai gambar) */
 .chatbot-container-wrapper {
-    background-color: #2F4F4F; /* Hijau tua */
-    border-radius: 15px; /* Sudut membulat */
-    overflow: hidden; /* Pastikan konten tidak meluber */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sedikit bayangan */
+    background-color: #2F4F4F; 
+    border-radius: 15px; 
+    overflow: hidden; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
 }
 
 .chatbot-header {
-    background-color: #366767; /* Sedikit lebih terang dari background utama */
+    background-color: #366767; 
     color: white;
     padding: 15px 20px;
     font-size: 1.2em;
-    text-align: center; /* Sesuaikan jika ada logo di kiri */
+    text-align: center; 
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -126,43 +125,41 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    height: 600px; /* Tinggi total body, sesuaikan */
+    height: 600px; 
 }
 
 .chat-messages-area {
-    flex-grow: 1; /* Agar area pesan mengisi ruang yang tersedia */
-    overflow-y: auto; /* Scroll jika pesan banyak */
+    flex-grow: 1; 
+    overflow-y: auto; 
     margin-bottom: 20px;
-    padding-right: 10px; /* Untuk estetika scrollbar */
+    padding-right: 10px; 
 }
 
-/* Styling Gelembung Chat */
 .chat-message {
-    padding: 12px 18px; /* Padding lebih besar */
-    border-radius: 20px; /* Lebih membulat */
+    padding: 12px 18px; 
+    border-radius: 20px; 
     margin-bottom: 10px;
-    max-width: 75%; /* Batasi lebar gelembung */
-    word-wrap: break-word; /* Pastikan teks panjang tidak meluber */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sedikit bayangan */
+    max-width: 75%; 
+    word-wrap: break-word; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
 }
 
 .user-message {
-    background-color: #4CAF50; /* Hijau terang */
+    background-color: #4CAF50; 
     color: white;
-    margin-left: auto; /* Dorong ke kanan */
+    margin-left: auto; 
     margin-right: 0;
-    text-align: left; /* Teks tetap kiri di gelembung */
+    text-align: left; 
 }
 
 .bot-message {
-    background-color: #f0f0f0; /* Abu-abu terang */
+    background-color: #f0f0f0; 
     color: #333;
-    margin-right: auto; /* Dorong ke kiri */
+    margin-right: auto; 
     margin-left: 0;
     text-align: left;
 }
 
-/* Untuk pesan awal bot */
 .chat-message.initial-message {
     margin-right: auto;
     margin-left: 0;
@@ -175,47 +172,45 @@ body {
     text-align: left;
 }
 
-/* Input Area Styling */
 .chatbot-input-form .input-group {
-    background-color: white; /* Latar belakang putih untuk input */
-    border-radius: 25px; /* Sudut membulat */
-    overflow: hidden; /* Untuk menjaga border-radius */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Bayangan lebih jelas */
-    padding: 5px; /* Padding di sekitar input dan tombol */
+    background-color: white; 
+    border-radius: 25px; 
+    overflow: hidden; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); 
+    padding: 5px; 
 }
 
 .chatbot-input-form .form-control.chat-input {
-    border: none; /* Hapus border bawaan */
-    box-shadow: none; /* Hapus shadow bawaan */
-    padding-left: 15px; /* Sedikit padding di kiri */
-    background-color: transparent; /* Pastikan background transparan */
-    height: 45px; /* Tinggi input */
+    border: none; 
+    box-shadow: none; 
+    padding-left: 15px; 
+    background-color: transparent; 
+    height: 45px; 
 }
 
 .chatbot-input-form .form-control.chat-input:focus {
-    box-shadow: none; /* Pastikan tidak ada shadow fokus */
+    box-shadow: none; 
 }
 
 .chatbot-input-form .input-group-append {
-    margin-left: 0; /* Pastikan tidak ada margin ekstra */
+    margin-left: 0; 
 }
 
 .chatbot-input-form .btn.chat-send-button {
-    background-color: #4CAF50; /* Warna tombol hijau */
+    background-color: #4CAF50; 
     border-color: #4CAF50;
-    border-radius: 20px; /* Lebih membulat */
-    padding: 10px 20px; /* Padding tombol */
+    border-radius: 20px; 
+    padding: 10px 20px; 
     font-size: 1.1em;
-    min-width: 60px; /* Lebar minimum tombol */
-    transition: background-color 0.3s ease; /* Transisi hover */
+    min-width: 60px; 
+    transition: background-color 0.3s ease; 
 }
 
 .chatbot-input-form .btn.chat-send-button:hover {
-    background-color: #45a049; /* Warna hover */
+    background-color: #45a049; 
     border-color: #45a049;
 }
 
-/* Hapus styling card bawaan Bootstrap jika tidak digunakan */
 .card, .card-header, .card-body {
     border: none;
     background: none;

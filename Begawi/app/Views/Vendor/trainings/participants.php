@@ -27,13 +27,11 @@
                             <tr>
                                 <th scope="row"><?= $index + 1 ?></th>
                                 <td>
-                                    <?php // PERBAIKAN: Menambahkan pengecekan jika data peserta tidak ada ?>
                                     <div><?= esc($participant->jobseeker_name ?? 'Data Peserta Hilang') ?></div>
                                     <div class="small text-secondary"><?= esc($participant->jobseeker_email ?? 'N/A') ?></div>
                                 </td>
                                 <td><?= date('d M Y, H:i', strtotime($participant->enrolled_at ?? time())) ?></td>
                                 <td>
-                                    <?php // Pastikan ID aplikasi ada sebelum membuat form ?>
                                     <?php if (isset($participant->id)): ?>
                                         <form action="<?= site_url('vendor/trainings/participants/' . $participant->id . '/status') ?>" method="post" class="d-flex gap-2">
                                             <?= csrf_field() ?>

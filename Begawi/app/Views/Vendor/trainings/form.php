@@ -32,8 +32,8 @@
             <div class="form-group">
                 <label for="title">Judul Pelatihan</label>
                 <input type="text" name="title" class="form-control"
-                       placeholder="Contoh: Pelatihan Web Developer Fundamental"
-                       value="<?= old('title', $training->title ?? '') ?>" required>
+                    placeholder="Contoh: Pelatihan Web Developer Fundamental"
+                    value="<?= old('title', $training->title ?? '') ?>" required>
             </div>
 
             <div class="row">
@@ -64,20 +64,20 @@
             <div class="form-group">
                 <label for="description">Deskripsi Lengkap Pelatihan</label>
                 <textarea name="description" class="form-control" rows="5"
-                          placeholder="Jelaskan detail tentang pelatihan ini, silabus, dll."><?= old('description', $training->description ?? '') ?></textarea>
+                        placeholder="Jelaskan detail tentang pelatihan ini, silabus, dll."><?= old('description', $training->description ?? '') ?></textarea>
             </div>
             <div class="form-group">
                 <label for="platform">Platform Pelatihan (Online/Offline)</label>
                 <input type="text" name="platform" class="form-control"
-                       placeholder="Contoh: Zoom Meeting, Kantor Begawi, Google Meet"
-                       value="<?= old('platform', $training->platform ?? '') ?>" required>
+                    placeholder="Contoh: Zoom Meeting, Kantor Begawi, Google Meet"
+                    value="<?= old('platform', $training->platform ?? '') ?>" required>
                 <small class="form-text text-muted">Contoh: Zoom Meeting, Kantor Begawi.</small>
             </div>
             <div class="form-group">
                 <label for="registration_instructions">Instruksi Pendaftaran</label>
                 <textarea name="registration_instructions" class="form-control" rows="3"
-                          placeholder="Contoh: Kunjungi website xyz.com/daftar, Isi formulir."
-                          required><?= old('registration_instructions', $training->registration_instructions ?? '') ?></textarea>
+                        placeholder="Contoh: Kunjungi website xyz.com/daftar, Isi formulir."
+                        required><?= old('registration_instructions', $training->registration_instructions ?? '') ?></textarea>
             </div>
             <hr>
 
@@ -86,13 +86,13 @@
                 <div class="form-group col-md-6">
                     <label for="start_date">Tanggal & Waktu Mulai</label>
                     <input type="datetime-local" name="start_date" class="form-control"
-                           value="<?= old('start_date', isset($training->start_date) && $training->start_date ? date('Y-m-d\TH:i', strtotime($training->start_date)) : '') ?>"
-                           required>
+                        value="<?= old('start_date', isset($training->start_date) && $training->start_date ? date('Y-m-d\TH:i', strtotime($training->start_date)) : '') ?>"
+                        required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="end_date">Tanggal & Waktu Selesai (Opsional)</label>
                     <input type="datetime-local" name="end_date" class="form-control"
-                           value="<?= old('end_date', isset($training->end_date) && $training->end_date ? date('Y-m-d\TH:i', strtotime($training->end_date)) : '') ?>">
+                        value="<?= old('end_date', isset($training->end_date) && $training->end_date ? date('Y-m-d\TH:i', strtotime($training->end_date)) : '') ?>">
                     <small class="form-text text-muted">Kosongkan jika tidak ada tanggal selesai pasti.</small>
                 </div>
             </div>
@@ -100,15 +100,15 @@
             <div class="form-group">
                 <label for="duration">Durasi Pelatihan (Jam)</label>
                 <input type="number" name="duration" class="form-control"
-                       placeholder="Contoh: 10 (untuk 10 jam)"
-                       value="<?= old('duration', $training->duration ?? '') ?>" min="0" required>
+                    placeholder="Contoh: 10 (untuk 10 jam)"
+                    value="<?= old('duration', $training->duration ?? '') ?>" min="0" required>
                 <small class="form-text text-muted">Masukkan durasi dalam jam.</small>
             </div>
 
             <div class="form-group">
                 <label for="quota">Kuota Peserta (Opsional)</label>
                 <input type="number" name="quota" class="form-control" placeholder="Contoh: 20"
-                       value="<?= old('quota', $training->quota ?? '') ?>" min="0">
+                    value="<?= old('quota', $training->quota ?? '') ?>" min="0">
                 <small class="form-text text-muted">Kuota tidak boleh negatif. Kosongkan jika tidak ada batasan kuota.</small>
             </div>
 
@@ -119,13 +119,13 @@
                 <div class="form-group col-md-6">
                     <label for="contact_email">Email Kontak</label>
                     <input type="email" name="contact_email" class="form-control"
-                           placeholder="email.kontak@perusahaan.com"
-                           value="<?= old('contact_email', $training->contact_email ?? '') ?>" required>
+                        placeholder="email.kontak@perusahaan.com"
+                        value="<?= old('contact_email', $training->contact_email ?? '') ?>" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="contact_phone">Nomor Telepon Kontak (Opsional)</label>
                     <input type="text" name="contact_phone" class="form-control" placeholder="08xxxxxxxxxx"
-                           value="<?= old('contact_phone', $training->contact_phone ?? '') ?>">
+                        value="<?= old('contact_phone', $training->contact_phone ?? '') ?>">
                 </div>
             </div>
 

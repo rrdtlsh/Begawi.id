@@ -65,9 +65,9 @@
             <div class="activity-item">
                 <div class="d-flex align-items-center">
                     <div class="activity-icon">
-                        <?php if (isset($item->job_title)): // Lamaran Kerja ?>
+                        <?php if (isset($item->job_title)): ?>
                         <i class="bi bi-briefcase-fill" title="Lamaran Kerja"></i>
-                        <?php else: // Pelatihan ?>
+                        <?php else:  ?>
                         <i class="bi bi-easel2-fill" title="Pelatihan"></i>
                         <?php endif; ?>
                     </div>
@@ -87,8 +87,7 @@
                             $status = strtolower($item->status);
                             $status_text = ($status === 'accepted') ? 'Accepted' : ucfirst($status);
 
-                            // Mapping status ke class CSS baru
-                            $status_class = 'status-reviewed'; // default
+                            $status_class = 'status-reviewed'; 
                             if (in_array($status, ['pending']))
                                 $status_class = 'status-pending';
                             if (in_array($status, ['accepted']))

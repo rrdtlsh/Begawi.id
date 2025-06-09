@@ -23,7 +23,7 @@
                                     $initials .= strtoupper(substr($words[0], 0, 1));
                                 }
                                 if (isset($words[1]) && !in_array(strtoupper($words[0]), ['PT', 'CV'])) {
-                                     $initials .= strtoupper(substr($words[1], 0, 1));
+                                    $initials .= strtoupper(substr($words[1], 0, 1));
                                 } else if (isset($words[1]) && in_array(strtoupper($words[0]), ['PT', 'CV'])) {
                                     $initials = strtoupper(substr($words[1], 0, 1));
                                     if(isset($words[2])) {

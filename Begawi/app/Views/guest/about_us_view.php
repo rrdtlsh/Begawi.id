@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 mb-4">
-                     <div class="card h-100 shadow-sm">
+                    <div class="card h-100 shadow-sm">
                         <div class="card-body">
                             <h5 class="benefit-category"><i class="bi bi-bank2 icon-benefit"></i> Bagi Pemerintah Kota</h5>
                             <ul class="list-unstyled benefit-list">
@@ -116,10 +116,10 @@
     
     <section class="content-section text-center">
         <div class="container">
-             <h2 class="section-title-about">Bergabunglah dengan Begawi</h2>
-             <p class="lead mb-4">Mari bersama-sama membangun ekosistem karir yang lebih baik di Banjarmasin. <br>Temukan peluang Anda atau rekrut talenta terbaik bersama Begawi.</p>
-             <a href="<?= site_url('/') ?>" class="btn btn-success btn-lg me-2">Cari Lowongan</a>
-             <a href="<?= site_url('register/vendor') ?>" class="btn btn-outline-success btn-lg">Pasang Lowongan</a> 
+            <h2 class="section-title-about">Bergabunglah dengan Begawi</h2>
+            <p class="lead mb-4">Mari bersama-sama membangun ekosistem karir yang lebih baik di Banjarmasin. <br>Temukan peluang Anda atau rekrut talenta terbaik bersama Begawi.</p>
+            <a href="<?= site_url('/') ?>" class="btn btn-success btn-lg me-2">Cari Lowongan</a>
+            <a href="<?= site_url('register/vendor') ?>" class="btn btn-outline-success btn-lg">Pasang Lowongan</a> 
         </div>
     </section>
 </main>
