@@ -9,6 +9,12 @@ use CodeIgniter\Router\RouteCollection;
 // ===================================================================
 // RUTE PUBLIK (Bisa diakses siapa saja)
 // ===================================================================
+
+// ---- route navbar ---
+$routes->get('/jobs', 'JobPageController::index'); 
+$routes->get('/trainings', 'TrainingPageController::index');
+$routes->get('/companies', 'VendorPageController::index');
+
 $routes->get('/', 'HomeController::index');
 $routes->post('/search/jobs', 'SearchController::jobs');
 $routes->get('/about', 'HomeController::about');
@@ -112,7 +118,3 @@ $routes->group('daftar-pelatihan', ['filter' => 'auth'], function ($routes) {
     $routes->post('apply/(:num)', 'TrainingApplicationController::apply/$1');
 });
 
-// ---- route navbar ---
-$routes->get('/jobs', 'JobPageController::index'); 
-$routes->get('/trainings', 'TrainingPageController::index');
-$routes->get('/companies', 'VendorPageController::index');
