@@ -15,11 +15,11 @@ $routes->get('/', 'HomeController::index');
 $routes->get('/about', 'HomeController::about');
 $routes->post('/search/process', 'SearchController::process');
 
-$routes->get('/jobs', 'JobPageController::index'); 
+$routes->get('/jobs', 'JobPageController::index');
 $routes->get('/trainings', 'TrainingPageController::index');
 $routes->get('/companies', 'VendorPageController::index');
 // ---Rute tombol kembali
-$routes->get('/home', 'HomeController::index'); 
+$routes->get('/home', 'HomeController::index');
 
 $routes->post('/lowongan', 'JobPageController::index'); // Menangani filter/pencarian
 $routes->get('/lowongan/detail/(:num)', 'JobPageController::detail/$1');
@@ -111,3 +111,8 @@ $routes->group('daftar-pelatihan', ['filter' => 'auth'], function ($routes) {
     $routes->post('apply/(:num)', 'TrainingApplicationController::apply/$1');
 });
 
+$routes->group('admin', ['filter' => 'admin'], function ($routes) {
+    // Dasbor
+    $routes->get('dashboard', 'Admin\DashboardController::index');
+
+});

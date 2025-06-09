@@ -29,6 +29,10 @@ class UserModel extends Model
         'email' => [
             'is_unique' => 'Maaf, email tersebut sudah terdaftar.',
         ],
+        'password' => [
+            'min_length' => 'Password harus memiliki minimal 8 karakter.',
+        ],
+
     ];
 
     protected $beforeInsert = ['hashPassword'];

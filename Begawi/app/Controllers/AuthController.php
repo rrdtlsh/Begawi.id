@@ -80,7 +80,7 @@ class AuthController extends BaseController
             'password' => $this->request->getPost('password'),
             'role' => $role,
         ];
-        
+
         if (!$userModel->save($userData)) {
             $db->transRollback();
             return redirect()->to('/register/jobseeker')->withInput()->with('errors', $userModel->errors());
@@ -96,13 +96,13 @@ class AuthController extends BaseController
                 'user_id' => $userId,
                 'location_id' => $this->request->getPost('js_location_id'),
             ];
-            
+
             if (!$jobseekerModel->save($jobseekerData)) {
                 $db->transRollback();
                 return redirect()->to('/register/jobseeker')->withInput()->with('errors', $jobseekerModel->errors());
             }
             $jobseekerId = $jobseekerModel->getInsertID();
-            
+
             $selectedSkillId = $this->request->getPost('skills');
             if (!empty($selectedSkillId) && $jobseekerId > 0) {
                 $skillsData = ['jobseeker_id' => $jobseekerId, 'skill_id' => $selectedSkillId];
@@ -119,7 +119,7 @@ class AuthController extends BaseController
                 'contact' => $this->request->getPost('contact'),
                 'company_address' => $this->request->getPost('company_address'), // Pastikan field ini ada di form Anda
             ];
-            if(!$vendorModel->save($vendorData)){
+            if (!$vendorModel->save($vendorData)) {
                 $db->transRollback();
                 return redirect()->to('/register/vendor')->withInput()->with('errors', $vendorModel->errors());
             }
@@ -136,13 +136,13 @@ class AuthController extends BaseController
         // Redirect terakhir, berada di luar semua kondisi if/else
         return redirect()->to('/login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
-    
+
     // ... (method login, processLogin, logout) ...
     public function login()
     {
         return view('login_page');
     }
-    
+
     public function processLogin()
     {
         $userModel = new UserModel();
@@ -168,12 +168,12 @@ class AuthController extends BaseController
                 $profileId = $profile->id;
             }
         }
-        
+
         $sessionData = [
-            'user_id'    => $user->id,
-            'fullname'   => $user->fullname,
-            'email'      => $user->email,
-            'role'       => $user->role,
+            'user_id' => $user->id,
+            'fullname' => $user->fullname,
+            'email' => $user->email,
+            'role' => $user->role,
             'profile_id' => $profileId,
             'isLoggedIn' => true,
         ];
@@ -181,8 +181,10 @@ class AuthController extends BaseController
 
         if ($user->role === 'vendor') {
             return redirect()->to('/vendor/dashboard');
+        } elseif ($user->role === 'admin') {
+            return redirect()->to('/admin/dashboard');
         }
-        
+
         return redirect()->to('/jobseeker/dashboard');
     }
 
