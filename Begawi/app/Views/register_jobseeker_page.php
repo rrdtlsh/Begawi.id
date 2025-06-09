@@ -40,8 +40,8 @@
     </div>
 
     <div class="input-group">
-        <label for="skills">Keahlian</label>
-        <select id="skills" name="skills[]" class=" form-control" multiple required>
+        <label for="skills">Keahlian</label> 
+        <select id="skills" name="skills[]" class=" form-control" required>
             <option value="" disabled selected>Pilih Keahlian Utama</option>
             <?php foreach ($skills as $skill): ?>
                 <option value="<?= $skill->id ?>" <?= old('skills') == $skill->id ? 'selected' : '' ?>>

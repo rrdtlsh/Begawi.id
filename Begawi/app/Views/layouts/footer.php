@@ -5,7 +5,7 @@
         <div class="row">
             <!-- Kolom Logo (lebar tetap) -->
             <div class="col-lg-4 mb-4 mb-lg-0">
-                <img src="<?= base_url('images/Logo_Begawi.png') ?>" alt="Logo Begawi" class="logo-footer mb-3" style="height: 40px;">
+                <img src="<?= base_url('images/Logo_Begawi.png') ?>" alt="Logo Begawi" class="logo-footer mb-3" style="height: 100px;">
                 <p>Platform penyedia jasa terpercaya di Banjarmasin.</p>
             </div>
             

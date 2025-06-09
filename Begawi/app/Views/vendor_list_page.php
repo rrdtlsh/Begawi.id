@@ -1,63 +1,80 @@
-<!DOCTYPE html>
-<html lang="id">
+<?= $this->extend('layouts/main_layout') ?>
 
-<head>
-    <meta charset="UTF-8">
-    <title><?= esc($title ?? 'Daftar Perusahaan') ?></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .company-card {
-            text-decoration: none;
-            color: inherit;
-        }
+<?= $this->section('content') ?>
 
-        .company-card .card {
-            transition: all 0.3s ease;
-        }
+<link rel="stylesheet" href="<?= base_url('css/vendorlist.css') ?>">
 
-        .company-card:hover .card {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            transform: translateY(-5px);
-        }
+<div class="container my-5">
+    <h1 class="page-title text-center"><?= esc($title ?? 'Daftar Perusahaan Terpercaya') ?></h1>
 
-        .company-logo {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-    </style>
-</head>
+    <div class="row">
+        <?php if (!empty($vendors)): ?>
+            <?php foreach ($vendors as $vendor): ?>
+                <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+                    
+                    <a href="<?= site_url('vendor/detail/' . esc($vendor->id)) ?>" class="company-card-link">
+                        <div class="company-card">
+                            <?php
+                                // Logika untuk membuat avatar inisial perusahaan
+                                $companyName = $vendor->company_name;
+                                $words = explode(' ', $companyName);
+                                $initials = '';
+                                if (isset($words[0])) {
+                                    $initials .= strtoupper(substr($words[0], 0, 1));
+                                }
+                                if (isset($words[1]) && !in_array(strtoupper($words[0]), ['PT', 'CV'])) {
+                                     $initials .= strtoupper(substr($words[1], 0, 1));
+                                } else if (isset($words[1]) && in_array(strtoupper($words[0]), ['PT', 'CV'])) {
+                                    $initials = strtoupper(substr($words[1], 0, 1));
+                                    if(isset($words[2])) {
+                                        $initials .= strtoupper(substr($words[2], 0, 1));
+                                    }
+                                } else {
+                                    // Jika hanya satu kata, ambil 2 huruf pertama
+                                    $initials = strtoupper(substr($words[0], 0, 2));
+                                }
 
-<body>
-    <div class="container my-5">
-        <h1 class="text-center mb-5"><?= esc($title) ?></h1>
-        <div class="row">
-            <?php if (!empty($vendors)): ?>
-                <?php foreach ($vendors as $vendor): ?>
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <a href="<?= site_url('vendor/detail/' . esc($vendor->id)) ?>" class="company-card">
-                            <div class="card h-100">
-                                <div class="card-body text-center">
-                                    <img src="<?= esc($vendor->company_logo_path ? '/uploads/logos/' . $vendor->company_logo_path : 'https://placehold.co/60x60/A1C349/FFFFFF?text=Logo') ?>"
-                                        alt="Logo" class="company-logo mb-3">
-                                    <h5 class="card-title"><?= esc($vendor->company_name) ?></h5>
-                                    <p class="text-muted mb-1"><?= esc($vendor->industry ?? 'Industri tidak spesifik') ?></p>
-                                    <p class="small text-muted"><i class="fas fa-map-marker-alt"></i>
-                                        <?= esc($vendor->location_name ?? 'Lokasi tidak diketahui') ?></p>
-                                </div>
+                                // Memberi warna random untuk background avatar
+                                $colors = ['#215546', '#A1C349', '#FFC700', '#00796B', '#5E35B1', '#E53935'];
+                                $color = $colors[crc32($companyName) % count($colors)];
+                            ?>
+                            <div class="company-initials-avatar" style="background-color: <?= $color; ?>;">
+                                <span><?= esc($initials) ?></span>
                             </div>
-                        </a>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p class="col text-center">Belum ada perusahaan yang terdaftar.</p>
-            <?php endif; ?>
-        </div>
-        <div class="mt-4 d-flex justify-content-center">
-            <?= $pager->links() ?>
-        </div>
-    </div>
-</body>
 
-</html>
+                            <h5 class="company-card-name"><?= esc($vendor->company_name) ?></h5>
+                            
+                            <div class="company-card-details">
+                                <p>
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                    <span><?= esc($vendor->location_name ?? 'Lokasi tidak diketahui') ?></span>
+                                </p>
+                                <p>
+                                    <i class="bi bi-building-fill"></i>
+                                    <span><?= esc($vendor->industry ?? 'Industri tidak spesifik') ?></span>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    <h4>Belum Ada Perusahaan</h4>
+                    <p>Saat ini belum ada perusahaan yang terdaftar di platform kami.</p>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <div class="mt-4 d-flex justify-content-center">
+        <?php if (isset($pager) && $pager) : ?>
+            <?= $pager->links() ?>
+        <?php endif; ?>
+    </div>
+
+</div>
+
+<?= $this->endSection() ?>

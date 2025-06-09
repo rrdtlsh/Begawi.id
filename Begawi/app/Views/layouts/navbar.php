@@ -1,45 +1,55 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-0">
     <div class="container">
-        <a class="navbar-brand" href="<?= site_url('/') ?>">
-            <img src="<?= base_url('images/Logo_Begawi.png') ?>" alt="Logo Begawi" style="height: 40px;">
+        <a class="navbar-brand" href="/">
+            <img src="/images/logo_begawi.png" alt="Begawi Logo">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= site_url('/') ?>">Beranda</a>
+                    <a class="nav-link" href="/">Beranda</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="workDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="jobsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Lowongan Kerja
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="workDropdown">
-                        <li><a class="dropdown-item" href="/lowongan">Pekerjaan</a></li>
-                        <li><a class="dropdown-item" href="/pelatihan">Workshop & Training</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="jobsDropdown">
+                        <li><a class="dropdown-item" href="/jobs">Pekerjaan</a></li>
+                        <li><a class="dropdown-item" href="/trainings">Workshop & Training</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= site_url('/vendor') ?>">Perusahaan</a>
+                    <a class="nav-link" href="/companies">Perusahaan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= site_url('/about') ?>">Tentang Kami</a>
+                    <a class="nav-link" href="/about">Tentang Kami</a>
                 </li>
             </ul>
-            <div class="d-flex">
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="/chatbot" class="nav-icon-link">
+                    <i class="bi bi-robot nav-icon-item"></i>
+                    <span class="nav-icon-text">ChatBot AI</span>
+                </a>
+
                 <?php if (session()->get('isLoggedIn')): ?>
-                    <!-- Ini bisa diganti dengan ikon user jika sudah login -->
-                    <a href="<?= site_url((session()->get('role') === 'vendor') ? 'vendor/dashboard' : 'jobseeker/dashboard') ?>"
-                        class="btn btn-outline-success me-2">Dashboard</a>
-                    <a href="<?= site_url('logout') ?>" class="btn btn-success">Logout</a>
+                    <a href="/jobseeker/dashboard" class="nav-icon-link">
+                        <i class="bi bi-person-circle nav-icon-item"></i>
+                        <span class="nav-icon-text">Profile</span>
+                    </a>
+                    <a href="/logout" class="btn btn-logout-nav">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Log Out</span>
+                    </a>
                 <?php else: ?>
-                    <a href="<?= site_url('register') ?>" class="btn btn-outline-success me-2">Daftar</a>
-                    <a href="<?= site_url('login') ?>" class="btn btn-success">Masuk</a>
+                    <a href="/login" class="btn btn-login">Masuk</a>
+                    <a href="/register" class="btn btn-register">Daftar</a>
                 <?php endif; ?>
             </div>
-        </div>
+            </div>
     </div>
 </nav>

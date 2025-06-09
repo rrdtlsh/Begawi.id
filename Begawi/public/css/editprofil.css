@@ -1,0 +1,192 @@
+
+:root {
+  --sasirangan-green: #215546;
+  --sasirangan-yellow: #ffc700;
+  --light-gray: #f8f9fa;
+  --dark-gray: #6c757d;
+  --border-color: #ced4da;
+  --danger-color: #dc3545;
+  --success-color: #28a745;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background-color: var(--sasirangan-green); /* Fallback color */
+}
+
+.edit-profile-container {
+  background: linear-gradient(
+    135deg,
+    var(--sasirangan-green),
+    var(--sasirangan-yellow)
+  );
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 15px;
+  box-sizing: border-box;
+}
+
+.form-container {
+  background-color: var(--light-gray);
+  padding: 35px 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  max-width: 650px;
+  width: 100%;
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.form-title {
+  color: var(--sasirangan-green);
+  font-weight: 700;
+  font-size: 1.75rem;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #343a40;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.form-control, .form-control-file {
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  box-sizing: border-box; 
+  background-color: #fff;
+}
+
+.form-control:focus {
+  border-color: var(--sasirangan-green);
+  box-shadow: 0 0 0 0.2rem rgba(33, 85, 70, 0.25);
+  outline: none;
+}
+
+.form-control-file {
+    padding: 8px;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-text {
+    font-size: 0.8rem;
+    color: var(--dark-gray);
+    margin-top: 5px;
+}
+
+img.img-thumbnail {
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+}
+
+/* Penyesuaian untuk Select2 */
+.select2-container--default .select2-selection--multiple {
+  border: 1px solid var(--border-color) !important;
+  border-radius: 8px !important;
+  min-height: 45px;
+  padding: 5px;
+  background-color: #fff;
+}
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+  border-color: var(--sasirangan-green) !important;
+  box-shadow: 0 0 0 0.2rem rgba(33, 85, 70, 0.25);
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: var(--sasirangan-green);
+  color: white;
+  border: 1px solid #1a4437;
+  border-radius: 5px;
+  padding: 3px 8px;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  color: rgba(255, 255, 255, 0.8);
+  margin-right: 5px;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+    color: white;
+}
+.select2-search__field {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+/* Styling untuk Alert Messages */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+}
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.button-group {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-save {
+  background-color: var(--sasirangan-green);
+  color: white;
+}
+.btn-save:hover {
+  background-color: #1a4437; /* Darker green */
+}
+
+.btn-cancel {
+  background-color: var(--dark-gray);
+  color: white;
+}
+.btn-cancel:hover {
+    background-color: #5a6268; /* Darker gray */
+}

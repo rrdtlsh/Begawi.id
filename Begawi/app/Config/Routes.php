@@ -111,3 +111,8 @@ $routes->group('daftar-pelatihan', ['filter' => 'auth'], function ($routes) {
     // Akan menangani POST request ke /daftar-pelatihan/apply/2 (contoh)
     $routes->post('apply/(:num)', 'TrainingApplicationController::apply/$1');
 });
+
+// ---- route navbar ---
+$routes->get('/jobs', 'JobPageController::index'); 
+$routes->get('/trainings', 'TrainingPageController::index');
+$routes->get('/companies', 'VendorPageController::index');

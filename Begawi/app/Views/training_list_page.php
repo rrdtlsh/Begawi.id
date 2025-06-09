@@ -1,83 +1,93 @@
-<!DOCTYPE html>
-<html lang="id">
-<!--begawi-->
+<?= $this->extend('layouts/main_layout') ?>
 
-<head>
-    <meta charset="UTF-8">
-    <title><?= esc($title ?? 'Daftar Pelatihan') ?></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-    .training-card {
-        border: 1px solid #eee;
-        transition: box-shadow 0.3s ease-in-out;
-    }
+<?= $this->section('content') ?>
 
-    .training-card:hover {
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
+<link rel="stylesheet" href="<?= base_url('css/jobpage.css') ?>">
 
-    .card-footer {
-        background-color: #f8f9fa;
-    }
-    </style>
-</head>
+<div class="container my-5">
+    <h1 class="page-title text-center"><?= esc($title ?? 'Daftar Pelatihan & Workshop') ?></h1>
 
-<body>
-    <!-- Anda bisa menyertakan layout utama Anda di sini jika ada -->
-    <!-- Contoh: <?= $this->extend('layouts/main_layout') ?> -->
-    <!-- Contoh: <?= $this->section('content') ?> -->
-
-    <div class="container my-5">
-        <h1 class="text-center mb-4"><?= esc($title) ?></h1>
-
-        <div class="row">
-            <?php if (!empty($trainings)): ?>
+    <div class="row">
+        <?php if (!empty($trainings)): ?>
             <?php foreach ($trainings as $training): ?>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card training-card h-100">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title"><?= esc($training->title) ?></h5>
-                        <p class="card-text text-muted">
-                            Oleh: <strong><?= esc($training->penyelenggara ?? 'N/A') ?></strong>
-                        </p>
-                        <ul class="list-unstyled text-muted small">
-                            <li>
-                                <strong>Tanggal:</strong> <?= date('d M Y', strtotime($training->start_date)) ?>
-                            </li>
-                            <li>
-                                <strong>Durasi:</strong> <?= esc($training->duration) ?>
-                            </li>
-                            <li>
-                                <strong>Lokasi:</strong> <?= esc($training->platform) ?>
-                            </li>
-                        </ul>
-                        <h4 class="mt-auto pt-3">
-                            <?= ($training->cost > 0) ? 'Rp ' . number_format($training->cost, 0, ',', '.') : '<span class="badge badge-success">GRATIS</span>' ?>
-                        </h4>
-                    </div>
-                    <div class="card-footer">
-                        <a href="<?= site_url('pelatihan/detail/' . $training->id) ?>"
-                            class="btn btn-primary btn-block">Lihat Detail</a>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
-            <?php else: ?>
-            <div class="col-12">
-                <div class="alert alert-info text-center">
-                    Saat ini belum ada pelatihan yang tersedia.
-                </div>
-            </div>
-            <?php endif; ?>
-        </div>
+                <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+                    <div class="job-card-new">
+                        
+                        <div class="card-header-new">
+                            <?php
+                                // Logika untuk membuat avatar inisial penyelenggara
+                                $organizerName = $training->penyelenggara ?? 'Umum';
+                                $words = explode(' ', $organizerName);
+                                $initials = '';
+                                if (isset($words[0])) {
+                                    $initials .= strtoupper(substr($words[0], 0, 1));
+                                }
+                                if (isset($words[1])) {
+                                    $initials .= strtoupper(substr($words[1], 0, 1));
+                                } else {
+                                    $initials = strtoupper(substr($words[0], 0, 2));
+                                }
 
-        <!-- Tampilkan Link Paginasi -->
-        <div class="mt-4">
-            <?= $pager->links() ?>
-        </div>
+                                // Memberi warna random untuk background avatar
+                                $colors = ['#00796B', '#5E35B1', '#E53935', '#215546', '#A1C349', '#FFC700'];
+                                $color = $colors[crc32($organizerName) % count($colors)];
+                            ?>
+                            <div class="company-initials-avatar" style="background-color: <?= $color; ?>;">
+                                <span><?= esc($initials) ?></span>
+                            </div>
+
+                            <div>
+                                <h5 class="job-title-new"><?= esc($training->title) ?></h5>
+                                <p class="company-name-new">Oleh: <?= esc($organizerName) ?></p>
+                            </div>
+                        </div>
+
+                        <div class="card-body-new">
+                            <ul class="job-details-list">
+                                <li>
+                                    <i class="bi bi-calendar-event-fill"></i>
+                                    <span><?= date('j M Y', strtotime($training->start_date)) ?></span>
+                                </li>
+                                <li>
+                                    <i class="bi bi-clock-history"></i>
+                                    <span>Durasi: <?= esc($training->duration) ?></span>
+                                </li>
+                                <li>
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                    <span>Lokasi: <?= esc($training->platform) ?></span>
+                                </li>
+                                <li>
+                                    <i class="bi bi-tags-fill"></i>
+                                    <span>
+                                        <?= ($training->cost > 0) ? 'Rp ' . number_format($training->cost, 0, ',', '.') : 'GRATIS' ?>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card-footer-new">
+                            <a href="<?= site_url('pelatihan/detail/' . $training->id) ?>" class="btn-apply-new">Lihat Detail</a>
+                        </div>
+
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    <h4>Pelatihan Tidak Ditemukan</h4>
+                    <p>Saat ini belum ada pelatihan atau workshop yang tersedia.</p>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 
-    <!-- Contoh: <?= $this->endSection() ?> -->
-</body>
+    <div class="mt-4 d-flex justify-content-center">
+        <?php if (isset($pager) && $pager) : ?>
+            <?= $pager->links() ?>
+        <?php endif; ?>
+    </div>
 
-</html>
+</div>
+
+<?= $this->endSection() ?>
