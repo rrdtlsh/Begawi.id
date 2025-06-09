@@ -1,0 +1,220 @@
+/* styles.css */
+:root {
+  --sasirangan-green-dark: #2a5c0f;
+  --sasirangan-green-medium: #5d8b2f;
+  --sasirangan-green-light: #a1c349;
+  --sasirangan-yellow: #f8de3d;
+  --sasirangan-yellow-light: #fff9c4; /* Sesuai gambar, warna lebih ke cream/light yellow */
+  --neutral-light: #f7f7f7;
+  --neutral-white: #ffffff;
+  --neutral-dark: #333333;
+  --neutral-grey: #ced4da; /* Disesuaikan dengan border default bootstrap */
+}
+
+/* Base Styles */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--neutral-light);
+  color: var(--neutral-dark);
+}
+
+.btn-custom-green {
+  background-color: var(--sasirangan-green-medium);
+  border-color: var(--sasirangan-green-medium);
+  color: var(--neutral-white);
+  font-weight: 600;
+  padding: 0.5rem 1rem; /* Padding disamakan */
+}
+
+.btn-custom-green:hover {
+  background-color: var(--sasirangan-green-dark);
+  border-color: var(--sasirangan-green-dark);
+  color: var(--neutral-white);
+}
+
+/* Hero Section */
+.hero-section {
+  /* Ganti URL placeholder ini dengan gambar Anda */
+  background-image: url("https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
+  padding: 6rem 0;
+  position: relative;
+  color: var(--neutral-white);
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(42, 92, 15, 0.6); /* Overlay hijau agar lebih sesuai tema */
+  z-index: 0;
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* =================================================================
+     PENYESUAIAN FORM PENCARIAN
+   ================================================================= */
+.search-form-card {
+  background-color: rgba(255, 255, 255, 0.95); /* Sedikit transparan */
+  backdrop-filter: blur(5px);
+  padding: 1.5rem; /* Padding disesuaikan */
+  border-radius: 0.75rem; /* Sudut lebih bulat */
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
+  color: var(--neutral-dark);
+}
+
+/* Menyembunyikan label secara visual, tapi tetap ada untuk screen reader */
+.search-form-card .form-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.search-form-card .form-control,
+.search-form-card .form-select {
+  height: 50px; /* Tinggi form disamakan */
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--neutral-grey);
+  border-radius: 0.5rem;
+}
+
+.search-form-card .form-control::placeholder,
+.search-form-card .form-select {
+    color: #6c757d; /* Warna placeholder */
+}
+
+.search-form-card .form-control:focus,
+.search-form-card .form-select:focus {
+  border-color: var(--sasirangan-green-medium);
+  box-shadow: 0 0 0 0.25rem rgba(93, 139, 47, 0.25);
+}
+
+/* Tombol Cari */
+.search-form-card .btn-search {
+  background-color: var(--sasirangan-green-light);
+  color: var(--sasirangan-green-dark);
+  border: none;
+  font-weight: 700;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.search-form-card .btn-search:hover {
+  background-color: var(--sasirangan-yellow);
+}
+
+
+/* Section Titles */
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--neutral-dark);
+  margin-bottom: 3rem;
+}
+
+/* Category Cards */
+.category-card {
+  background-color: var(--sasirangan-yellow-light);
+  border-radius: 0.75rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.05); /* Shadow lebih halus */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: var(--neutral-dark);
+  border: 1px solid #f0eada;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  color: var(--sasirangan-green-medium);
+}
+
+.category-card-icon .bi {
+  color: var(--sasirangan-green-medium);
+  margin-bottom: 0.75rem;
+  transition: color 0.3s ease;
+}
+
+.category-card:hover .category-card-icon .bi {
+    color: var(--sasirangan-green-dark);
+}
+
+.category-card h5 {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Job & Training Cards */
+.job-card {
+  background-color: var(--neutral-white);
+  border-radius: 0.75rem;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  height: 100%;
+}
+
+.job-card:hover {
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.08);
+  transform: translateY(-5px);
+}
+
+.job-card .company-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+}
+
+.job-card .card-title a {
+  color: var(--neutral-dark);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.job-card .card-title a:hover {
+  color: var(--sasirangan-green-medium);
+  text-decoration: underline;
+}
+
+.job-card .card-subtitle {
+  font-weight: 500;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.job-card .job-detail-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.5rem; /* Sedikit jarak antar item */
+}
+
+.job-detail-item .bi {
+  margin-right: 0.75rem;
+  color: var(--sasirangan-green-medium);
+  width: 1rem;
+}

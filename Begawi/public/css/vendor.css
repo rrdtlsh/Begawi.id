@@ -1,0 +1,177 @@
+:root {
+  --sasirangan-green-dark: #2a5c0f;
+  --sasirangan-green-medium: #5d8b2f;
+  --sasirangan-green-light: #a1c349;
+  --sasirangan-yellow: #f8de3d;
+  --sasirangan-yellow-light: #fff9c4;
+  --neutral-light: #f7f7f7;
+  --neutral-white: #ffffff;
+  --neutral-dark: #333333;
+  --neutral-grey: #b0b0b0;
+  --bs-body-font-family: "Inter", sans-serif;
+}
+
+body {
+  display: flex;
+  background-color: var(--neutral-light); /* Latar belakang utama halaman */
+}
+
+/* Styling untuk Sidebar */
+.sidebar {
+  width: 280px;
+  min-height: 100vh;
+  background-color: var(--neutral-white); /* Latar belakang sidebar */
+  position: fixed;
+  top: 0;
+  left: 0px;
+  transition: left 0.3s ease-in-out;
+  z-index: 1050; /* Di atas overlay */
+  border-right: 1px solid #e0e0e0; /* Garis pemisah halus */
+}
+
+.sidebar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  color: var(--neutral-dark); /* Warna teks link navigasi */
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s, color 0.2s;
+  font-weight: 500;
+}
+
+.sidebar-nav .nav-link i {
+  font-size: 1.25rem;
+  margin-right: 1rem;
+}
+
+/* 2. Menggunakan warna kuning muda untuk hover yang lebih lembut */
+.sidebar-nav .nav-link:hover {
+  background-color: var(--sasirangan-yellow-light);
+  color: var(--sasirangan-green-dark);
+}
+
+/* 3. Mengganti style link aktif dengan palet baru */
+.sidebar-nav .nav-link.active {
+  background-color: var(
+    --sasirangan-yellow-light
+  ); /* Latar belakang kuning muda untuk item aktif */
+  color: var(--sasirangan-green-dark); /* Teks hijau tua agar kontras */
+  font-weight: 700;
+  border-left: 4px solid var(--sasirangan-green-medium); /* Aksen garis hijau medium */
+}
+
+/* Tombol Logout (Warna merah tetap dipertahankan untuk menandakan aksi 'destruktif') */
+.logout-btn {
+  background-color: #dc3545;
+  color: white;
+}
+.logout-btn:hover {
+  background-color: #c82333;
+  color: white;
+}
+
+/* Overlay */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}
+.sidebar-overlay.active {
+  display: block;
+}
+
+/* Konten Utama */
+#main-content {
+  width: 100%;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* Layout untuk Desktop */
+@media (min-width: 992px) {
+  .sidebar {
+    left: 0;
+  }
+  #main-content {
+    margin-left: 280px;
+  }
+  #hamburger-btn {
+    display: none;
+  }
+  .sidebar-overlay {
+    display: none !important;
+  }
+}
+
+/* Kustomisasi komponen Bootstrap */
+.card {
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  background-color: var(--neutral-white);
+  border: 1px solid #e0e0e0;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--sasirangan-green-light);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12), 0 6px 6px rgba(0, 0, 0, 0.08);
+}
+
+.profile-card,
+.posting-card {
+  padding: 1.5rem;
+}
+
+/* 4. Mengganti tombol utama dengan warna hijau dari palet baru */
+.btn-brand-green {
+  background-color: var(--sasirangan-green-dark);
+  color: var(--neutral-white);
+  border: none;
+  font-weight: 600;
+}
+.btn-brand-green:hover {
+  background-color: var(
+    --sasirangan-green-medium
+  ); /* Warna lebih gelap saat hover */
+  color: var(--neutral-white);
+}
+
+.btn-secondary {
+  background-color: var(--sasirangan-green-medium);
+  color: var(--neutral-white);
+  border: none;
+  font-weight: 600;
+}
+
+.btn-secondary:hover {
+  background-color: var(
+    --sasirangan-green-dark
+  ); /* Warna lebih terang saat hover */
+  color: var(--neutral-white);
+}
+
+/* 5. Mengganti warna pada ikon profil dan postingan */
+.profile-card .flex-shrink-0 {
+  background-color: var(--sasirangan-green-medium) !important;
+}
+
+.posting-card .flex-shrink-0 {
+  background-color: var(--sasirangan-green-light) !important;
+  color: var(--sasirangan-green-dark) !important;
+}
+
+/* Penyesuaian Tipografi */
+.h4.fw-bold {
+  color: var(--neutral-dark);
+}
+.text-secondary {
+  color: #555 !important;
+}
+.text-muted {
+  color: var(--neutral-grey) !important;
+}

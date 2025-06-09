@@ -1,0 +1,129 @@
+/* /public/css/jobpage.css */
+
+/* --- Pengaturan Umum Halaman --- */
+.page-title {
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 2.5rem !important;
+}
+
+/* --- Kartu Lowongan Baru --- */
+.job-card-new {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Membuat semua kartu dalam satu baris sama tinggi */
+}
+
+.job-card-new:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.card-header-new {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+}
+
+/* Avatar Inisial Perusahaan */
+.company-initials-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Judul dan Nama Perusahaan */
+.job-title-new {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 2px;
+}
+
+.company-name-new {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+/* Bagian Body Kartu (Detail Lowongan) */
+.card-body-new {
+    padding: 0 20px 20px 20px;
+    flex-grow: 1; /* Mendorong footer ke bawah */
+    border-top: 1px solid #f1f1f1;
+    padding-top: 20px;
+}
+
+.job-details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.job-details-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.job-details-list li i {
+    color: #215546; /* Warna ikon hijau brand */
+    margin-right: 12px;
+    font-size: 1.1rem;
+}
+
+/* Bagian Footer Kartu (Tombol) */
+.card-footer-new {
+    padding: 20px;
+    border-top: 1px solid #f1f1f1;
+    margin-top: auto; /* Memastikan footer selalu di bawah */
+}
+
+.btn-apply-new {
+    background-color: #215546;
+    color: white;
+    font-weight: 600;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s ease;
+}
+
+.btn-apply-new:hover {
+    background-color: #1a4437;
+    color: white;
+}
+
+/* --- Paginasi --- */
+.pagination .page-link {
+    color: #215546;
+}
+.pagination .page-item.active .page-link {
+    background-color: #215546;
+    border-color: #215546;
+    color: white;
+}
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+}

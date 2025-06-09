@@ -1,0 +1,119 @@
+/* navbar.css */
+.navbar {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background-color: var(--neutral-white);
+}
+
+.navbar-brand img {
+  max-height: 90px;
+}
+
+.nav-link {
+  color: var(--neutral-dark);
+  font-weight: 500;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--sasirangan-green-medium);
+}
+
+.btn-custom-green {
+  background-color: var(--sasirangan-green-medium);
+  border-color: var(--sasirangan-green-medium);
+  color: var(--neutral-white);
+  font-weight: 600;
+}
+
+.btn-custom-green:hover {
+  background-color: var(--sasirangan-green-dark);
+  border-color: var(--sasirangan-green-dark);
+  color: var(--neutral-white);
+}
+
+/* Sedikit penyesuaian pada padding navbar */
+.navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Membuat link navigasi utama sedikit lebih renggang */
+.navbar-nav .nav-link {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Style untuk ikon di kanan (ChatBot & Profile) */
+.nav-icon-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--neutral-dark);
+    font-weight: 500;
+}
+
+.nav-icon-link:hover {
+    color: var(--sasirangan-green-medium);
+}
+
+.nav-icon-item {
+    font-size: 1.75rem; /* Ukuran ikon */
+}
+
+.nav-icon-text {
+    font-size: 0.8rem; /* Ukuran teks di bawah ikon */
+    margin-top: -2px;
+}
+
+/* Style untuk Tombol Log Out Baru */
+.btn-logout-nav {
+    background-color: #215546; /* Warna hijau tua sesuai brand */
+    color: var(--neutral-white);
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Jarak antara ikon dan teks */
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-logout-nav:hover {
+    background-color: #1a4437; /* Versi lebih gelap saat hover */
+    color: var(--neutral-white);
+}
+
+/* Tombol Masuk (outline) */
+.btn-login {
+    color: #215546;
+    border: 2px solid #215546;
+    font-weight: 600;
+    padding: 6px 20px;
+    border-radius: 8px;
+    background-color: transparent;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-login:hover {
+    background-color: #215546;
+    color: white;
+}
+
+/* Tombol Daftar (solid) - Mirip tombol logout */
+.btn-register {
+    background-color: #215546;
+    color: white;
+    font-weight: 600;
+    padding: 8px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-register:hover {
+    background-color: #1a4437;
+    color: white;
+}

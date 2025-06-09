@@ -1,0 +1,138 @@
+
+body {
+    background: linear-gradient(135deg, #215546, #ffc700);
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+}
+
+.main-container {
+    max-width: 700px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 40px 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.form-title {
+    font-weight: 700;
+    color: #333;
+}
+
+.job-summary {
+    background-color: #f8f9fa;
+    padding: 20px 25px;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+}
+
+.job-summary p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.job-summary .job-title {
+    font-weight: 700;
+    color: #212529;
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.job-summary .company-name {
+    font-size: 1rem;
+    color: #495057;
+}
+
+.section-heading {
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: #495057;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 20px 15px;
+    height: auto;
+}
+
+.form-control:focus {
+    border-color: #0c392c;
+    box-shadow: 0 0 0 0.2rem rgba(12, 57, 44, 0.15);
+}
+
+/* Membuat field readonly terlihat sama dengan field aktif */
+.form-control[readonly] {
+    background-color: #fff;
+    opacity: 1;
+}
+
+textarea.form-control {
+    padding: 15px; /* Menyesuaikan padding untuk textarea */
+}
+
+/* Styling untuk custom file input */
+.custom-file-input ~ .custom-file-label::after {
+    content: "Browse"; /* Mengubah teks default jika diperlukan */
+}
+.custom-file {
+    height: auto;
+}
+.custom-file-label {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 12px 15px;
+    height: auto;
+    line-height: 1.8;
+    display: flex;          
+    align-items: center;   
+    line-height: normal;   
+}
+
+.form-text.text-muted {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+/* Styling Tombol */
+.btn {
+    border-radius: 8px;
+    font-weight: 700;
+    padding: 12px;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+}
+
+.btn-submit {
+    background-color: #1a6a51; /* Warna hijau dari gambar */
+    border-color: #1a6a51;
+    color: #fff;
+}
+.btn-submit:hover {
+    background-color: #14523e;
+    border-color: #14523e;
+    color: #fff;
+}
+
+.btn-cancel {
+    background-color: #6c757d; /* Warna abu-abu dari gambar */
+    border-color: #6c757d;
+    color: #fff;
+}
+.btn-cancel:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+    color: #fff;
+}

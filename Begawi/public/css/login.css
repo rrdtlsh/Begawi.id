@@ -1,0 +1,118 @@
+:root {
+  --sasirangan-green: #215546;
+  --sasirangan-yellow: #ffc700;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+}
+
+.login {
+  background: linear-gradient(
+    135deg,
+    var(--sasirangan-green),
+    var(--sasirangan-yellow)
+  );
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem; /* TAMBAHAN: Jaga jarak pada layar kecil */
+}
+
+.form-container {
+  background-color: #fff;
+  padding: 50px 40px; /* MODIFIKASI: Padding lebih besar */
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-width: 500px; /* MODIFIKASI: Sedikit lebih lebar */
+  width: 100%;
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* --- Ukuran Logo & Judul Disesuaikan --- */
+.logo-begawi {
+  font-size: 2.8rem; /* MODIFIKASI: Logo lebih besar */
+  color: var(--sasirangan-green);
+  font-weight: 700; /* TAMBAHAN: Pastikan tebal */
+}
+
+.logo-begawi span {
+  color: var(--sasirangan-yellow);
+  font-style: italic; /* TAMBAHAN: Memberi aksen */
+}
+
+.form-container h2 {
+  color: #333; /* MODIFIKASI: Warna lebih lembut dari logo */
+  font-weight: 600;
+  font-size: 1.5rem; /* MODIFIKASI: Disesuaikan agar proporsional */
+  margin-bottom: 1.5rem; /* TAMBAHAN: Jarak ke form */
+}
+
+
+/* --- Bagian Terpenting: Perbesar Elemen Form --- */
+.form-label {
+    font-weight: 600; /* TAMBAHAN: Label lebih tebal */
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+  height: 52px; /* TAMBAHAN: Membuat input lebih tinggi */
+  padding: 10px 16px; /* TAMBAHAN: Padding internal input */
+  font-size: 1rem; /* TAMBAHAN: Ukuran teks di dalam input */
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+  border-color: var(--sasirangan-green);
+  box-shadow: 0 0 0 0.2rem rgba(33, 85, 70, 0.25);
+}
+
+.btn-primary {
+  background-color: var(--sasirangan-green);
+  border-color: var(--sasirangan-green);
+  font-weight: 700; /* MODIFIKASI: Lebih tebal */
+  transition: 0.3s ease-in-out;
+  padding: 12px 20px; /* TAMBAHAN: Membuat tombol lebih besar */
+  font-size: 1rem; /* TAMBAHAN: Ukuran font tombol */
+  margin-top: 1rem; /* TAMBAHAN: Jarak dari input password */
+  text-transform: uppercase; /* TAMBAHAN: Teks kapital */
+  letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+  background-color: #1a4437;
+  border-color: #1a4437;
+  transform: translateY(-2px); /* TAMBAHAN: Efek sedikit terangkat */
+}
+
+.signup-link {
+  text-align: center;
+  margin-top: 25px; /* MODIFIKASI: Jarak lebih besar */
+  font-size: 0.9rem;
+}
+
+.signup-link a {
+  color: var(--sasirangan-green);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,99 @@
+/* /public/css/companypage.css */
+
+/* --- Pengaturan Umum Halaman --- */
+.page-title {
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 2.5rem !important;
+}
+
+/* --- Wrapper untuk membuat seluruh kartu bisa diklik --- */
+.company-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.company-card-link:hover {
+    color: inherit;
+}
+
+/* --- Kartu Perusahaan Baru --- */
+.company-card {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    height: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.company-card-link:hover .company-card {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* Avatar Inisial Perusahaan (sama seperti sebelumnya) */
+.company-initials-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* Dibuat bulat agar lebih menarik */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+/* Nama Perusahaan */
+.company-card-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 12px;
+}
+
+/* Detail (Lokasi & Industri) */
+.company-card-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px; /* Jarak antar detail */
+}
+
+.company-card-details p {
+    font-size: 0.9rem;
+    color: #495057;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.company-card-details i {
+    color: #215546; /* Warna ikon hijau brand */
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+/* --- Paginasi (sama seperti sebelumnya) --- */
+.pagination .page-link {
+    color: #215546;
+}
+.pagination .page-item.active .page-link {
+    background-color: #215546;
+    border-color: #215546;
+    color: white;
+}
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+}
