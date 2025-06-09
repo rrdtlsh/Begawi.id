@@ -8,23 +8,27 @@
         <p class="lead mb-5">Platform pencarian kerja terpercaya di Banua.</p>
 
         <div class="search-form-card col-lg-11 mx-auto">
-            <form class="row g-3 align-items-center" action="<?= site_url('search/process') ?>" method="post">
+            
+            <form class="row g-3 align-items-end" action="<?= site_url('search/process') ?>" method="post">
                 <?= csrf_field() ?>
 
-                <div class="col-lg">
-                    <label for="keyword" class="form-label">Judul Pekerjaan/Kata Kunci</label>
-                    <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Contoh: Web Developer">
+                <div class="col-lg text-start">
+                    <label for="search_type" class="form-label fw-bold">Saya mencari...</label>
+                    <select class="form-select form-select-lg" id="search_type" name="search_type">
+                        <option value="jobs" selected>Pekerjaan</option>
+                        <option value="trainings">Pelatihan</option>
+                    </select>
                 </div>
 
-                <div class="col-lg">
-                    <label for="keyword_alt" class="form-label">Judul Kata Kunci</label>
-                    <input type="text" class="form-control" id="keyword_alt" name="keyword_alt" placeholder="Contoh: Web Developer">
+                <div class="col-lg-4 text-start">
+                    <label for="keyword" class="form-label fw-bold">Judul/Kata Kunci</label>
+                    <input type="text" class="form-control form-control-lg" id="keyword" name="keyword"
+                           placeholder="Contoh: Web Developer">
                 </div>
 
-                <div class="col-lg">
-                    <label for="location" class="form-label">Lokasi</label>
-                    <select class="form-select" id="location" name="location">
-                        <option selected disabled>Pilih Lokasi</option>
+                <div class="col-lg text-start">
+                    <label for="location" class="form-label fw-bold">Lokasi</label>
+                    <select class="form-select form-select-lg" id="location" name="location">
                         <option value="">Semua Lokasi</option>
                         <?php if (!empty($locations)): foreach ($locations as $loc): ?>
                             <option value="<?= $loc->id ?>"><?= esc($loc->name) ?></option>
@@ -32,19 +36,18 @@
                     </select>
                 </div>
 
-                <div class="col-lg">
-                     <label for="category" class="form-label">Kategori</label>
-                    <select class="form-select" id="category" name="category">
-                        <option selected disabled>Semua Kategori</option>
-                         <option value="">Semua Kategori</option>
+                <div class="col-lg text-start">
+                     <label for="category" class="form-label fw-bold">Kategori</label>
+                    <select class="form-select form-select-lg" id="category" name="category">
+                        <option value="">Semua Kategori</option>
                         <?php if (!empty($categories)): foreach ($categories as $cat): ?>
                             <option value="<?= $cat->id ?>"><?= esc($cat->name) ?></option>
                         <?php endforeach; endif; ?>
                     </select>
                 </div>
 
-                <div class="col-lg-auto">
-                    <button type="submit" class="btn btn-search btn-block w-100">
+                <div class="col-lg-auto d-grid">
+                    <label class="form-label d-none d-lg-block">&nbsp;</label> <button type="submit" class="btn btn-search btn-lg btn-block w-100">
                         <i class="bi bi-search"></i> Cari
                     </button>
                 </div>
