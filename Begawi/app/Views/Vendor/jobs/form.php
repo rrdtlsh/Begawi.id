@@ -71,14 +71,24 @@
                     <div class="col-md-6">
                          <div class="form-group">
                             <label for="job_type">Tipe Pekerjaan</label>
-                            <select name="job_type" id="job_type" class="form-control">
-                                <?php $job_types = ['Paruh Waktu (Part Time)', 'Penuh Waktu (Full Time)', 'Kontrak (Contract)', 'Magang (Internship)', 'Lepas (Freelance)']; ?>
-                                <?php foreach ($job_types as $type): ?>
-                                <option value="<?= $type ?>" <?= (old('job_type', $job->job_type ?? '') == $type) ? 'selected' : '' ?>>
-                                    <?= $type ?>
-                                </option>
+                            <select name="job_type" id="job_type" class="form-control" required>
+                                <?php
+                                // Mengubah array menjadi asosiatif: 'nilai_untuk_database' => 'teks_untuk_tampilan'
+                                $job_types = [
+                                    'Full-time'  => 'Penuh Waktu (Full-time)',
+                                    'Part-time'  => 'Paruh Waktu (Part-time)',
+                                    'Contract'   => 'Kontrak (Contract)',
+                                    'Internship' => 'Magang (Internship)',
+                                    'Freelance'  => 'Lepas (Freelance)'
+                                ];
+                                ?>
+                                <option value="">Pilih Tipe Pekerjaan</option>
+                                <?php foreach ($job_types as $value => $label): ?>
+                                    <option value="<?= $value ?>" <?= (old('job_type', $job->job_type ?? '') == $value) ? 'selected' : '' ?>>
+                                        <?= $label ?>
+                                    </option>
                                 <?php endforeach; ?>
-                            </select>
+                                </select>
                         </div>
                     </div>
                     <div class="col-md-3">
