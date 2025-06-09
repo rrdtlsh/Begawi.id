@@ -12,7 +12,7 @@
 
 <body>
     <div class="container" style="max-width: 1100px; margin-top: 40px;">
-        <a href="javascript:history.back()" class="btn-back"><i class="bi bi-arrow-left-circle"></i> Kembali</a>
+        <a href="<?= site_url('home') ?>" class="btn-back"><i class="bi bi-arrow-left-circle"></i> Kembali</a>
     </div>
 
     <div class="main-container">

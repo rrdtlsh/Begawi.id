@@ -18,6 +18,8 @@ $routes->post('/search/process', 'SearchController::process');
 $routes->get('/jobs', 'JobPageController::index'); 
 $routes->get('/trainings', 'TrainingPageController::index');
 $routes->get('/companies', 'VendorPageController::index');
+// ---Rute tombol kembali
+$routes->get('/home', 'HomeController::index'); 
 
 $routes->post('/lowongan', 'JobPageController::index'); // Menangani filter/pencarian
 $routes->get('/lowongan/detail/(:num)', 'JobPageController::detail/$1');
