@@ -32,8 +32,14 @@
            </a>
         </div>
         <nav class="nav sidebar-nav flex-column">
-            <a class="nav-link active" href="<?= site_url('vendor/dashboard') ?>"><i class="bi bi-house-door-fill"></i><span>Beranda Vendor</span></a>
-            
+            <a class="nav-link" href="<?= site_url('home') ?>">
+                <i class="bi bi-house-door-fill"></i><span>Homepage</span>
+            </a>
+
+            <a class="nav-link active" href="<?= site_url('vendor/dashboard') ?>">
+                <i class="bi bi-briefcase-fill"></i><span>Beranda Vendor</span>
+            </a>
+
             <!-- Posting dengan submenu -->
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="postingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
