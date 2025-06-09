@@ -14,8 +14,6 @@ class JobApplicationController extends BaseController
      */
     public function showApplicationForm($jobId)
     {
-        // ... (kode pengecekan session tetap sama) ...
-
         $jobModel = new JobModel();
         $jobseekerModel = new JobseekerModel(); // Panggil JobseekerModel
 

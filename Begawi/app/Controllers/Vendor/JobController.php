@@ -224,29 +224,29 @@ class JobController extends BaseController
     }
 
     public function showApplicantDetail($applicationId)
-{
-    $applicationModel = new \App\Models\JobApplicationModel();
-    $jobseekerModel = new \App\Models\JobseekerModel(); // Untuk mengambil skills
-    $vendorId = session()->get('profile_id');
+    {
+        $applicationModel = new \App\Models\JobApplicationModel();
+        $jobseekerModel = new \App\Models\JobseekerModel(); // Untuk mengambil skills
+        $vendorId = session()->get('profile_id');
 
-    // 1. Ambil detail lamaran dari model
-    $applicant = $applicationModel->getApplicantDetail($applicationId);
+        // 1. Ambil detail lamaran dari model
+        $applicant = $applicationModel->getApplicantDetail($applicationId);
 
-    // 2. Verifikasi: Cek apakah lamaran ada & milik vendor yang benar
-    if (!$applicant || $applicant->vendor_id != $vendorId) {
-        return redirect()->to('vendor/dashboard')->with('error', 'Lamaran tidak ditemukan atau akses ditolak.');
+        // 2. Verifikasi: Cek apakah lamaran ada & milik vendor yang benar
+        if (!$applicant || $applicant->vendor_id != $vendorId) {
+            return redirect()->to('vendor/dashboard')->with('error', 'Lamaran tidak ditemukan atau akses ditolak.');
+        }
+
+        // 3. Ambil data skills pelamar
+        // Pastikan jobseeker_id ada sebelum memanggil method ini
+        $applicant->skills = $jobseekerModel->getJobseekerSkills($applicant->jobseeker_id);
+
+        $data = [
+            'title' => 'Detail Pelamar: ' . esc($applicant->jobseeker_name),
+            'applicant' => $applicant
+        ];
+
+        // 4. Tampilkan view baru yang akan kita buat selanjutnya
+        return view('vendor/jobs/applicant_detail', $data);
     }
-
-    // 3. Ambil data skills pelamar
-    // Pastikan jobseeker_id ada sebelum memanggil method ini
-    $applicant->skills = $jobseekerModel->getJobseekerSkills($applicant->jobseeker_id);
-
-    $data = [
-        'title' => 'Detail Pelamar: ' . esc($applicant->jobseeker_name),
-        'applicant' => $applicant
-    ];
-
-    // 4. Tampilkan view baru yang akan kita buat selanjutnya
-    return view('vendor/jobs/applicant_detail', $data);
-}
 }

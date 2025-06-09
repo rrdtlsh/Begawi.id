@@ -53,11 +53,11 @@ class TrainingPageController extends BaseController
                 $isRegistered = true;
             }
             if ($training->quota > 0 && !$isRegistered) { // Tambahan: Cek hanya jika belum terdaftar
-            $applicantCount = $trainingApplicationModel->where('training_id', $id)->countAllResults();
-            if ($applicantCount >= $training->quota) {
-                $isQuotaFull = true;
+                $applicantCount = $trainingApplicationModel->where('training_id', $id)->countAllResults();
+                if ($applicantCount >= $training->quota) {
+                    $isQuotaFull = true;
+                }
             }
-        }
         }
 
 

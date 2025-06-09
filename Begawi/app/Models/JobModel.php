@@ -31,39 +31,39 @@ class JobModel extends Model
     protected $updatedField = 'updated_at';
     protected $deletedField = 'deleted_at';
 
-    // *** ATURAN VALIDASI UNTUK PEMBUATAN BARU ***
+    // Validasi untuk inputan saat membuat lowongan baru
     protected $validationRules = [
         'title' => 'required|max_length[255]',
         'category_id' => 'required|integer',
         'location_id' => 'required|integer',
         'description' => 'required',
-        'qualifications' => 'permit_empty|string', // Kualifikasi opsional saat ini, tapi bisa string
-        'application_instructions' => 'permit_empty|string', // Opsional
+        'qualifications' => 'permit_empty|string',
+        'application_instructions' => 'permit_empty|string',
         'job_type' => 'required|in_list[Full-time,Part-time,Contract,Internship,Freelance]',
         'salary_min' => 'permit_empty|integer|less_than_equal_to[salary_max]',
         'salary_max' => 'permit_empty|integer',
         'application_deadline' => 'required',
         'quota' => 'permit_empty|integer|greater_than_equal_to[1]',
         'contact_email' => 'required|valid_email',
-        'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]', // Opsional
+        'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]',
     ];
-
+    // Validasi untuk inputan saat mengupdate lowongan
     protected $validationRulesUpdate = [
-        'title' => 'permit_empty|max_length[255]', // TIDAK WAJIB
-        'category_id' => 'permit_empty|integer', // TIDAK WAJIB
-        'location_id' => 'permit_empty|integer', // TIDAK WAJIB
-        'description' => 'permit_empty', // TIDAK WAJIB
-        'qualifications' => 'permit_empty|string', // Kualifikasi opsional saat ini, tapi bisa string
-        'application_instructions' => 'permit_empty|string', // Opsional
-        'job_type' => 'permit_empty|in_list[Full-time,Part-time,Contract,Internship,Freelance]', // TIDAK WAJIB
+        'title' => 'permit_empty|max_length[255]',
+        'category_id' => 'permit_empty|integer',
+        'location_id' => 'permit_empty|integer',
+        'description' => 'permit_empty',
+        'qualifications' => 'permit_empty|string',
+        'application_instructions' => 'permit_empty|string',
+        'job_type' => 'permit_empty|in_list[Full-time,Part-time,Contract,Internship,Freelance]',
         'salary_min' => 'permit_empty|integer|less_than_equal_to[salary_max]',
         'salary_max' => 'permit_empty|integer',
-        'application_deadline' => 'permit_empty|valid_date[Y-m-d H:i:s]|after_now', // TIDAK WAJIB
+        'application_deadline' => 'permit_empty|valid_date[Y-m-d H:i:s]|after_now',
         'quota' => 'permit_empty|integer|greater_than_equal_to[1]',
-        'contact_email' => 'permit_empty|valid_email', // TIDAK WAJIB
-        'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]', // Opsional
+        'contact_email' => 'permit_empty|valid_email',
+        'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]',
     ];
-
+    // Pesan kesalahan validasi saat mengisi formulir lowongan
     protected $validationMessages = [
         'title' => [
             'required' => 'Judul lowongan wajib diisi.',
