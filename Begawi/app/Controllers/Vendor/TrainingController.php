@@ -124,8 +124,6 @@ class TrainingController extends BaseController
         // Ambil semua data POST
         $data = $this->request->getPost();
 
-        // Hapus field kosong agar tidak menimpa data yang ada saat update
-        // Kecuali jika memang ingin diset ke NULL, maka biarkan saja.
         foreach ($data as $key => $value) {
             // Jika value kosong string (''), unset agar tidak menimpa data lama dengan kosong
             // Ini akan membuat field tersebut tidak di-update
@@ -198,8 +196,8 @@ class TrainingController extends BaseController
 
         // 3. Siapkan data untuk view
         $data = [
-            'title'        => 'Daftar Peserta: ' . esc($training->title),
-            'training'     => $training,
+            'title' => 'Daftar Peserta: ' . esc($training->title),
+            'training' => $training,
             'participants' => $participants,
         ];
 
@@ -214,12 +212,11 @@ class TrainingController extends BaseController
     {
         // 1. Validasi input
         $newStatus = $this->request->getPost('status');
-        $allowedStatus = ['pending', 'approved', 'rejected'];
+        $allowedStatus = ['pending', 'accepted', 'rejected'];
         if (!in_array($newStatus, $allowedStatus)) {
             return redirect()->back()->with('error', 'Status tidak valid.');
         }
 
-        // 2. Inisialisasi model
         $applicationModel = new TrainingApplicationModel();
 
         // 3. Verifikasi bahwa vendor berhak mengubah status ini
@@ -233,9 +230,13 @@ class TrainingController extends BaseController
         }
 
         // 4. Update status di database
-        $applicationModel->update($applicationId, ['status' => $newStatus]);
+        $updateResult = $applicationModel->update($applicationId, ['status' => $newStatus]);
 
-        // 5. Kembali ke halaman sebelumnya dengan pesan sukses
-        return redirect()->back()->with('success', 'Status peserta berhasil diperbarui.');
+        if ($updateResult) {
+            // Jika Anda ingin mengirim email notifikasi, logikanya ada di sini
+            return redirect()->back()->with('success', 'Status peserta berhasil diperbarui.');
+        } else {
+            return redirect()->back()->with('error', 'Gagal memperbarui status peserta.');
+        }
     }
 }
