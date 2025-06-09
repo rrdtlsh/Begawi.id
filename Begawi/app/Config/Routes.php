@@ -93,8 +93,8 @@ $routes->group('jobseeker', ['filter' => 'auth'], function ($routes) {
     // Riwayat Lamaran & Pelatihan
     $routes->get('history', 'Jobseeker\HistoryController::index');
 
-    $routes->get('chatbot', 'ChatbotController::index');
-    $routes->post('chatbot/ask', 'ChatbotController::ask');
+    $routes->get('chatbot', 'Jobseeker\ChatbotController::index');
+    $routes->post('chatbot/ask', 'Jobseeker\ChatbotController::ask');
 
 });
 
