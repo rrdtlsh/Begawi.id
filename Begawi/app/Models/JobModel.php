@@ -20,7 +20,6 @@ class JobModel extends Model
         'qualifications',
         'application_instructions',
         'job_type',
-        'experience_level',
         'salary_min',
         'salary_max',
         'application_deadline',

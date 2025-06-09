@@ -16,14 +16,12 @@ class VendorModel extends Model
         'user_id',
         'company_name',
         'company_email',
-        'location_id', // Tambahkan ini
+        'location_id',
         'company_address', // Tambahkan ini
         'company_profile',
         'company_logo_path',
         'industry',
-        'company_size',
         'contact',
-        'website'
     ];
 
     protected $useTimestamps = true;
