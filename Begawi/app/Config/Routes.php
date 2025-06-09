@@ -6,55 +6,55 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-// ===================================================================
-// RUTE PUBLIK (Bisa diakses siapa saja)
-// ===================================================================
+//===================================================================
+// RUTE PUBLIK (Bisa diakses siapa saja tanpa login)
+//===================================================================
 
-// ---- route navbar ---
+// Rute Halaman Utama & Navigasi
 $routes->get('/', 'HomeController::index');
 $routes->get('/about', 'HomeController::about');
+$routes->get('/home', 'HomeController::index'); // Rute tombol kembali
+
+// Rute Pencarian Publik
 $routes->post('/search/process', 'SearchController::process');
 
+// Rute Halaman Daftar & Detail Lowongan Pekerjaan
 $routes->get('/jobs', 'JobPageController::index');
-$routes->get('/trainings', 'TrainingPageController::index');
-$routes->get('/companies', 'VendorPageController::index');
-// ---Rute tombol kembali
-$routes->get('/home', 'HomeController::index');
-
 $routes->post('/lowongan', 'JobPageController::index'); // Menangani filter/pencarian
 $routes->get('/lowongan/detail/(:num)', 'JobPageController::detail/$1');
 
-// Rute untuk Halaman Daftar & Detail Pelatihan
-$routes->post('/pelatihan', 'TrainingPageController::index');
-$routes->get('/pelatihan/detail/(:num)', 'TrainingPageController::detail/$1'); // Aktifkan rute detail pelatihan// Menangani filter/pencarian
-$routes->get('/pelatihan/daftar/(:num)', 'TrainingApplicationController::processApplication/$1');
+// Rute Halaman Daftar & Detail Pelatihan
+$routes->get('/trainings', 'TrainingPageController::index');
+$routes->post('/pelatihan', 'TrainingPageController::index'); // Menangani filter/pencarian
+$routes->get('/pelatihan/detail/(:num)', 'TrainingPageController::detail/$1');
 
-// ===================================================================
-// RUTE AUTENTIKASI (Login, Register, Logout)
-// ===================================================================
+// Rute Halaman Daftar & Detail Perusahaan/Vendor
+$routes->get('/companies', 'VendorPageController::index');
+$routes->get('/vendor', 'VendorPageController::index'); // Alias untuk '/companies' atau daftar vendor umum
+$routes->get('/vendor/detail/(:num)', 'VendorPageController::detail/$1');
+
+//===================================================================
+// RUTE AUTENTIKASI (Pendaftaran, Login, Logout)
+//===================================================================
 $routes->get('/register', 'AuthController::register'); // Halaman pilihan peran
-$routes->get('/register/jobseeker', 'AuthController::registerJobseeker'); // Form jobseeker
-$routes->get('/register/vendor', 'AuthController::registerVendor');     // Form vendor
+$routes->get('/register/jobseeker', 'AuthController::registerJobseeker'); // Form pendaftaran jobseeker
+$routes->get('/register/vendor', 'AuthController::registerVendor'); // Form pendaftaran vendor
 $routes->post('/register/process', 'AuthController::processRegister'); // Proses pendaftaran
 $routes->get('/login', 'AuthController::login');
 $routes->post('/login/process', 'AuthController::processLogin');
 $routes->get('/logout', 'AuthController::logout');
 
-//rute untuk halaman perusahaann
-$routes->get('/vendor', 'VendorPageController::index');
-$routes->get('/vendor/detail/(:num)', 'VendorPageController::detail/$1');
 
-// ===================================================================
+//===================================================================
 // RUTE KHUSUS VENDOR (Memerlukan Login & Peran Vendor)
-// ===================================================================
+//===================================================================
 $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
-    // Dashboard
+    // Dashboard Vendor
     $routes->get('dashboard', 'Vendor\DashboardController::index');
 
-    // Profil Vendor
+    // Pengelolaan Profil Vendor
     $routes->get('profile/edit', 'Vendor\ProfileController::edit');
     $routes->post('profile/update', 'Vendor\ProfileController::update');
-
 
     // CRUD Lowongan Pekerjaan (Jobs)
     $routes->get('jobs/new', 'Vendor\JobController::newJob');
@@ -62,6 +62,8 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     $routes->get('jobs/edit/(:num)', 'Vendor\JobController::editJob/$1');
     $routes->post('jobs/update/(:num)', 'Vendor\JobController::updateJob/$1');
     $routes->post('jobs/delete/(:num)', 'Vendor\JobController::deleteJob/$1');
+
+    // Pengelolaan Pelamar Lowongan
     $routes->get('jobs/(:num)/applicants', 'Vendor\JobController::showApplicants/$1');
     $routes->post('applicants/(:num)/status', 'Vendor\JobController::updateApplicantStatus/$1');
     $routes->get('jobs/applicant/(:num)', 'Vendor\JobController::showApplicantDetail/$1');
@@ -72,47 +74,50 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     $routes->get('trainings/edit/(:num)', 'Vendor\TrainingController::editTraining/$1');
     $routes->post('trainings/update/(:num)', 'Vendor\TrainingController::updateTraining/$1');
     $routes->post('trainings/delete/(:num)', 'Vendor\TrainingController::deleteTraining/$1');
+
+    // Pengelolaan Peserta Pelatihan
     $routes->get('trainings/(:num)/participants', 'Vendor\TrainingController::showParticipants/$1');
     $routes->post('trainings/participants/(:num)/status', 'Vendor\TrainingController::updateParticipantStatus/$1');
-
-    // email
-    $routes->get('jobs/applicants/(:num)', 'Vendor\JobController::showApplicants/$1');
-    $routes->post('applicants/status/(:num)', 'Vendor\JobController::updateApplicantStatus/$1');
 });
 
 
-// ===================================================================
+//===================================================================
 // RUTE KHUSUS JOBSEEKER (Memerlukan Login & Peran Jobseeker)
-// ===================================================================
+//===================================================================
 $routes->group('jobseeker', ['filter' => 'auth'], function ($routes) {
-    // Dashboard
+    // Dashboard Jobseeker
     $routes->get('dashboard', 'Jobseeker\DashboardController::index');
 
-    // Profil Jobseeker
+    // Pengelolaan Profil Jobseeker
     $routes->get('profile/edit', 'Jobseeker\ProfileController::edit');
     $routes->post('profile/update', 'Jobseeker\ProfileController::update');
 
     // Riwayat Lamaran & Pelatihan
     $routes->get('history', 'Jobseeker\HistoryController::index');
 
+    // Chatbot
     $routes->get('chatbot', 'Jobseeker\ChatbotController::index');
     $routes->post('chatbot/ask', 'Jobseeker\ChatbotController::ask');
-
 });
 
-// --- RUTE LAMARAN PEKERJAAN (Memerlukan Login) ---
+
+//===================================================================
+// RUTE LAMARAN/PENDAFTARAN (Memerlukan Login, Umumnya Jobseeker)
+//===================================================================
 $routes->group('lamar', ['filter' => 'auth'], function ($routes) {
     $routes->get('job/(:num)', 'JobApplicationController::showApplicationForm/$1');
     $routes->post('job/(:num)', 'JobApplicationController::submitApplication/$1');
 });
 
 $routes->group('daftar-pelatihan', ['filter' => 'auth'], function ($routes) {
-    // Akan menangani POST request ke /daftar-pelatihan/apply/2 (contoh)
     $routes->post('apply/(:num)', 'TrainingApplicationController::apply/$1');
 });
 
-$routes->group('admin', ['filter' => 'admin'], function ($routes) {
-    // Dasbor
-    $routes->get('dashboard', 'Admin\DashboardController::index');
 
+//===================================================================
+// RUTE KHUSUS ADMIN (Memerlukan Login & Peran Admin)
+//===================================================================
+$routes->group('admin', ['filter' => 'admin'], function ($routes) {
+    // Dasbor Admin
+    $routes->get('dashboard', 'Admin\DashboardController::index');
 });
