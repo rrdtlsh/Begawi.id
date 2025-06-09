@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Vendor;
 
 use App\Controllers\BaseController;
-use App\Models\TrainingApplicationModel; // Model untuk pendaftaran pelatihan
-use App\Models\TrainingModel;          // Model pelatihan, untuk cek apakah pelatihan valid
-use App\Models\JobseekerModel;         // Model jobseeker, untuk mendapatkan data jobseeker
+use App\Models\TrainingApplicationModel; 
+use App\Models\TrainingModel;          
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class TrainingApplicationController extends BaseController

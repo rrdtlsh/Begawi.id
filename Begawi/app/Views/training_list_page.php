@@ -56,12 +56,6 @@
                                     <i class="bi bi-geo-alt-fill"></i>
                                     <span>Lokasi: <?= esc($training->platform) ?></span>
                                 </li>
-                                <li>
-                                    <i class="bi bi-tags-fill"></i>
-                                    <span>
-                                        <?= ($training->cost > 0) ? 'Rp ' . number_format($training->cost, 0, ',', '.') : 'GRATIS' ?>
-                                    </span>
-                                </li>
                             </ul>
                         </div>
                         

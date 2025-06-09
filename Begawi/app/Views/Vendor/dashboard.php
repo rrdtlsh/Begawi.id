@@ -94,7 +94,6 @@
                             <div class="text-secondary small mb-4">
                                 <p class="mb-1"><strong>Mulai:</strong> <?= date('d M Y', strtotime($training->start_date)) ?>
                                 </p>
-                                <p class="mb-0"><strong>Status:</strong> <?= $training->is_paid ? 'Berbayar' : 'Gratis' ?></p>
                             </div>
                             <div class="mt-auto d-grid gap-2 d-sm-flex justify-content-center align-items-center">
                                 <a href="<?= site_url('vendor/trainings/edit/' . $training->id) ?>"

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Vendor;
 
 use App\Controllers\BaseController;
 use App\Models\JobApplicationModel;
@@ -14,6 +14,8 @@ class JobApplicationController extends BaseController
      */
     public function showApplicationForm($jobId)
     {
+        // ... (kode pengecekan session tetap sama) ...
+
         $jobModel = new JobModel();
         $jobseekerModel = new JobseekerModel(); // Panggil JobseekerModel
 
@@ -71,7 +73,7 @@ class JobApplicationController extends BaseController
         $data = [
             'job_id' => $jobId,
             'jobseeker_id' => $jobseekerId,
-            'cover_letter' => $this->request->getPost('cover_letter'),
+            'notes' => $this->request->getPost('cover_letter'),
             'resume_file_path' => $newName,
             'status' => 'pending',
         ];

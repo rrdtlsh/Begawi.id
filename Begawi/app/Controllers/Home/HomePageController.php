@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Home;
 
-// 1. Pastikan semua model yang dibutuhkan sudah dipanggil
+use App\Controllers\BaseController;
 use App\Models\JobModel;
 use App\Models\JobCategoryModel;
 use App\Models\LocationModel;
 use App\Models\TrainingModel;
 
-class HomeController extends BaseController
+class HomePageController extends BaseController
 {
     public function index()
     {

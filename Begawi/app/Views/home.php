@@ -156,7 +156,6 @@
                                 <div class="mb-3 small">
                                     <p class="job-detail-item"><i class="bi bi-geo-alt-fill"></i> <?= esc($training->location_name ?? 'Online') ?></p>
                                     <p class="job-detail-item"><i class="bi bi-calendar-event"></i> Mulai: <?= date('d M Y', strtotime($training->start_date)) ?></p>
-                                    <p class="job-detail-item"><i class="bi bi-patch-check-fill"></i> <?= $training->is_paid ? 'Gratis' : 'Gratis' // Sesuai gambar, keduanya menampilkan 'Gratis' ?></p>
                                 </div>
                                 <a href="<?= site_url('pelatihan/detail/' . $training->id) ?>" class="btn btn-custom-green mt-auto">Lihat Detail</a>
                             </div>

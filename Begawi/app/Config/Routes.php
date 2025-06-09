@@ -11,38 +11,38 @@ use CodeIgniter\Router\RouteCollection;
 //===================================================================
 
 // Rute Halaman Utama & Navigasi
-$routes->get('/', 'HomeController::index');
-$routes->get('/about', 'HomeController::about');
-$routes->get('/home', 'HomeController::index'); // Rute tombol kembali
+$routes->get('/', 'Home\HomePageController::index');
+$routes->get('/about', 'Home\HomePageController::about');
+$routes->get('/home', 'Home\HomePageController::index'); // Rute tombol kembali
 
 // Rute Pencarian Publik
-$routes->post('/search/process', 'SearchController::process');
+$routes->post('/search/process', 'Home\SearchController::process');
 
 // Rute Halaman Daftar & Detail Lowongan Pekerjaan
-$routes->get('/jobs', 'JobPageController::index');
-$routes->post('/lowongan', 'JobPageController::index'); // Menangani filter/pencarian
-$routes->get('/lowongan/detail/(:num)', 'JobPageController::detail/$1');
+$routes->get('/jobs', 'Home\JobPageController::index');
+$routes->post('/lowongan', 'Home\JobPageController::index'); // Menangani filter/pencarian
+$routes->get('/lowongan/detail/(:num)', 'Home\JobPageController::detail/$1');
 
 // Rute Halaman Daftar & Detail Pelatihan
-$routes->get('/trainings', 'TrainingPageController::index');
-$routes->post('/pelatihan', 'TrainingPageController::index'); // Menangani filter/pencarian
-$routes->get('/pelatihan/detail/(:num)', 'TrainingPageController::detail/$1');
+$routes->get('/trainings', 'Home\TrainingPageController::index');
+$routes->post('/pelatihan', 'Home\TrainingPageController::index'); // Menangani filter/pencarian
+$routes->get('/pelatihan/detail/(:num)', 'Home\TrainingPageController::detail/$1');
 
 // Rute Halaman Daftar & Detail Perusahaan/Vendor
-$routes->get('/companies', 'VendorPageController::index');
-$routes->get('/vendor', 'VendorPageController::index'); // Alias untuk '/companies' atau daftar vendor umum
-$routes->get('/vendor/detail/(:num)', 'VendorPageController::detail/$1');
+$routes->get('/companies', 'Home\VendorPageController::index');
+$routes->get('/vendor', 'Home\VendorPageController::index'); // Alias untuk '/companies' atau daftar vendor umum
+$routes->get('/vendor/detail/(:num)', 'Home\VendorPageController::detail/$1');
 
 //===================================================================
 // RUTE AUTENTIKASI (Pendaftaran, Login, Logout)
 //===================================================================
-$routes->get('/register', 'AuthController::register'); // Halaman pilihan peran
-$routes->get('/register/jobseeker', 'AuthController::registerJobseeker'); // Form pendaftaran jobseeker
-$routes->get('/register/vendor', 'AuthController::registerVendor'); // Form pendaftaran vendor
-$routes->post('/register/process', 'AuthController::processRegister'); // Proses pendaftaran
-$routes->get('/login', 'AuthController::login');
-$routes->post('/login/process', 'AuthController::processLogin');
-$routes->get('/logout', 'AuthController::logout');
+$routes->get('/register', 'Auth\AuthController::register'); // Halaman pilihan peran
+$routes->get('/register/jobseeker', 'Auth\AuthController::registerJobseeker'); // Form pendaftaran jobseeker
+$routes->get('/register/vendor', 'Auth\AuthController::registerVendor'); // Form pendaftaran vendor
+$routes->post('/register/process', 'Auth\AuthController::processRegister'); // Proses pendaftaran
+$routes->get('/login', 'Auth\AuthController::login');
+$routes->post('/login/process', 'Auth\AuthController::processLogin');
+$routes->get('/logout', 'Auth\AuthController::logout');
 
 
 //===================================================================
@@ -105,12 +105,12 @@ $routes->group('jobseeker', ['filter' => 'auth'], function ($routes) {
 // RUTE LAMARAN/PENDAFTARAN (Memerlukan Login, Umumnya Jobseeker)
 //===================================================================
 $routes->group('lamar', ['filter' => 'auth'], function ($routes) {
-    $routes->get('job/(:num)', 'JobApplicationController::showApplicationForm/$1');
-    $routes->post('job/(:num)', 'JobApplicationController::submitApplication/$1');
+    $routes->get('job/(:num)', 'Vendor\JobApplicationController::showApplicationForm/$1');
+    $routes->post('job/(:num)', 'Vendor\JobApplicationController::submitApplication/$1');
 });
 
 $routes->group('daftar-pelatihan', ['filter' => 'auth'], function ($routes) {
-    $routes->post('apply/(:num)', 'TrainingApplicationController::apply/$1');
+    $routes->post('apply/(:num)', 'Vendor\TrainingApplicationController::apply/$1');
 });
 
 

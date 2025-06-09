@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Home;
 
+use App\Controllers\BaseController;
 use App\Models\JobModel;
 use App\Models\TrainingModel;
 use App\Models\LocationModel;
