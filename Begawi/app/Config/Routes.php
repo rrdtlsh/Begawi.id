@@ -7,7 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 // RUTE PUBLIK (Bisa diakses siapa saja tanpa login)
-
+//
 // Rute Halaman Utama & Navigasi
 $routes->get('/', 'Home\HomePageController::index');
 $routes->get('/about', 'Home\HomePageController::about');
@@ -34,9 +34,9 @@ $routes->get('/vendor/detail/(:num)', 'Home\VendorPageController::detail/$1');
 $routes->get('/register', 'Auth\AuthController::register');
 $routes->get('/register/jobseeker', 'Auth\AuthController::registerJobseeker');
 $routes->get('/register/vendor', 'Auth\AuthController::registerVendor');
-$routes->post('/register/process', 'Auth\AuthController::processRegister');
+$routes->post('/register/process', 'Auth\AuthController::processRegister', ['filter' => 'throttle:10,300']);
 $routes->get('/login', 'Auth\AuthController::login');
-$routes->post('/login/process', 'Auth\AuthController::processLogin');
+$routes->post('/login/process', 'Auth\AuthController::processLogin', ['filter' => 'throttle:5,60']);
 $routes->get('/logout', 'Auth\AuthController::logout');
 
 // RUTE KHUSUS VENDOR (Memerlukan Login & Peran Vendor)
@@ -50,9 +50,9 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
 
     // CRUD Lowongan Pekerjaan (Jobs)
     $routes->get('jobs/new', 'Vendor\JobController::newJob');
-    $routes->post('jobs/create', 'Vendor\JobController::createJob');
+    $routes->post('jobs/create', 'Vendor\JobController::createJob', ['filter' => 'throttle:10,600']);
     $routes->get('jobs/edit/(:num)', 'Vendor\JobController::editJob/$1');
-    $routes->post('jobs/update/(:num)', 'Vendor\JobController::updateJob/$1');
+    $routes->post('jobs/update/(:num)', 'Vendor\JobController::updateJob/$1', ['filter' => 'throttle:10,600']);
     $routes->post('jobs/delete/(:num)', 'Vendor\JobController::deleteJob/$1');
 
     // Pengelolaan Pelamar Lowongan
@@ -62,9 +62,9 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
 
     // CRUD Pelatihan (Trainings)
     $routes->get('trainings/new', 'Vendor\TrainingController::newTraining');
-    $routes->post('trainings/create', 'Vendor\TrainingController::createTraining');
+    $routes->post('trainings/create', 'Vendor\TrainingController::createTraining', ['filter' => 'throttle:10,600']);
     $routes->get('trainings/edit/(:num)', 'Vendor\TrainingController::editTraining/$1');
-    $routes->post('trainings/update/(:num)', 'Vendor\TrainingController::updateTraining/$1');
+    $routes->post('trainings/update/(:num)', 'Vendor\TrainingController::updateTraining/$1', ['filter' => 'throttle:10,600']);
     $routes->post('trainings/delete/(:num)', 'Vendor\TrainingController::deleteTraining/$1');
 
     // Pengelolaan Peserta Pelatihan
@@ -93,11 +93,11 @@ $routes->group('jobseeker', ['filter' => 'auth'], function ($routes) {
 // RUTE LAMARAN/PENDAFTARAN (Memerlukan Login, Umumnya Jobseeker)
 $routes->group('lamar', ['filter' => 'auth'], function ($routes) {
     $routes->get('job/(:num)', 'Vendor\JobApplicationController::showApplicationForm/$1');
-    $routes->post('job/(:num)', 'Vendor\JobApplicationController::submitApplication/$1');
+    $routes->post('job/(:num)', 'Vendor\JobApplicationController::submitApplication/$1', ['filter' => 'throttle:15,300']);
 });
 
 $routes->group('daftar-pelatihan', ['filter' => 'auth'], function ($routes) {
-    $routes->post('apply/(:num)', 'Vendor\TrainingApplicationController::apply/$1');
+    $routes->post('apply/(:num)', 'Vendor\TrainingApplicationController::apply/$1', ['filter' => 'throttle:15,300']);
 });
 
 
