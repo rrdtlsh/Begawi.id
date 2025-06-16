@@ -23,38 +23,49 @@
                 </thead>
                 <tbody>
                     <?php if (!empty($participants)): ?>
-                        <?php foreach ($participants as $index => $participant): ?>
-                            <tr>
-                                <th scope="row"><?= $index + 1 ?></th>
-                                <td>
-                                    <div><?= esc($participant->jobseeker_name ?? 'Data Peserta Hilang') ?></div>
-                                    <div class="small text-secondary"><?= esc($participant->jobseeker_email ?? 'N/A') ?></div>
-                                </td>
-                                <td><?= date('d M Y, H:i', strtotime($participant->enrolled_at ?? time())) ?></td>
-                                <td>
-                                    <?php if (isset($participant->id)): ?>
-                                        <form action="<?= site_url('vendor/trainings/participants/' . $participant->id . '/status') ?>" method="post" class="d-flex gap-2">
-                                            <?= csrf_field() ?>
-                                            <select name="status" class="form-select form-select-sm">
-                                                <option value="pending" <?= ($participant->status ?? '') == 'pending' ? 'selected' : '' ?>>Menunggu</option>
-                                                <option value="approved" <?= ($participant->status ?? '') == 'approved' ? 'selected' : '' ?>>Setujui</option>
-                                                <option value="rejected" <?= ($participant->status ?? '') == 'rejected' ? 'selected' : '' ?>>Tolak</option>
-                                            </select>
-                                            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
-                                        </form>
-                                    <?php else: ?>
-                                        <span class="text-danger">ID Pendaftaran tidak valid</span>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                    <?php foreach ($participants as $index => $participant): ?>
+                    <tr>
+                        <th scope="row"><?= $index + 1 ?></th>
+                        <td>
+                            <div><?= esc($participant->jobseeker_name ?? 'Data Peserta Hilang') ?></div>
+                            <div class="small text-secondary"><?= esc($participant->jobseeker_email ?? 'N/A') ?></div>
+                        </td>
+                        <td><?= date('d M Y, H:i', strtotime($participant->enrolled_at ?? time())) ?></td>
+                        <td>
+                            <?php if (isset($participant->id)): ?>
+                            <form
+                                action="<?= site_url('vendor/trainings/participants/' . $participant->id . '/status') ?>"
+                                method="post" class="d-flex gap-2">
+                                <?= csrf_field() ?>
+                                <select name="status" class="form-select form-select-sm">
+                                    <option value="pending"
+                                        <?= ($participant->status ?? '') == 'pending' ? 'selected' : '' ?>>Menunggu
+                                    </option>
+                                    <option value="approved"
+                                        <?= ($participant->status ?? '') == 'approved' ? 'selected' : '' ?>>Setujui
+                                    </option>
+                                    <option value="rejected"
+                                        <?= ($participant->status ?? '') == 'rejected' ? 'selected' : '' ?>>Tolak
+                                    </option>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                            </form>
+                            <?php else: ?>
+                            <span class="text-danger">ID Pendaftaran tidak valid</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
                     <?php else: ?>
-                        <tr>
-                            <td colspan="4" class="text-center text-secondary py-4">
-                                Belum ada peserta yang mendaftar untuk pelatihan ini.
-                            </td>
-                        </tr>
+                    <tr>
+                        <td colspan="4" class="text-center text-secondary py-4">
+                            Belum ada peserta yang mendaftar untuk pelatihan ini.
+                        </td>
+                    </tr>
                     <?php endif; ?>
+                    <a href="<?= site_url('vendor/trainings/'.$training->id.'/download-pdf') ?>" class="btn btn-danger">
+                        <i class="bi bi-file-pdf"></i> Download Laporan PDF
+                    </a>
                 </tbody>
             </table>
         </div>

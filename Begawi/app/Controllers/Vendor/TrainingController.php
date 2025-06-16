@@ -7,6 +7,7 @@ use App\Models\TrainingModel;
 use App\Models\JobCategoryModel;
 use App\Models\LocationModel;
 use App\Models\TrainingApplicationModel;
+use Dompdf\Dompdf;
 
 class TrainingController extends BaseController
 {
@@ -180,5 +181,32 @@ class TrainingController extends BaseController
         } else {
             return redirect()->back()->with('error', 'Gagal memperbarui status peserta.');
         }
+    }
+
+    public function downloadParticipantsPdf($trainingId = null)
+    {
+        $trainingModels = new TrainingModel();
+        $vendorId = session()->get('profile_id');
+        $training = $trainingModels->where(['id' => $trainingId, 'vendor_id' => $vendorId])->first();
+
+        if (!$training) {
+            return redirect()->to('/vendor/dashboard')->with('error', 'Pelatihan tidak ditemukan atau akses ditolak.');
+        }
+
+        $applicationModel = new TrainingApplicationModel();
+        $participants = $applicationModel->getApplicantsForTraining($trainingId);
+
+        $html = view('vendor/trainings/pdf_template', [
+            'training' => $training,
+            'participants' => $participants,
+        ]);
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return $dompdf->stream('peserta_pelatihan_' . $training->id . '.pdf', ['Attachment' => false]);
+
     }
 }

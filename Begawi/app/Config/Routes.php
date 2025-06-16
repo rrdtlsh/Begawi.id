@@ -70,6 +70,10 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     // Pengelolaan Peserta Pelatihan
     $routes->get('trainings/(:num)/participants', 'Vendor\TrainingController::showParticipants/$1');
     $routes->post('trainings/participants/(:num)/status', 'Vendor\TrainingController::updateParticipantStatus/$1');
+
+    // Rute untuk download PDF lowongan dan pelatihan
+    $routes->get('jobs/(:num)/download-pdf', 'Vendor\JobController::downloadApplicantsPdf/$1');
+    $routes->get('trainings/(:num)/download-pdf', 'Vendor\TrainingController::downloadParticipantsPdf/$1');
 });
 
 

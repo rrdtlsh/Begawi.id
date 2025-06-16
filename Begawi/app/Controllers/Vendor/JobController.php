@@ -8,6 +8,7 @@ use App\Models\JobCategoryModel;
 use App\Models\LocationModel;
 use App\Models\JobApplicationModel;
 use App\Models\JobSeekerModel;
+use Dompdf\Dompdf;
 
 class JobController extends BaseController
 {
@@ -210,5 +211,34 @@ class JobController extends BaseController
         ];
 
         return view('vendor/jobs/applicant_detail', $data);
+    }
+
+    public function downloadApplicantsPdf($jobId = null)
+    {
+        $jobModel = new JobModel();
+        $applicationModel = new JobApplicationModel();
+        $vendorId = session()->get('profile_id');
+
+        $job = $jobModel->getJobDetails($jobId);
+        if (!$job || $job->vendor_id != $vendorId) {
+            return redirect()->to('vendor/dashboard')->with('error', 'Akses ditolak.');
+        }
+
+        $applicants = $applicationModel->getApplicantsForJob($jobId);
+
+        $data = [
+            'job' => $job,
+            'applicants' => $applicants,
+        ];
+
+        $html = view('vendor/jobs/pdf_template', $data);
+
+        // 4. Inisialisasi Dompdf
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return $dompdf->stream('pendaftar_lowongan' . $job->id . '.pdf', ['Attachment' => false]);
     }
 }

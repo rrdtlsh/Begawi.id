@@ -86,6 +86,9 @@
                         </td>
                     </tr>
                     <?php endif; ?>
+                    <a href="<?= site_url('vendor/jobs/'.$job->id.'/download-pdf') ?>" class="btn btn-danger">
+                        <i class="bi bi-file-pdf"></i> Download Laporan PDF
+                    </a>
                 </tbody>
             </table>
         </div>
