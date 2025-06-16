@@ -36,9 +36,9 @@
                                         <form action="<?= site_url('vendor/trainings/participants/' . $participant->id . '/status') ?>" method="post" class="d-flex gap-2">
                                             <?= csrf_field() ?>
                                             <select name="status" class="form-select form-select-sm">
-                                                <option value="pending" <?= ($participant->status ?? '') == 'pending' ? 'selected' : '' ?>>Menunggu</option>
-                                                <option value="approved" <?= ($participant->status ?? '') == 'approved' ? 'selected' : '' ?>>Setujui</option>
-                                                <option value="rejected" <?= ($participant->status ?? '') == 'rejected' ? 'selected' : '' ?>>Tolak</option>
+                                                <option value="pending" <?= ($participant->status ?? '') == 'pending' ? 'selected' : '' ?>>Pending</option>
+                                                <option value="accepted" <?= ($participant->status ?? '') == 'accepted' ? 'selected' : '' ?>>Accept</option>
+                                                <option value="rejected" <?= ($participant->status ?? '') == 'rejected' ? 'selected' : '' ?>>Reject</option>
                                             </select>
                                             <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
                                         </form>
