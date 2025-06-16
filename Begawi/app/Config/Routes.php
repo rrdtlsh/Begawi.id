@@ -92,16 +92,22 @@ $routes->group('jobseeker', ['filter' => 'auth'], function ($routes) {
     // Chatbot
     $routes->get('chatbot', 'Jobseeker\ChatbotController::index');
     $routes->post('chatbot/ask', 'Jobseeker\ChatbotController::ask');
+
+    $routes->get('applications/edit/(:num)', 'Jobseeker\JobApplicationController::edit/$1');
+    $routes->post('applications/update/(:num)', 'Jobseeker\JobApplicationController::update/$1'); 
+    $routes->post('applications/delete/(:num)', 'Jobseeker\JobApplicationController::delete/$1'); 
+
+    $routes->post('trainings/delete-enrollment/(:num)', 'Jobseeker\TrainingApplicationController::deleteEnrollment/$1');
 });
 
 // RUTE LAMARAN/PENDAFTARAN (Memerlukan Login, Umumnya Jobseeker)
 $routes->group('lamar', ['filter' => 'auth'], function ($routes) {
-    $routes->get('job/(:num)', 'Vendor\JobApplicationController::showApplicationForm/$1');
-    $routes->post('job/(:num)', 'Vendor\JobApplicationController::submitApplication/$1', ['filter' => 'throttle:15,300']);
+    $routes->get('job/(:num)', 'Jobseeker\JobApplicationController::showApplicationForm/$1');
+    $routes->post('job/(:num)', 'Jobseeker\JobApplicationController::submitApplication/$1', ['filter' => 'throttle:15,300']);
 });
 
 $routes->group('daftar-pelatihan', ['filter' => 'auth'], function ($routes) {
-    $routes->post('apply/(:num)', 'Vendor\TrainingApplicationController::apply/$1', ['filter' => 'throttle:15,300']);
+    $routes->post('apply/(:num)', 'Jobseeker\TrainingApplicationController::apply/$1', ['filter' => 'throttle:15,300']);
 });
 
 

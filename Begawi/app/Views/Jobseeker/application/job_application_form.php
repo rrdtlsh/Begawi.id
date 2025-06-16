@@ -16,7 +16,7 @@
 <body>
     <div class="main-container">
         <div class="text-center mb-5">
-            <h2 class="form-title">Formulir Lamaran Pekerjaan</h2>
+            <h2 class="form-title"><?= isset($application) ? 'Edit Lamaran Pekerjaan' : 'Formulir Lamaran Pekerjaan' ?></h2>
         </div>
 
         <div class="job-summary mb-5">
@@ -36,7 +36,7 @@
             </div>
         <?php endif; ?>
 
-        <form action="/lamar/job/<?= $job->id ?? '' ?>" method="post" enctype="multipart/form-data">
+        <form action="<?= isset($application) ? site_url('jobseeker/applications/update/' . esc($application->id)) : site_url('lamar/job/' . esc($job->id ?? '')) ?>" method="post" enctype="multipart/form-data">
             <?= csrf_field() ?>
 
             <h5 class="section-heading">Informasi Pelamar</h5>
@@ -61,19 +61,24 @@
                 <label for="cover_letter">Surat Lamaran (Cover Letter)</label>
                 <textarea name="cover_letter" id="cover_letter" class="form-control" rows="5"
                     placeholder="Sampaikan mengapa Anda tertarik dengan posisi ini..."
-                    required><?= esc(old('cover_letter')) ?></textarea>
-            </div>
+                    required><?= esc(old('cover_letter', $application->notes ?? '')) ?></textarea> </div>
             <div class="form-group">
                 <label for="resume">Unggah CV / Resume Anda</label>
                 <div class="custom-file">
-                    <input type="file" name="resume" class="custom-file-input" id="resume" required>
+                    <input type="file" name="resume" class="custom-file-input" id="resume" <?= isset($application) && !empty($application->resume_file_path) ? '' : 'required' ?>>
                     <label class="custom-file-label" for="resume">Choose file</label>
                 </div>
-                <small class="form-text text-muted">Format: PDF, Doc, Docx. Maksimal 2MB.</small>
+                <small class="form-text text-muted">Format: PDF, Doc, Docx. Maksimal 2MB.
+                    <?php if (isset($application) && !empty($application->resume_file_path)): ?>
+                        <br>CV saat ini: <a href="<?= base_url('uploads/resumes/' . esc($application->resume_file_path)) ?>" target="_blank">Lihat CV</a>
+                    <?php endif; ?>
+                </small>
             </div>
 
-            <button type="submit" class="btn btn-submit btn-block mt-4">Kirim Lamaran</button>
-            <a href="/lowongan/detail/<?= $job->id ?? '#' ?>" class="btn btn-cancel btn-block mt-2">Batal</a>
+            <button type="submit" class="btn btn-submit btn-block mt-4">
+                <?= isset($application) ? 'Simpan Perubahan' : 'Kirim Lamaran' ?>
+            </button>
+            <a href="<?= isset($application) ? site_url('jobseeker/history') : site_url('lowongan/detail/' . ($job->id ?? '#')) ?>" class="btn btn-cancel btn-block mt-2">Batal</a>
         </form>
     </div>
 
@@ -83,6 +88,14 @@
             var nextSibling = e.target.nextElementSibling
             nextSibling.innerText = fileName
         })
+
+        <?php if (isset($application) && !empty($application->resume_file_path)): ?>
+            document.addEventListener('DOMContentLoaded', function() {
+                var currentResumePath = "<?= esc($application->resume_file_path) ?>";
+                var fileName = currentResumePath.substring(currentResumePath.lastIndexOf('/') + 1);
+                document.querySelector('.custom-file-label').innerText = fileName;
+            });
+        <?php endif; ?>
     </script>
 </body>
 
