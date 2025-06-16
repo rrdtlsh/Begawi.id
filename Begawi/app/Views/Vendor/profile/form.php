@@ -81,12 +81,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="website">Website (Opsional)</label>
-                    <input type="text" id="website" name="website" class="form-control" placeholder="https://..."
-                        value="<?= old('website', $vendor->website ?? '') ?>">
-                </div>
-
-                <div class="form-group">
                     <label for="company_profile">Deskripsi Singkat Perusahaan</label>
                     <textarea id="company_profile" name="company_profile" class="form-control"
                         rows="5"><?= old('company_profile', $vendor->company_profile ?? '') ?></textarea>
