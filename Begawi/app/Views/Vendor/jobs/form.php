@@ -65,6 +65,11 @@
                     <textarea name="description" id="description" class="form-control" rows="5" placeholder="Jelaskan secara detail mengenai lowongan atau workshop yang Anda tawarkan..."><?= old('description', $job->description ?? '') ?></textarea>
                 </div>
 
+                <div class="form-group">
+                    <label for="description">Kualifikasi Pekerjaan</label>
+                    <textarea name="qualifications" id="qualifications" class="form-control" rows="5" placeholder="Kualifikasi Pekerjaan Perusahaan Anda"><?= old('qualifications', $job->qualifications ?? '') ?></textarea>
+                </div>
+
                 <h5 class="form-section-title">Detail Lowongan Pekerjaan</h5>
                 
                 <div class="row">
