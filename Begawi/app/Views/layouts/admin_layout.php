@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Orbitron:wght@700&display=swap"
+        rel="stylesheet">
 
     <?= $this->renderSection('styles') ?>
 
@@ -40,84 +42,125 @@
             background-color: var(--bs-body-bg);
             transition: background-color 0.4s ease;
         }
+
         .main-content {
             background: var(--main-content-bg);
             min-height: 100vh;
             padding-top: 24px;
         }
+
         .navbar-custom {
             background-color: var(--navbar-bg);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+
         .navbar-custom .navbar-brand,
         .navbar-custom .nav-link {
             color: var(--navbar-link-color);
             font-weight: 500;
         }
+
         .sidebar {
-            position: fixed; top: 0; bottom: 0; left: 0; z-index: 100;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
             padding: 56px 0 0;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
             background-color: var(--sidebar-bg);
             border-right: 1px solid var(--sidebar-border-color);
             transition: background-color 0.4s ease, border-right-color 0.4s ease;
         }
+
         .sidebar-sticky {
-            position: relative; top: 0; height: calc(100vh - 56px);
-            padding-top: 1rem; overflow-x: hidden; overflow-y: auto;
+            position: relative;
+            top: 0;
+            height: calc(100vh - 56px);
+            padding-top: 1rem;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
-        .sidebar .nav-link, .sidebar .dropdown-toggle {
-            font-weight: 500; color: var(--sidebar-link-color);
-            padding: 12px 20px; display: flex; align-items: center;
+
+        .sidebar .nav-link,
+        .sidebar .dropdown-toggle {
+            font-weight: 500;
+            color: var(--sidebar-link-color);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
             border-left: 4px solid transparent;
             transition: all 0.3s ease;
             text-decoration: none;
         }
-        .sidebar .nav-link:hover, .sidebar .dropdown-toggle:hover {
+
+        .sidebar .nav-link:hover,
+        .sidebar .dropdown-toggle:hover {
             background-color: var(--sidebar-link-hover-bg);
             color: var(--sidebar-link-hover-color);
         }
+
         .sidebar .nav-link.active {
             background-color: var(--sidebar-link-active-bg);
             color: var(--sidebar-link-active-color);
             font-weight: 600;
         }
+
         /* Styling Dropdown */
-        .sidebar .dropdown-toggle::after { display: none; }
+        .sidebar .dropdown-toggle::after {
+            display: none;
+        }
+
         .sidebar .dropdown-menu {
             border-radius: 0;
             border: none;
-            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
             background-color: var(--sidebar-bg);
             width: 100%;
             padding: 0;
             margin-top: 0 !important;
         }
+
         .sidebar .dropdown-item {
             color: var(--sidebar-link-color);
             padding: 10px 20px;
         }
+
         .sidebar .dropdown-item:hover {
             background-color: var(--sidebar-link-hover-bg);
             color: var(--sidebar-link-hover-color);
         }
+
         .sidebar .dropdown-item.active {
-             background-color: var(--sidebar-link-active-bg);
-             color: var(--sidebar-link-active-color);
-             font-weight: 600;
+            background-color: var(--sidebar-link-active-bg);
+            color: var(--sidebar-link-active-color);
+            font-weight: 600;
         }
+
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--card-border-color);
             color: var(--text-color-default);
             transition: background-color 0.4s ease, border-color 0.4s ease;
         }
-        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5,
+        .h6 {
             color: var(--text-color-headings);
             transition: color 0.4s ease;
         }
     </style>
-    
+
     <style id="dynamic-theme-styles"></style>
 
 </head>
@@ -152,47 +195,53 @@
                         </li>
                         <li class="nav-item">
                             <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                     <i class="fas fa-paint-brush fa-fw me-2"></i>
-                                     Pilih Tema
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="fas fa-paint-brush fa-fw me-2"></i>
+                                    Pilih Tema
                                 </a>
                                 <ul class="dropdown-menu" id="theme-menu">
                                     <li><a class="dropdown-item" href="#" data-theme="default">Default</a></li>
                                     <li><a class="dropdown-item" href="#" data-theme="cyberpunk">Cyberpunk</a></li>
                                 </ul>
-                            </div>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= site_url('admin/master-data') ?>">
+                                <i class="bi bi-stack me-2"></i> Data Master
+                            </a>
                         </li>
-                    </ul>
                 </div>
-            </nav>
-            
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
-                <?= $this->renderSection('content') ?>
-            </main>
+                </li>
+                </ul>
         </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+            <?= $this->renderSection('content') ?>
+        </main>
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // --- Penanda Link Aktif ---
-        const currentPath = window.location.pathname;
-        const navLinks = document.querySelectorAll('.sidebar .nav-link:not(.dropdown-toggle)');
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('active');
-            }
-        });
+        document.addEventListener("DOMContentLoaded", function () {
+            // --- Penanda Link Aktif ---
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.sidebar .nav-link:not(.dropdown-toggle)');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
 
-        // --- Logika Pengalih Tema ---
-        const themeMenu = document.getElementById('theme-menu');
-        const body = document.body;
-        const themeStyleTag = document.getElementById('dynamic-theme-styles');
+            // --- Logika Pengalih Tema ---
+            const themeMenu = document.getElementById('theme-menu');
+            const body = document.body;
+            const themeStyleTag = document.getElementById('dynamic-theme-styles');
 
-        const cyberpunkStyles = `
+            const cyberpunkStyles = `
         @keyframes glitch {
             0% { text-shadow: -2px -2px 0 #ff00c1, 2px 2px 0 #00fff9; transform: translate(0, 0); }
             20% { text-shadow: 2px 2px 0 #ff00c1, -2px -2px 0 #00fff9; transform: translate(0, 0); }
@@ -256,45 +305,46 @@
         .cyberpunk-theme .badge.bg-success { background-color: #39ff14 !important; color: #000; }
         .cyberpunk-theme .badge.bg-warning { background-color: #f9f002 !important; color: #000; }
          `;
-        function setTheme(theme) {
-            // Hapus status aktif dari semua item menu
-            themeMenu.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
+            function setTheme(theme) {
+                // Hapus status aktif dari semua item menu
+                themeMenu.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
 
-            if (theme === 'cyberpunk') {
-                body.classList.add('cyberpunk-theme');
-                themeStyleTag.innerHTML = cyberpunkStyles;
-                document.cookie = "theme=cyberpunk;path=/;max-age=31536000";
-                themeMenu.querySelector('[data-theme="cyberpunk"]').classList.add('active');
-            } else { // Tema Default
-                body.classList.remove('cyberpunk-theme');
-                themeStyleTag.innerHTML = "";
-                document.cookie = "theme=default;path=/;max-age=31536000";
-                themeMenu.querySelector('[data-theme="default"]').classList.add('active');
+                if (theme === 'cyberpunk') {
+                    body.classList.add('cyberpunk-theme');
+                    themeStyleTag.innerHTML = cyberpunkStyles;
+                    document.cookie = "theme=cyberpunk;path=/;max-age=31536000";
+                    themeMenu.querySelector('[data-theme="cyberpunk"]').classList.add('active');
+                } else { // Tema Default
+                    body.classList.remove('cyberpunk-theme');
+                    themeStyleTag.innerHTML = "";
+                    document.cookie = "theme=default;path=/;max-age=31536000";
+                    themeMenu.querySelector('[data-theme="default"]').classList.add('active');
+                }
+
+                // Perbarui chart jika ada di halaman ini
+                if (typeof window.updateCharts === 'function') {
+                    window.updateCharts();
+                }
             }
 
-            // Perbarui chart jika ada di halaman ini
-            if (typeof window.updateCharts === 'function') {
-                window.updateCharts();
-            }
-        }
+            themeMenu.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = e.target;
+                if (target.matches('.dropdown-item')) {
+                    const selectedTheme = target.dataset.theme;
+                    setTheme(selectedTheme);
+                }
+            });
 
-        themeMenu.addEventListener('click', (e) => {
-            e.preventDefault();
-            const target = e.target;
-            if (target.matches('.dropdown-item')) {
-                const selectedTheme = target.dataset.theme;
-                setTheme(selectedTheme);
-            }
+            // Terapkan tema dari cookie saat memuat
+            const savedTheme = body.classList.contains('cyberpunk-theme') ? 'cyberpunk' : 'default';
+            setTheme(savedTheme);
+
         });
-
-        // Terapkan tema dari cookie saat memuat
-        const savedTheme = body.classList.contains('cyberpunk-theme') ? 'cyberpunk' : 'default';
-        setTheme(savedTheme);
-
-    });
     </script>
-    
+
     <?= $this->renderSection('scripts') ?>
 
 </body>
+
 </html>
