@@ -111,8 +111,20 @@
                     <button type="submit" class="btn btn-save">Simpan Perubahan</button>
                     <a href="/jobseeker/dashboard" class="btn btn-cancel">Batal</a>
                 </div>
-
             </form>
+
+            <hr class="my-4">
+
+            <div class="danger-zone">
+                <h5 class="text-danger">Zona Berbahaya</h5>
+                <p class="text-muted small">Tindakan ini tidak dapat diurungkan. Seluruh data Anda, termasuk riwayat lamaran dan pendaftaran pelatihan, akan dihapus secara permanen.</p>
+        
+                <form action="<?= site_url('jobseeker/profile/delete') ?>" method="post" onsubmit="return confirm('PERINGATAN: Apakah Anda benar-benar yakin ingin menghapus akun ini secara permanen?');">
+                <?= csrf_field() ?>
+                <button type="submit" class="btn btn-danger w-100"><i class="bi bi-trash-fill"></i> Hapus Akun Saya</button>
+            </form>
+        </div>
+
         </div>
     </div>
 

@@ -80,4 +80,31 @@ class ProfileController extends BaseController
 
         return redirect()->to('/vendor/dashboard')->with('success', 'Profil berhasil diperbarui.');
     }
+
+    public function deleteAccount()
+    {
+        // 1. Verifikasi keamanan: pastikan yang mengakses adalah vendor yang login
+        if (!session()->get('isLoggedIn') || session()->get('role') !== 'vendor') {
+            return redirect()->to('/login')->with('error', 'Akses tidak sah.');
+        }
+
+        $userId = session()->get('user_id');
+
+        // 2. Inisialisasi model
+        $userModel = new UserModel();
+
+        // 3. Lakukan hard delete pada tabel users
+        // Ini akan memicu penghapusan berantai (CASCADE) pada tabel `vendors`, `jobs`, `trainings`, dll.
+        // yang terhubung dengan `user_id` atau `vendor_id`.
+        $deleted = $userModel->delete($userId, true); // `true` memaksa hard delete
+
+        if ($deleted) {
+            // 4. Hancurkan sesi dan redirect ke halaman utama dengan pesan sukses
+            session()->destroy();
+            return redirect()->to('/')->with('success', 'Akun Anda telah berhasil dihapus secara permanen. Terima kasih telah menggunakan layanan kami.');
+        } else {
+            // Jika karena suatu alasan gagal
+            return redirect()->to('/vendor/dashboard')->with('error', 'Gagal menghapus akun. Silakan coba lagi.');
+        }
+    }
 }

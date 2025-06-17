@@ -47,6 +47,7 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     // Pengelolaan Profil Vendor
     $routes->get('profile/edit', 'Vendor\ProfileController::edit');
     $routes->post('profile/update', 'Vendor\ProfileController::update');
+    $routes->post('profile/delete', 'Vendor\ProfileController::deleteAccount');
 
     // CRUD Lowongan Pekerjaan (Jobs)
     $routes->get('jobs/new', 'Vendor\JobController::newJob');
