@@ -19,7 +19,6 @@
                         <th scope="col">#</th>
                         <th scope="col">Nama Pelamar</th>
                         <th scope="col">Tanggal Melamar</th>
-                        <!-- PERBAIKAN: Kolom Status dikembalikan -->
                         <th scope="col">Status</th>
                         <th scope="col" style="min-width: 340px;">Aksi</th>
                     </tr>
@@ -88,6 +87,10 @@
                     <?php endif; ?>
                     <a href="<?= site_url('vendor/jobs/'.$job->id.'/download-pdf') ?>" class="btn btn-danger">
                         <i class="bi bi-file-pdf"></i> Download Laporan PDF
+                    </a>
+                    <a href="<?= site_url('vendor/jobs/'.$job->id.'/download-excel') ?>"
+                        class="btn btn-success btn-sm mb-3">
+                        <i class="bi bi-file-earmark-excel-fill"></i> Download Excel
                     </a>
                 </tbody>
             </table>

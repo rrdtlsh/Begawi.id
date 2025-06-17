@@ -12,7 +12,9 @@
     "require": {
         "php": "^8.1",
         "codeigniter4/framework": "^4.0",
-        "phpmailer/phpmailer": "*"
+        "dompdf/dompdf": "^3.1",
+        "phpmailer/phpmailer": "*",
+        "phpoffice/phpspreadsheet": "^4.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",
