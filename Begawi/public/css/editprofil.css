@@ -190,3 +190,16 @@ img.img-thumbnail {
 .btn-cancel:hover {
     background-color: #5a6268; /* Darker gray */
 }
+
+
+.danger-zone .btn-danger {
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.danger-zone .btn-danger:hover {
+  background-color: #c82333; 
+  border-color: #bd2130;
+  transform: translateY(-3px); 
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2); 
+ }

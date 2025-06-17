@@ -10,8 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <link rel="stylesheet" href="/css/editprofil.css">
+
 </head>
 <body>
 
@@ -115,15 +117,15 @@
 
             <hr class="my-4">
 
-            <div class="danger-zone">
-                <h5 class="text-danger">Zona Berbahaya</h5>
-                <p class="text-muted small">Tindakan ini tidak dapat diurungkan. Seluruh data Anda, termasuk riwayat lamaran dan pendaftaran pelatihan, akan dihapus secara permanen.</p>
+            <div class="danger-zone" style="border: 1px solid #f5c6cb; border-radius: 8px; padding: 20px; background-color: #f8d7da;">
+                <h5 class="font-weight-bold" style="color: #721c24;"><i class="bi bi-exclamation-triangle-fill"></i> Hapus Akun !</h5>
+                <p class="small" style="color: #721c24;">Tindakan ini tidak dapat diurungkan. Seluruh data Anda, termasuk riwayat lamaran dan pendaftaran pelatihan, akan dihapus secara permanen.</p>
         
                 <form action="<?= site_url('jobseeker/profile/delete') ?>" method="post" onsubmit="return confirm('PERINGATAN: Apakah Anda benar-benar yakin ingin menghapus akun ini secara permanen?');">
                 <?= csrf_field() ?>
-                <button type="submit" class="btn btn-danger w-100"><i class="bi bi-trash-fill"></i> Hapus Akun Saya</button>
+                <button type="submit" class="btn btn-danger w-100 font-weight-bold"><i class="bi bi-trash-fill"></i> Hapus Akun Saya</button>
             </form>
-        </div>
+            </div>
 
         </div>
     </div>
