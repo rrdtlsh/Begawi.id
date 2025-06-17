@@ -7,7 +7,7 @@ class LocationController extends BaseController
 {
     public function new()
     {
-        return view('admin/master_data/form_skill', ['title' => 'Tambah Keahlian Baru']);
+        return view('admin/master_data/form_location', ['title' => 'Tambah lokasi Baru']);
     }
 
     public function create()
@@ -21,19 +21,17 @@ class LocationController extends BaseController
 
     public function edit($id = null)
     {
-        $model = new \App\Models\SkillModel();
-        $skill = $model->find($id);
+        $model = new \App\Models\LocationModel();
+        $location = $model->find($id);
 
-        if (empty($skill)) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Keahlian tidak ditemukan.');
+        if (empty($location)) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Lokasi tidak ditemukan.');
         }
-
         $data = [
-            'title' => 'Edit Keahlian',
-            'skill' => $skill
+            'title' => 'Edit Lokasi',
+            'location' => $location
         ];
-
-        return view('admin/master_data/form_skill', $data);
+        return view('admin/master_data/form_location', $data);
     }
 
     public function update($id = null)
@@ -76,6 +74,6 @@ class LocationController extends BaseController
         $locationModel = new LocationModel();
         $locationModel->ignore(true)->insertBatch($dataToInsert);
         $count = $locationModel->db->affectedRows();
-        return redirect()->to(route_to('admin.master-data.index'))->with('success', "{$count} data skill baru berhasil diimpor.");
+        return redirect()->to(route_to('admin.master-data.index'))->with('success', "{$count} data lokasi baru berhasil diimpor.");
     }
 }

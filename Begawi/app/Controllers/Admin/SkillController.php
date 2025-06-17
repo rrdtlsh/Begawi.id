@@ -7,7 +7,7 @@ class SkillController extends BaseController
 {
     public function new()
     {
-        return view('admin/master_data/form_simple', ['title' => 'Tambah Keahlian Baru']);
+        return view('admin/master_data/form_skill', ['title' => 'Tambah Keahlian Baru']);
     }
 
     public function create()
@@ -21,18 +21,21 @@ class SkillController extends BaseController
 
     public function edit($id = null)
     {
-        $model = new \App\Models\LocationModel();
-        $location = $model->find($id);
+        $model = new \App\Models\SkillModel();
+        $skill = $model->find($id);
 
-        if (empty($location)) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Lokasi tidak ditemukan.');
+        if (empty($skill)) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Keahlian tidak ditemukan.');
         }
+
         $data = [
-            'title' => 'Edit Lokasi',
-            'location' => $location
+            'title' => 'Edit Keahlian',
+            'skill' => $skill
         ];
-        return view('admin/master_data/form_location', $data);
+
+        return view('admin/master_data/form_skill', $data);
     }
+
 
     public function update($id = null)
     {
