@@ -94,8 +94,8 @@ $routes->group('jobseeker', ['filter' => 'auth'], function ($routes) {
     $routes->post('chatbot/ask', 'Jobseeker\ChatbotController::ask');
 
     $routes->get('applications/edit/(:num)', 'Jobseeker\JobApplicationController::edit/$1');
-    $routes->post('applications/update/(:num)', 'Jobseeker\JobApplicationController::update/$1'); 
-    $routes->post('applications/delete/(:num)', 'Jobseeker\JobApplicationController::delete/$1'); 
+    $routes->post('applications/update/(:num)', 'Jobseeker\JobApplicationController::update/$1');
+    $routes->post('applications/delete/(:num)', 'Jobseeker\JobApplicationController::delete/$1');
 
     $routes->post('trainings/delete-enrollment/(:num)', 'Jobseeker\TrainingApplicationController::deleteEnrollment/$1');
 });
@@ -116,36 +116,38 @@ $routes->group('admin', ['filter' => 'admin'], function ($routes) {
     // Dasbor Admin
     $routes->get('dashboard', 'Admin\DashboardController::index');
 
-    // === TAMBAHKAN ATAU GANTI DENGAN BLOK DI BAWAH INI ===
-
-    // Rute untuk Halaman Utama Master Data
+    // Rute BARU untuk halaman master data 
     $routes->get('master-data', 'Admin\MasterDataController::index', ['as' => 'admin.master-data.index']);
 
-    // Rute untuk Kategori Pekerjaan (JobCategory)
-    $routes->group('master-data/job-categories', function ($routes) {
-        $routes->get('new', 'Admin\JobCategoryController::new', ['as' => 'admin.job-categories.new']);
-        $routes->post('create', 'Admin\JobCategoryController::create', ['as' => 'admin.job-categories.create']);
-        $routes->get('edit/(:num)', 'Admin\JobCategoryController::edit/$1', ['as' => 'admin.job-categories.edit']);
-        $routes->post('update/(:num)', 'Admin\JobCategoryController::update/$1', ['as' => 'admin.job-categories.update']);
-        $routes->post('delete/(:num)', 'Admin\JobCategoryController::delete/$1', ['as' => 'admin.job-categories.delete']);
-    });
+    // Rute untuk Kategori
+    $routes->get('job-categories/new', 'Admin\JobCategoryController::new', ['as' => 'admin.job-categories.new']);
+    $routes->post('job-categories/create', 'Admin\JobCategoryController::create', ['as' => 'admin.job-categories.create']);
+    $routes->get('job-categories/edit/(:num)', 'Admin\JobCategoryController::edit/$1', ['as' => 'admin.job-categories.edit']);
+    $routes->post('job-categories/update/(:num)', 'Admin\JobCategoryController::update/$1', ['as' => 'admin.job-categories.update']);
+    $routes->post('job-categories/delete/(:num)', 'Admin\JobCategoryController::delete/$1', ['as' => 'admin.job-categories.delete']);
 
-    // Rute untuk Keahlian (Skill)
-    $routes->group('master-data/skills', function ($routes) {
-        $routes->get('new', 'Admin\SkillController::new', ['as' => 'admin.skills.new']);
-        $routes->post('create', 'Admin\SkillController::create', ['as' => 'admin.skills.create']);
-        $routes->get('edit/(:num)', 'Admin\SkillController::edit/$1', ['as' => 'admin.skills.edit']);
-        $routes->post('update/(:num)', 'Admin\SkillController::update/$1', ['as' => 'admin.skills.update']);
-        $routes->post('delete/(:num)', 'Admin\SkillController::delete/$1', ['as' => 'admin.skills.delete']);
-    });
+    // Rute untuk Skills
+    $routes->get('skills/new', 'Admin\SkillController::new', ['as' => 'admin.skills.new']);
+    $routes->post('skills/create', 'Admin\SkillController::create', ['as' => 'admin.skills.create']);
+    $routes->get('skills/edit/(:num)', 'Admin\SkillController::edit/$1', ['as' => 'admin.skills.edit']);
+    $routes->post('skills/update/(:num)', 'Admin\SkillController::update/$1', ['as' => 'admin.skills.update']);
+    $routes->post('skills/delete/(:num)', 'Admin\SkillController::delete/$1', ['as' => 'admin.skills.delete']);
 
-    // Rute untuk Lokasi (Location)
-    $routes->group('master-data/locations', function ($routes) {
-        $routes->get('new', 'Admin\LocationController::new', ['as' => 'admin.locations.new']);
-        $routes->post('create', 'Admin\LocationController::create', ['as' => 'admin.locations.create']);
-        $routes->get('edit/(:num)', 'Admin\LocationController::edit/$1', ['as' => 'admin.locations.edit']);
-        $routes->post('update/(:num)', 'Admin\LocationController::update/$1', ['as' => 'admin.locations.update']);
-        $routes->post('delete/(:num)', 'Admin\LocationController::delete/$1', ['as' => 'admin.locations.delete']);
-    });
+    // Rute untuk Locations
+    $routes->get('locations/new', 'Admin\LocationController::new', ['as' => 'admin.locations.new']);
+    $routes->post('locations/create', 'Admin\LocationController::create', ['as' => 'admin.locations.create']);
+    $routes->get('locations/edit/(:num)', 'Admin\LocationController::edit/$1', ['as' => 'admin.locations.edit']);
+    $routes->post('locations/update/(:num)', 'Admin\LocationController::update/$1', ['as' => 'admin.locations.update']);
+    $routes->post('locations/delete/(:num)', 'Admin\LocationController::delete/$1', ['as' => 'admin.locations.delete']);
+
+    // rute untuk menginport menggunakan excel
+    $routes->get('locations/import', 'Admin\LocationController::showImportForm', ['as' => 'admin.locations.import']);
+    $routes->post('locations/import', 'Admin\LocationController::processImport');
+
+    $routes->get('skills/import', 'Admin\SkillController::showImportForm', ['as' => 'admin.skills.import']);
+    $routes->post('skills/import', 'Admin\SkillController::processImport');
+
+    $routes->get('job-categories/import', 'Admin\JobCategoryController::showImportForm', ['as' => 'admin.job-categories.import']);
+    $routes->post('job-categories/import', 'Admin\JobCategoryController::processImport');
 
 });

@@ -2,6 +2,7 @@
 namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\LocationModel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 class LocationController extends BaseController
 {
     public function new()
@@ -32,7 +33,6 @@ class LocationController extends BaseController
             'skill' => $skill
         ];
 
-        // Memanggil view form yang spesifik untuk skill
         return view('admin/master_data/form_skill', $data);
     }
 
@@ -49,5 +49,33 @@ class LocationController extends BaseController
     {
         (new LocationModel())->delete($id);
         return redirect()->to(route_to('admin.master-data.index'))->with('success', 'Lokasi berhasil dihapus.');
+    }
+
+    public function processImport()
+    {
+        $rules = ['excel_file' => 'uploaded[excel_file]|max_size[excel_file,5120]|ext_in[excel_file,xlsx,xls]'];
+        if (!$this->validate($rules)) {
+            return redirect()->to(route_to('admin.master-data.index'))->with('errors', $this->validator->getErrors());
+        }
+
+        $file = $this->request->getFile('excel_file');
+        $spreadsheet = IOFactory::load($file->getTempName());
+        $rows = $spreadsheet->getActiveSheet()->toArray();
+
+        $dataToInsert = [];
+        foreach (array_slice($rows, 1) as $row) {
+            if (!empty(trim($row[0] ?? ''))) {
+                $dataToInsert[] = ['name' => trim($row[0])];
+            }
+        }
+
+        if (empty($dataToInsert)) {
+            return redirect()->to(route_to('admin.master-data.index'))->with('error', 'Tidak ada data valid untuk diimpor.');
+        }
+
+        $locationModel = new LocationModel();
+        $locationModel->ignore(true)->insertBatch($dataToInsert);
+        $count = $locationModel->db->affectedRows();
+        return redirect()->to(route_to('admin.master-data.index'))->with('success', "{$count} data skill baru berhasil diimpor.");
     }
 }
