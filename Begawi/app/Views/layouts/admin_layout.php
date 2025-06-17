@@ -37,6 +37,8 @@
             --card-border-color: #e3e6f0;
             --text-color-default: #5a5c69;
             --text-color-headings: #3a3b45;
+            --sidebar-hover-bg-neon: #F9F002;
+            --sidebar-hover-text-neon: #000000;
         }
 
         body {
@@ -99,8 +101,10 @@
 
         .sidebar .nav-link:hover,
         .sidebar .dropdown-toggle:hover {
-            background-color: var(--sidebar-link-hover-bg);
-            color: var(--sidebar-link-hover-color);
+            background-color: var(--sidebar-link-hover-bg-neon);
+            color: var(--sidebar-hover-text-neon);
+            transform: scale(1.05) translateX(5px); 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
         }
 
         .sidebar .nav-link.active {
@@ -162,6 +166,21 @@
             color: var(--text-color-headings);
             transition: color 0.4s ease;
         }
+        #sidebar-homepage-link {
+            color: #D48806; 
+            font-weight: 600;
+        }
+        .cyberpunk-theme #sidebar-homepage-link {
+            color: #f9f002;
+            font-weight: 700;
+            text-shadow: 0 0 7px rgba(249, 240, 2, 0.7);
+        }
+
+        /* Membuat ikonnya juga ikut bersinar di tema cyberpunk */
+        .cyberpunk-theme #sidebar-homepage-link i {
+            color: #f9f002;
+            text-shadow: 0 0 7px rgba(249, 240, 2, 0.7);
+        }
     </style>
 
     <style id="dynamic-theme-styles"></style>
@@ -191,6 +210,12 @@
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
+                            <a class="nav-link" id="sidebar-homepage-link" href="<?= site_url('/') ?>">
+                                <i class="bi bi-house-door-fill fa-fw me-2"></i>
+                                Homepage
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/admin/dashboard">
                                 <i class="fas fa-tachometer-alt fa-fw me-2"></i>
                                 Dashboard
@@ -209,7 +234,7 @@
                                 </ul>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= site_url('admin/master-data') ?>">
-                                <i class="bi bi-stack me-2"></i> Data Master
+                                <i class="bi bi-stack me-2"></i>  Data Master
                             </a>
                         </li>
                 </div>
@@ -261,7 +286,7 @@
             --sidebar-bg: #11112b;
             --sidebar-border-color: #4a00e0;
             --sidebar-link-color: #c0c0ff;
-            --sidebar-link-hover-bg: #f9f002;
+            --sidebar-link-hover-bg:rgb(174, 174, 174);
             --sidebar-link-hover-color: #000;
             --sidebar-link-active-bg: #f9f002;
             --sidebar-link-active-color: #000;
@@ -281,6 +306,13 @@
         }
         .cyberpunk-theme .sidebar .nav-link.active, .cyberpunk-theme .sidebar .dropdown-item.active {
             background-color: var(--sidebar-link-active-bg); color: var(--sidebar-link-active-color); box-shadow: inset 0 0 10px #000; text-shadow: 0 0 5px #000;
+        }
+        .cyberpunk-theme .sidebar .nav-link:hover, .cyberpunk-theme .sidebar .dropdown-toggle:hover, .cyberpunk-theme .sidebar .dropdown-item:hover {
+            background-color: var(--sidebar-hover-bg-neon); /* Menggunakan variabel baru */
+            color: var(--sidebar-hover-text-neon);          /* Menggunakan variabel baru */
+            text-shadow: 0 0 5px #000;
+            transform: scale(1.05) translateX(5px);
+            box-shadow: 0 0 15px var(--sidebar-hover-bg-neon); /* Efek glow disesuaikan */
         }
         .cyberpunk-theme .card {
             border: 1px solid var(--card-border-color);
@@ -320,6 +352,7 @@
                 border-color: var(--sidebar-border-color);
             }
 
+            /* kategori pekerjaan,keahlian,lokasi*/
             .cyberpunk-theme #masterDataTab .nav-link.active {
                 color: #f9f002; 
                 background-color: var(--card-bg);
@@ -328,7 +361,7 @@
                 text-shadow: 0 0 5px rgba(249, 240, 2, 0.7);
             }
         
-            
+            /* icon */
             .cyberpunk-theme #masterDataTabContent .table td i {
                 color: #f9f002; 
                 text-shadow: 0 0 6px rgba(249, 240, 2, 0.7); 
@@ -367,7 +400,6 @@
             
         `;
             function setTheme(theme) {
-                // Hapus status aktif dari semua item menu
                 themeMenu.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
 
                 if (theme === 'cyberpunk') {
@@ -375,14 +407,13 @@
                     themeStyleTag.innerHTML = cyberpunkStyles;
                     document.cookie = "theme=cyberpunk;path=/;max-age=31536000";
                     themeMenu.querySelector('[data-theme="cyberpunk"]').classList.add('active');
-                } else { // Tema Default
+                } else { 
                     body.classList.remove('cyberpunk-theme');
                     themeStyleTag.innerHTML = "";
                     document.cookie = "theme=default;path=/;max-age=31536000";
                     themeMenu.querySelector('[data-theme="default"]').classList.add('active');
                 }
 
-                // Perbarui chart jika ada di halaman ini
                 if (typeof window.updateCharts === 'function') {
                     window.updateCharts();
                 }
