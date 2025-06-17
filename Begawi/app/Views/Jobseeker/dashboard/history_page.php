@@ -241,43 +241,44 @@
                 </div>
                 <div class="actions ml-auto d-flex align-items-center">
                     <?php
-                    // Tentukan jenis dan status item
-                    $isJobApplication = (($item->type ?? '') === 'job_application');
-                    $isTrainingEnrollment = (($item->type ?? '') === 'training_enrollment');
-                    $currentStatus = $item->status ?? 'pending';
+    // Variabel ini sudah benar, kita gunakan lagi
+    $isJobApplication = (($item->type ?? '') === 'job_application');
+    $isTrainingEnrollment = (($item->type ?? '') === 'training_enrollment');
+    $currentStatus = $item->status ?? 'pending';
+    $idToActOn = $item->id ?? null;
+    ?>
 
-                    // ID yang akan digunakan untuk aksi (application_id atau training_id)
-                    $idToActOn = null;
-                    if (isset($item->id)) {
-                        $idToActOn = $item->id;
-                    }
-                    ?>
+    <?php if ($idToActOn): ?>
 
-                    <?php if ($idToActOn): ?>
-                        <?php if ($currentStatus === 'pending'): ?>
-                            <?php if ($isJobApplication): ?>
-                                <a href="<?= site_url('jobseeker/applications/edit/' . esc($idToActOn)) ?>" class="btn btn-sm btn-info me-2 d-flex align-items-center">
-                                    <i class="bi bi-pencil-square me-1"></i> Edit
-                                </a>
-                            <?php endif; ?>
+        <?php // --- BLOK 1: Tombol khusus untuk Lamaran Pekerjaan --- ?>
+        <?php if ($isJobApplication): ?>
+            <?php if ($currentStatus === 'pending'): ?>
+                <a href="<?= site_url('jobseeker/applications/edit/' . esc($idToActOn)) ?>" class="btn btn-sm btn-info me-2 d-flex align-items-center">
+                    <i class="bi bi-pencil-square me-1"></i> Edit
+                </a>
+                <form action="<?= site_url('jobseeker/applications/delete/' . esc($idToActOn)) ?>" method="post" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus lamaran ini?');">
+                    <?= csrf_field() ?>
+                    <button type="submit" class="btn btn-sm btn-danger d-flex align-items-center">
+                        <i class="bi bi-trash me-1"></i> Hapus
+                    </button>
+                </form>
+            <?php endif; ?>
+        <?php endif; ?>
 
-                            <form action="<?= site_url($isJobApplication ? 'jobseeker/applications/delete/' . esc($idToActOn) : 'jobseeker/trainings/delete-enrollment/' . esc($idToActOn)) ?>" method="post" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan <?= $isJobApplication ? 'lamaran' : 'pendaftaran' ?> ini?');">
-                                <?= csrf_field() ?>
-                                <button type="submit" class="btn btn-sm btn-danger d-flex align-items-center">
-                                    <i class="bi bi-trash me-1"></i> Hapus
-                                </button>
-                            </form>
 
-                        <?php elseif ($currentStatus === 'accepted'): ?>
-                            <form action="<?= site_url($isJobApplication ? 'jobseeker/applications/delete/' . esc($idToActOn) : 'jobseeker/trainings/delete-enrollment/' . esc($idToActOn)) ?>" method="post" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus <?= $isJobApplication ? 'lamaran' : 'pendaftaran' ?> yang sudah diterima ini? Tindakan ini tidak dapat dibatalkan.');">
-                                <?= csrf_field() ?>
-                                <button type="submit" class="btn btn-sm btn-danger d-flex align-items-center">
-                                    <i class="bi bi-trash me-1"></i> Hapus
-                                </button>
-                            </form>
+        <?php // --- BLOK 2: Tombol khusus untuk Pendaftaran Pelatihan --- ?>
+        <?php if ($isTrainingEnrollment): ?>
+            <?php if (in_array($currentStatus, ['pending', 'accepted'])): ?>
+                <form action="<?= site_url('jobseeker/trainings/delete-enrollment/' . esc($idToActOn)) ?>" method="post" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pendaftaran pelatihan ini?');">
+                    <?= csrf_field() ?>
+                    <button type="submit" class="btn btn-sm btn-danger d-flex align-items-center">
+                        <i class="bi bi-x-circle me-1"></i> Batalkan Pendaftaran
+                    </button>
+                </form>
+            <?php endif; ?>
+        <?php endif; ?>
 
-                        <?php endif; // End if currentStatus === 'accepted' ?>
-                    <?php endif; // End if idToActOn ?>
+    <?php endif; // End if idToActOn ?>
                 </div>
                 <?php
                 $status_class = [

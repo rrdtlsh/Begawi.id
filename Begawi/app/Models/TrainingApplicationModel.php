@@ -24,6 +24,7 @@ class TrainingApplicationModel extends Model
     public function getHistoryByJobseeker($jobseekerId, $limit = 5)
     {
         return $this->select('
+                            training_applications.id,
                             trainings.title, 
                             training_applications.status, 
                             training_applications.enrolled_at,

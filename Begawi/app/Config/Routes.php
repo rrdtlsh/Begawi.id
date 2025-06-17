@@ -85,6 +85,7 @@ $routes->group('jobseeker', ['filter' => 'auth'], function ($routes) {
     // Pengelolaan Profil Jobseeker
     $routes->get('profile/edit', 'Jobseeker\ProfileController::edit');
     $routes->post('profile/update', 'Jobseeker\ProfileController::update');
+    $routes->post('profile/delete', 'Jobseeker\ProfileController::deleteAccount');
 
     // Riwayat Lamaran & Pelatihan
     $routes->get('history', 'Jobseeker\HistoryController::index');

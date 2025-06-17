@@ -47,6 +47,11 @@
             <a href="<?= base_url('uploads/resumes/' . esc($profile->resume_path)) ?>" class="btn" target="_blank"><i
                     class="bi bi-file-earmark-text-fill"></i> Lihat CV</a>
             <?php endif; ?>
+
+            <form action="<?= site_url('jobseeker/profile/delete') ?>" method="post" onsubmit="return confirm('PERINGATAN: Tindakan ini tidak dapat diurungkan. Seluruh data Anda, termasuk riwayat lamaran dan pendaftaran pelatihan, akan dihapus secara permanen. Apakah Anda yakin ingin melanjutkan?');">
+                <?= csrf_field() ?>
+            <button type="submit" class="btn btn-danger w-100 mt-2"><i class="bi bi-trash-fill"></i> Hapus Akun</button>
+            </form>
         </div>
     </div>
     <?php endif; ?>
