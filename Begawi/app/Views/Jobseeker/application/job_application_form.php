@@ -50,10 +50,19 @@
                 <input type="email" id="email" class="form-control" value="<?= esc(session()->get('email') ?? '') ?>"
                     readonly>
             </div>
+            
             <div class="form-group">
-                <label for="phone">Nomor Telepon (Opsional)</label>
-                <input type="text" id="phone" class="form-control" value="<?= esc($profile->phone ?? '') ?>"
-                    placeholder="Contoh: 081234567890" readonly>
+                <label for="phone">Nomor Telepon</label>
+                <input type="text" id="phone" class="form-control" 
+                    value="<?= esc($profile->phone ?? '') ?>" 
+                    placeholder="Nomor HP belum diisi di profil" readonly>
+                
+                <?php 
+                if (empty($profile->phone)): ?>
+                    <small class="form-text text-muted">
+                        Nomor HP diambil dari detail profil, silahkan isi di halaman profil jika ingin ditampilkan.
+                    </small>
+                <?php endif; ?>
             </div>
 
             <h5 class="section-heading">Dokumen Lamaran</h5>

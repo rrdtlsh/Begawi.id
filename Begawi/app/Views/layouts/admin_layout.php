@@ -328,8 +328,9 @@
                 text-shadow: 0 0 5px rgba(249, 240, 2, 0.7);
             }
         
+            
             .cyberpunk-theme #masterDataTabContent .table td i {
-                color: #f9f002; /* Warna kuning neon */
+                color: #f9f002; 
                 text-shadow: 0 0 6px rgba(249, 240, 2, 0.7); 
                 font-size: 1.2em; 
             }
