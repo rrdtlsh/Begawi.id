@@ -115,4 +115,37 @@ $routes->group('daftar-pelatihan', ['filter' => 'auth'], function ($routes) {
 $routes->group('admin', ['filter' => 'admin'], function ($routes) {
     // Dasbor Admin
     $routes->get('dashboard', 'Admin\DashboardController::index');
+
+    // === TAMBAHKAN ATAU GANTI DENGAN BLOK DI BAWAH INI ===
+
+    // Rute untuk Halaman Utama Master Data
+    $routes->get('master-data', 'Admin\MasterDataController::index', ['as' => 'admin.master-data.index']);
+
+    // Rute untuk Kategori Pekerjaan (JobCategory)
+    $routes->group('master-data/job-categories', function ($routes) {
+        $routes->get('new', 'Admin\JobCategoryController::new', ['as' => 'admin.job-categories.new']);
+        $routes->post('create', 'Admin\JobCategoryController::create', ['as' => 'admin.job-categories.create']);
+        $routes->get('edit/(:num)', 'Admin\JobCategoryController::edit/$1', ['as' => 'admin.job-categories.edit']);
+        $routes->post('update/(:num)', 'Admin\JobCategoryController::update/$1', ['as' => 'admin.job-categories.update']);
+        $routes->post('delete/(:num)', 'Admin\JobCategoryController::delete/$1', ['as' => 'admin.job-categories.delete']);
+    });
+
+    // Rute untuk Keahlian (Skill)
+    $routes->group('master-data/skills', function ($routes) {
+        $routes->get('new', 'Admin\SkillController::new', ['as' => 'admin.skills.new']);
+        $routes->post('create', 'Admin\SkillController::create', ['as' => 'admin.skills.create']);
+        $routes->get('edit/(:num)', 'Admin\SkillController::edit/$1', ['as' => 'admin.skills.edit']);
+        $routes->post('update/(:num)', 'Admin\SkillController::update/$1', ['as' => 'admin.skills.update']);
+        $routes->post('delete/(:num)', 'Admin\SkillController::delete/$1', ['as' => 'admin.skills.delete']);
+    });
+
+    // Rute untuk Lokasi (Location)
+    $routes->group('master-data/locations', function ($routes) {
+        $routes->get('new', 'Admin\LocationController::new', ['as' => 'admin.locations.new']);
+        $routes->post('create', 'Admin\LocationController::create', ['as' => 'admin.locations.create']);
+        $routes->get('edit/(:num)', 'Admin\LocationController::edit/$1', ['as' => 'admin.locations.edit']);
+        $routes->post('update/(:num)', 'Admin\LocationController::update/$1', ['as' => 'admin.locations.update']);
+        $routes->post('delete/(:num)', 'Admin\LocationController::delete/$1', ['as' => 'admin.locations.delete']);
+    });
+
 });

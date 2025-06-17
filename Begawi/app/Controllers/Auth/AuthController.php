@@ -171,15 +171,52 @@ class AuthController extends BaseController
 
     public function processLogin()
     {
+        $session = session();
         $userModel = new UserModel();
+
+        // --- MULAI LOGIKA THROTTLING (PEMBATASAN PERCOBAAN LOGIN) ---
+
+        // 1. Cek apakah pengguna sedang dalam masa tunggu (lockout)
+        $lockoutTime = $session->get('lockout_time');
+        if ($lockoutTime && time() < $lockoutTime) {
+            $remainingTime = $lockoutTime - time();
+            // Kirim flashdata khusus untuk memicu countdown di view
+            $session->setFlashdata('lockout_active', true); 
+            return redirect()->back()->withInput()->with('error', 'Terlalu banyak percobaan. Silakan coba lagi dalam ' . $remainingTime . ' detik.');
+        }
+
+        // --- AKHIR LOGIKA THROTTLING ---
+
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
         $user = $userModel->where('email', $email)->first();
 
         if (!$user || !password_verify($password, $user->password)) {
-            return redirect()->back()->withInput()->with('error', 'Email atau password salah.');
+            // --- JIKA LOGIN GAGAL ---
+            
+            $loginAttempts = $session->get('login_attempts') ?? 0;
+            $loginAttempts++;
+            $session->set('login_attempts', $loginAttempts);
+
+            // 3. Jika percobaan gagal mencapai 4 kali
+            if ($loginAttempts >= 4) {
+                // Kunci akun selama 30 detik dari sekarang
+                $session->set('lockout_time', time() + 30); 
+                // Reset counter percobaan
+                $session->remove('login_attempts'); 
+                // Kirim flashdata untuk memicu countdown
+                $session->setFlashdata('lockout_active', true); 
+                return redirect()->back()->withInput()->with('error', 'Anda telah 4 kali gagal melakukan login. Akun dikunci sementara selama 30 detik.');
+            }
+
+            return redirect()->back()->withInput()->with('error', 'Email atau kata sandi salah. Percobaan ke-' . $loginAttempts . ' dari 3.');
         }
 
+        // --- JIKA LOGIN BERHASIL ---
+
+        $session->remove(['login_attempts', 'lockout_time']);
+
+        // Logika untuk membuat sesi pengguna setelah login berhasil (sudah ada)
         $profileId = null;
         if ($user->role === 'jobseeker') {
             $jobseekerModel = new JobseekerModel();

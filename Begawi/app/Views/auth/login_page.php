@@ -15,7 +15,7 @@
         <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
     <?php endif; ?>
     <?php if (session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+        <div class="alert alert-danger" id="errorMessage"><?= session()->getFlashdata('error') ?></div>
     <?php endif; ?>
 
     <?= form_open('login/process') ?>
@@ -31,7 +31,7 @@
             required />
     </div>
 
-    <button type="submit" class="btn btn-primary w-100">MASUK</button>
+    <button type="submit" id="loginButton" class="btn btn-primary w-100">MASUK</button>
     <?= form_close() ?>
 
     <p class="signup-link">
@@ -39,4 +39,44 @@
     </p>
 </div>
 
+
+<?php if (session()->getFlashdata('lockout_active')): ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginButton = document.getElementById('loginButton');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const errorMessageDiv = document.getElementById('errorMessage');
+
+        let timeLeft = 30;
+
+        // Nonaktifkan form segera saat halaman dimuat
+        loginButton.disabled = true;
+        emailInput.disabled = true;
+        passwordInput.disabled = true;
+
+        const countdownTimer = setInterval(function() {
+            if (timeLeft <= 0) {
+                // Jika waktu habis
+                clearInterval(countdownTimer);
+                loginButton.disabled = false;
+                emailInput.disabled = false;
+                passwordInput.disabled = false;
+                loginButton.innerText = 'MASUK';
+                if (errorMessageDiv) {
+                    errorMessageDiv.style.display = 'none'; 
+                }
+            } else {
+                // Selama waktu berjalan
+                const message = `Anda telah 4 kali gagal melakukan login. Coba lagi dalam ${timeLeft} detik.`;
+                loginButton.innerText = `Tunggu (${timeLeft}s)`;
+                if (errorMessageDiv) {
+                    errorMessageDiv.innerText = message;
+                }
+            }
+            timeLeft -= 1;
+        }, 1000); // Update setiap 1 detik
+    });
+</script>
+<?php endif; ?>
 <?= $this->endSection() ?>

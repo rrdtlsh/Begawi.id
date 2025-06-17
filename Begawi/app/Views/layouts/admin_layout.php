@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -293,7 +296,6 @@
         .cyberpunk-theme .text-warning { color: #f9f002 !important; }
         .cyberpunk-theme .text-gray-800 { color: #c0c0ff !important; }
         
-        /* Gaya untuk Tabel Baru */
         .cyberpunk-theme .table { color: var(--text-color-default); border-color: var(--sidebar-border-color); }
         .cyberpunk-theme .table th { color: var(--text-color-headings); }
         .cyberpunk-theme .table > :not(caption) > * > * { background-color: transparent; }
@@ -304,7 +306,65 @@
         }
         .cyberpunk-theme .badge.bg-success { background-color: #39ff14 !important; color: #000; }
         .cyberpunk-theme .badge.bg-warning { background-color: #f9f002 !important; color: #000; }
-         `;
+        .cyberpunk-theme #masterDataTabContent .table tbody td:nth-child(1),
+            .cyberpunk-theme #masterDataTabContent .table tbody td:nth-child(2) {
+                color: #00fff9; /* Warna biru neon / cyan */
+                font-weight: bold;
+                text-shadow: 0 0 6px rgba(0, 255, 249, 0.7);
+            }
+        
+            .cyberpunk-theme #masterDataTab .nav-link {
+                color: #c000ff; /* Warna ungu neon untuk tab tidak aktif */
+                text-shadow: 0 0 5px rgba(192, 0, 255, 0.7);
+                background-color: transparent;
+                border-color: var(--sidebar-border-color);
+            }
+
+            .cyberpunk-theme #masterDataTab .nav-link.active {
+                color: #f9f002; 
+                background-color: var(--card-bg);
+                border-color: var(--sidebar-border-color);
+                border-bottom-color: var(--card-bg); /* Membuat border menyatu */
+                text-shadow: 0 0 5px rgba(249, 240, 2, 0.7);
+            }
+        
+            .cyberpunk-theme #masterDataTabContent .table td i {
+                color: #f9f002; /* Warna kuning neon */
+                text-shadow: 0 0 6px rgba(249, 240, 2, 0.7); 
+                font-size: 1.2em; 
+            }
+
+            .cyberpunk-theme #masterDataTabContent .table .actions .btn {
+                background: transparent;
+                border-width: 1px;
+                border-style: solid;
+                font-weight: bold;
+                transition: all 0.3s ease;
+            }
+
+            .cyberpunk-theme #masterDataTabContent .table .actions .btn.btn-warning {
+                color: #f9f002;
+                border-color: #f9f002;
+                text-shadow: 0 0 5px rgba(249, 240, 2, 0.7);
+            }
+            .cyberpunk-theme #masterDataTabContent .table .actions .btn.btn-warning:hover {
+                color: #000;
+                background-color: #f9f002;
+                box-shadow: 0 0 10px #f9f002;
+            }
+
+            .cyberpunk-theme #masterDataTabContent .table .actions .btn.btn-danger {
+                color: #ff00c1;
+                border-color: #ff00c1;
+                text-shadow: 0 0 5px rgba(255, 0, 193, 0.7);
+            }
+            .cyberpunk-theme #masterDataTabContent .table .actions .btn.btn-danger:hover {
+                color: #000;
+                background-color: #ff00c1;
+                box-shadow: 0 0 10px #ff00c1;
+            }
+            
+        `;
             function setTheme(theme) {
                 // Hapus status aktif dari semua item menu
                 themeMenu.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
