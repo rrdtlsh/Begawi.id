@@ -4,13 +4,13 @@
 <h1 class="h3 mb-4"><?= esc($title) ?></h1>
 
 <?php if (session()->get('errors')): ?>
-    <div class="alert alert-danger">
-        <ul>
-            <?php foreach (session()->get('errors') as $error): ?>
-                <li><?= esc($error) ?></li>
-            <?php endforeach ?>
-        </ul>
-    </div>
+<div class="alert alert-danger">
+    <ul>
+        <?php foreach (session()->get('errors') as $error): ?>
+        <li><?= esc($error) ?></li>
+        <?php endforeach ?>
+    </ul>
+</div>
 <?php endif; ?>
 
 <div class="card">
@@ -19,9 +19,6 @@
             action="<?= isset($category) ? route_to('admin.job-categories.update', $category->id) : route_to('admin.job-categories.create') ?>"
             method="post">
             <?= csrf_field() ?>
-            <?php if (isset($category)): ?>
-                <input type="hidden" name="_method" value="PUT">
-            <?php endif; ?>
 
             <div class="mb-3">
                 <label for="name" class="form-label">Nama Kategori</label>

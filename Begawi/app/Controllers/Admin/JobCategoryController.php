@@ -59,10 +59,6 @@ class JobCategoryController extends BaseController
     }
 
 
-    // File: app/Controllers/Admin/JobCategoryController.php
-// Tambahkan 'use' statement di atas class:
-// use PhpOffice\PhpSpreadsheet\IOFactory;
-
     public function processImport()
     {
         $rules = ['excel_file' => 'uploaded[excel_file]|max_size[excel_file,5120]|ext_in[excel_file,xlsx,xls]'];
