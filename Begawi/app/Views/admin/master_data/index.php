@@ -81,9 +81,9 @@ Manajemen Data Master
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($categories as $item): ?>
+                            <?php foreach ($categories as $index => $item): ?>
                                 <tr>
-                                    <td><?= $item->id ?></td>
+                                    <td><?= $index + 1 ?></td>
                                     <td><?= esc($item->name) ?></td>
                                     <td><i class="bi <?= esc($item->icon_path) ?>"></i></td>
                                     <td class="text-end">
@@ -135,9 +135,9 @@ Manajemen Data Master
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($skills as $item): ?>
+                            <?php foreach ($skills as $index => $item): ?>
                                 <tr>
-                                    <td><?= $item->id ?></td>
+                                    <td><?= $index + 1 ?></td>
                                     <td><?= esc($item->name) ?></td>
                                     <td class="text-end">
                                         <a href="<?= route_to('admin.skills.edit', $item->id) ?>"
@@ -188,9 +188,9 @@ Manajemen Data Master
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($locations as $item): ?>
+                            <?php foreach ($locations as $index => $item ): ?>
                                 <tr>
-                                    <td><?= $item->id ?></td>
+                                    <td><?= $index + 1 ?></td>
                                     <td><?= esc($item->name) ?></td>
                                     <td class="text-end">
                                         <a href="<?= route_to('admin.locations.edit', $item->id) ?>"
