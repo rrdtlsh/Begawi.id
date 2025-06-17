@@ -107,7 +107,8 @@ class ChatbotController extends BaseController
 
             return $this->response->setJSON([
                 'status' => 'success',
-                'answer' => $answer
+                'answer' => $answer,
+                'new_csrf_hash' => csrf_hash()
             ]);
 
         } catch (RequestException $e) {

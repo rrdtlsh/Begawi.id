@@ -13,7 +13,7 @@
                 </div>
             
             <form id="chatbot-form" class="chatbot-input-form">
-                <div class="input-group">
+                <?= csrf_field() ?> <div class="input-group">
                     <input type="text" id="question" class="form-control chat-input" placeholder="Tanyakan sesuatu tentang karir Anda..." required>
                     <div class="input-group-append">
                         <button class="btn btn-primary chat-send-button" type="submit">
@@ -49,16 +49,31 @@ document.addEventListener('DOMContentLoaded', function() {
         addMessage('user', question);
         $('#question').val('');
         
+        // =================== PERUBAHAN DIMULAI DI SINI ===================
+
+        // Ambil nama dan hash token CSRF dari hidden input
+        const csrfName = $('input[name=csrf_test_name]').attr('name');
+        const csrfHash = $('input[name=csrf_test_name]').val();
+
         $.ajax({
             url: '<?= site_url('jobseeker/chatbot/ask') ?>',
             type: 'POST',
             dataType: 'json',
-            data: { question: question },
+            // Kirim data pertanyaan BERSAMA DENGAN token CSRF
+            data: {
+                question: question,
+                [csrfName]: csrfHash 
+            },
             beforeSend: function() {
                 $('#chat-container').append(loadingMessageHtml);
                 scrollToBottom();
             },
             success: function(response) {
+                // Perbarui nilai token di form agar request berikutnya valid
+                if(response.new_csrf_hash) {
+                    $('input[name=csrf_test_name]').val(response.new_csrf_hash);
+                }
+
                 $('.chat-message.loading').remove();
                 
                 if (response.status === 'success') {
