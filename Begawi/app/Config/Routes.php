@@ -74,6 +74,10 @@ $routes->group('vendor', ['filter' => 'auth'], function ($routes) {
     // Rute untuk download PDF lowongan dan pelatihan
     $routes->get('jobs/(:num)/download-pdf', 'Vendor\JobController::downloadApplicantsPdf/$1');
     $routes->get('trainings/(:num)/download-pdf', 'Vendor\TrainingController::downloadParticipantsPdf/$1');
+
+    // Rute untuk download laporan Excel lowongan dan pelatihan
+    $routes->get('jobs/(:num)/download-excel', 'Vendor\JobController::downloadApplicantsExcel/$1');
+    $routes->get('trainings/(:num)/download-excel', 'Vendor\TrainingController::downloadParticipantsExcel/$1');
 });
 
 
