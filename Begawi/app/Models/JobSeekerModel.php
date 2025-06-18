@@ -38,7 +38,7 @@ class JobSeekerModel extends Model
 
         $db = \Config\Database::connect();
         $skills = $db->table('jobseeker_skills')
-            ->select('skills.id, skills.name') // Ambil ID dan Nama
+            ->select('skills.id, skills.name')
             ->join('skills', 'skills.id = jobseeker_skills.skill_id')
             ->where('jobseeker_skills.jobseeker_id', $profile->id)
             ->get()->getResult();

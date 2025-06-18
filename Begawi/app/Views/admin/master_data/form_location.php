@@ -25,7 +25,7 @@
             method="post">
             <?= csrf_field() ?>
 
-            <?php if (isset($location)): // Untuk mode edit ?>
+            <?php if (isset($location)):  ?>
             <?php endif; ?>
 
             <div class="mb-3">

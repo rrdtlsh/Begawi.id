@@ -50,14 +50,12 @@
 
         let timeLeft = 30;
 
-        // Nonaktifkan form segera saat halaman dimuat
         loginButton.disabled = true;
         emailInput.disabled = true;
         passwordInput.disabled = true;
 
         const countdownTimer = setInterval(function() {
             if (timeLeft <= 0) {
-                // Jika waktu habis
                 clearInterval(countdownTimer);
                 loginButton.disabled = false;
                 emailInput.disabled = false;
@@ -67,7 +65,6 @@
                     errorMessageDiv.style.display = 'none'; 
                 }
             } else {
-                // Selama waktu berjalan
                 const message = `Anda telah 4 kali gagal melakukan login. Coba lagi dalam ${timeLeft} detik.`;
                 loginButton.innerText = `Tunggu (${timeLeft}s)`;
                 if (errorMessageDiv) {
@@ -75,7 +72,7 @@
                 }
             }
             timeLeft -= 1;
-        }, 1000); // Update setiap 1 detik
+        }, 1000); 
     });
 </script>
 <?php endif; ?>

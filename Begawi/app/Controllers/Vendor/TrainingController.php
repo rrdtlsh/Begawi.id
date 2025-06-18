@@ -214,7 +214,6 @@ class TrainingController extends BaseController
 
     public function downloadParticipantsExcel($trainingId = null)
     {
-        // 1. Ambil data (logikanya sama persis dengan fungsi PDF)
         $trainingModel = new TrainingModel();
         $applicationModel = new TrainingApplicationModel();
         $vendorId = session()->get('profile_id');
@@ -229,7 +228,6 @@ class TrainingController extends BaseController
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        // header dan detail pelatihan
         $sheet->setCellValue('A1', 'Laporan Daftar Peserta');
         $sheet->setCellValue('A2', 'Judul Pelatihan:');
         $sheet->setCellValue('B2', $training->title);
@@ -239,7 +237,6 @@ class TrainingController extends BaseController
         $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(16);
         $sheet->getStyle('A2:A3')->getFont()->setBold(true);
 
-        //header untuk tabel peserta
         $sheet->setCellValue('A5', 'No.');
         $sheet->setCellValue('B5', 'Nama Peserta');
         $sheet->setCellValue('C5', 'Email');
@@ -258,12 +255,10 @@ class TrainingController extends BaseController
             $rowNumber++;
         }
 
-        // Atur lebar kolom otomatis
         foreach (range('A', 'E') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
-        // 6. Kirim file Excel ke browser untuk diunduh
         $writer = new Xlsx($spreadsheet);
         $fileName = 'laporan-peserta-' . url_title($training->title, '-', true) . '.xlsx';
 

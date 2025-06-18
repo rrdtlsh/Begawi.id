@@ -254,7 +254,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // --- Penanda Link Aktif ---
             const currentPath = window.location.pathname;
             const navLinks = document.querySelectorAll('.sidebar .nav-link:not(.dropdown-toggle)');
             navLinks.forEach(link => {
@@ -264,7 +263,6 @@
                 }
             });
 
-            // --- Logika Pengalih Tema ---
             const themeMenu = document.getElementById('theme-menu');
             const body = document.body;
             const themeStyleTag = document.getElementById('dynamic-theme-styles');
@@ -428,7 +426,6 @@
                 }
             });
 
-            // Terapkan tema dari cookie saat memuat
             const savedTheme = body.classList.contains('cyberpunk-theme') ? 'cyberpunk' : 'default';
             setTheme(savedTheme);
 

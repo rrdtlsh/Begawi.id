@@ -25,7 +25,7 @@
             method="post">
             <?= csrf_field() ?>
 
-            <?php if (isset($skill)): // Untuk mode edit, kita tidak perlu _method spoofing karena rute sudah POST ?>
+            <?php if (isset($skill)): ?>
             <?php endif; ?>
 
             <div class="mb-3">

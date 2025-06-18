@@ -15,7 +15,6 @@
                         
                         <div class="card-header-new">
                             <?php
-                                // Logika untuk membuat avatar inisial perusahaan
                                 $companyName = $job->company_name;
                                 $words = explode(' ', $companyName);
                                 $initials = '';
@@ -25,11 +24,9 @@
                                 if (isset($words[1])) {
                                     $initials .= strtoupper(substr($words[1], 0, 1));
                                 } else {
-                                    // Jika hanya satu kata, ambil 2 huruf pertama
                                     $initials = strtoupper(substr($words[0], 0, 2));
                                 }
 
-                                // Memberi warna random untuk background avatar
                                 $colors = ['#215546', '#A1C349', '#FFC700', '#00796B', '#5E35B1', '#E53935'];
                                 $color = $colors[crc32($companyName) % count($colors)];
                             ?>

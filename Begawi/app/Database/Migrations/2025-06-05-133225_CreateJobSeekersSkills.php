@@ -25,7 +25,7 @@ class CreateJobseekerSkills extends Migration
     }
 
     public function down()
-    {//
+    {
         $this->forge->dropTable('jobseeker_skills');
     }
 }

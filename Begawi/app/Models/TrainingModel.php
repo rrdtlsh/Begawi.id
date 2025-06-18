@@ -131,7 +131,7 @@ class TrainingModel extends Model
             ->orderBy('trainings.start_date', 'ASC')
             ->paginate($perPage);
     }
-    //
+    
     public function getTrainingDetails(int $id)
     {
         return $this->select('
@@ -151,7 +151,6 @@ class TrainingModel extends Model
 
     public function searchTrainings($keyword = null, $location = null, $category = null)
     {
-        // Mulai membangun query dengan join ke tabel lain untuk mendapatkan info lengkap
         $builder = $this->select('
                 trainings.*, 
                 vendors.company_name as penyelenggara, 
@@ -162,7 +161,6 @@ class TrainingModel extends Model
             ->join('locations', 'locations.id = trainings.location_id', 'left')
             ->join('job_categories', 'job_categories.id = trainings.category_id', 'left');
 
-        // Tambahkan kondisi pencarian jika ada input
         if ($keyword) {
             $builder->like('trainings.title', $keyword);
         }
@@ -173,7 +171,6 @@ class TrainingModel extends Model
             $builder->where('trainings.category_id', $category);
         }
 
-        // Urutkan dari yang terbaru dan ambil hasilnya
         return $builder->orderBy('trainings.created_at', 'DESC')->findAll();
     }
 }

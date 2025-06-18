@@ -18,8 +18,7 @@ class JobApplicationModel extends Model
         'status',
         'notes',
     ];
-
-    // Menggunakan timestamps
+    
     protected $useTimestamps = true;
     protected $createdField = 'applied_at';
     protected $updatedField = 'updated_at';

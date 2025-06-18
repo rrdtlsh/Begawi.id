@@ -114,15 +114,13 @@ class JobApplicationController extends BaseController
 
         $application = $this->jobApplicationModel->find($applicationId);
 
-        // Validasi: lamaran harus ada, milik jobseeker yang login, dan statusnya 'pending'
         if (!$application || $application->jobseeker_id != $jobseekerId || $application->status !== 'pending') {
             return redirect()->to('/jobseeker/history')->with('error', 'Lamaran tidak ditemukan, atau tidak dapat diupdate karena statusnya.');
         }
 
-        // Aturan validasi untuk update lamaran
         $rules = [
-            'cover_letter' => 'required|max_length[500]', // Pastikan nama field sesuai dengan form HTML
-            'resume' => [ // Opsional: jika jobseeker bisa mengganti CV
+            'cover_letter' => 'required|max_length[500]', 
+            'resume' => [ 
                 'label' => 'File CV',
                 'rules' => 'if_exist|uploaded[resume]|max_size[resume,2048]|ext_in[resume,pdf,doc,docx]',
             ],
@@ -137,7 +135,6 @@ class JobApplicationController extends BaseController
             'updated_at' => date('Y-m-d H:i:s'), 
         ];
 
-        // Handle upload file resume jika ada file baru
         $resumeFile = $this->request->getFile('resume');
         if ($resumeFile && $resumeFile->isValid() && !$resumeFile->hasMoved()) {
             $oldFilePath = $application->resume_file_path; 
@@ -167,12 +164,10 @@ class JobApplicationController extends BaseController
 
         $application = $this->jobApplicationModel->find($applicationId);
 
-        // Validasi: lamaran harus ada dan milik jobseeker yang login
         if (!$application || $application->jobseeker_id != $jobseekerId) {
             return redirect()->to('/jobseeker/history')->with('error', 'Lamaran tidak ditemukan, atau Anda tidak memiliki akses.');
         }
 
-        // Hapus file resume terkait jika ada
         if ($application->resume_file_path && file_exists(ROOTPATH . 'public/' . $application->resume_file_path)) {
             unlink(ROOTPATH . 'public/' . $application->resume_file_path);
         }

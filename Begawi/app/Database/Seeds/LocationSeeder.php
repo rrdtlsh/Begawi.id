@@ -8,10 +8,8 @@ class LocationSeeder extends Seeder
 {
     public function run()
     {
-        // 1. Matikan sementara pengecekan foreign key
         $this->db->query('SET FOREIGN_KEY_CHECKS=0');
 
-        // 2. Kosongkan tabel dan masukkan data baru
         $this->db->table('locations')->truncate();
         $data = [
             ['name' => 'Banjarmasin Selatan'],
@@ -22,7 +20,6 @@ class LocationSeeder extends Seeder
         ];
         $this->db->table('locations')->insertBatch($data);
 
-        // 3. Aktifkan kembali pengecekan foreign key (SANGAT PENTING!)
         $this->db->query('SET FOREIGN_KEY_CHECKS=1');
     }
 }

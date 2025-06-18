@@ -161,7 +161,6 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 
-                // Fungsi untuk format Rupiah
                 function formatRupiah(angka) {
                     let number_string = angka.replace(/[^,\d]/g, '').toString(),
                         split = number_string.split(','),
@@ -178,7 +177,6 @@
                     return rupiah;
                 }
 
-                // Terapkan format Rupiah pada input gaji
                 const salaryMinInput = document.getElementById('salary_min');
                 const salaryMaxInput = document.getElementById('salary_max');
 
@@ -190,7 +188,6 @@
                     salaryMaxInput.value = formatRupiah(this.value);
                 });
 
-                // Validasi agar input angka tidak bisa di bawah 0
                 const numberInputs = document.querySelectorAll('input[type="number"]');
                 numberInputs.forEach(input => {
                     input.addEventListener('input', function() {

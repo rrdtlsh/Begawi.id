@@ -55,29 +55,22 @@ class TrainingApplicationController extends BaseController
 
     public function deleteEnrollment($enrollmentId)
     {
-        // 1. Ambil ID jobseeker dari sesi untuk verifikasi
         $jobseekerId = session()->get('profile_id');
 
-        // Jika tidak ada di sesi, redirect ke login
         if (!$jobseekerId) {
             return redirect()->to('/login')->with('error', 'Sesi tidak valid, silakan login kembali.');
         }
 
-        // 2. Cari data pendaftaran berdasarkan ID dari URL
         $enrollment = $this->trainingApplicationModel->find($enrollmentId);
 
-        // 3. Validasi Keamanan (Sangat Penting):
-        //    Pastikan pendaftaran ditemukan DAN pendaftaran itu milik pengguna yang sedang login.
+
         if (!$enrollment || $enrollment->jobseeker_id != $jobseekerId) {
             return redirect()->to('/jobseeker/history')->with('error', 'Aksi tidak diizinkan.');
         }
 
-        // 4. Jika semua validasi lolos, hapus data pendaftaran
         if ($this->trainingApplicationModel->delete($enrollmentId)) {
-            // Berikan pesan sukses dan kembali ke halaman riwayat
             return redirect()->to('/jobseeker/history')->with('success', 'Pendaftaran pelatihan berhasil dibatalkan.');
         } else {
-            // Berikan pesan error jika gagal menghapus
             return redirect()->back()->with('error', 'Gagal membatalkan pendaftaran pelatihan.');
         }
     }

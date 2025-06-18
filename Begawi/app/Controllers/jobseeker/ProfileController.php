@@ -108,27 +108,21 @@ class ProfileController extends BaseController
 
     public function deleteAccount()
     {
-        // 1. Verifikasi keamanan: pastikan yang mengakses adalah jobseeker yang login
         if (!session()->get('isLoggedIn') || session()->get('role') !== 'jobseeker') {
             return redirect()->to('/login')->with('error', 'Akses tidak sah.');
         }
 
         $userId = session()->get('user_id');
 
-        // 2. Inisialisasi model
         $userModel = new UserModel();
 
-        // 3. Lakukan hard delete pada tabel users
-        // Parameter kedua (true) akan memaksa penghapusan permanen (purge)
-        // dan mengabaikan soft delete.
+    
         $deleted = $userModel->delete($userId, true);
 
         if ($deleted) {
-            // 4. Hancurkan sesi dan redirect ke halaman utama
             session()->destroy();
             return redirect()->to('/')->with('success', 'Akun Anda telah berhasil dihapus secara permanen. Terima kasih telah menggunakan layanan kami.');
         } else {
-            // Jika karena suatu alasan gagal
             return redirect()->to('/jobseeker/dashboard')->with('error', 'Gagal menghapus akun. Silakan coba lagi.');
         }
     }

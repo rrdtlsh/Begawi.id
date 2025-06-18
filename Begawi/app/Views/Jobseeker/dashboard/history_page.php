@@ -241,7 +241,6 @@
                 </div>
                 <div class="actions ml-auto d-flex align-items-center">
                     <?php
-    // Variabel ini sudah benar, kita gunakan lagi
     $isJobApplication = (($item->type ?? '') === 'job_application');
     $isTrainingEnrollment = (($item->type ?? '') === 'training_enrollment');
     $currentStatus = $item->status ?? 'pending';
@@ -250,7 +249,6 @@
 
     <?php if ($idToActOn): ?>
 
-        <?php // --- BLOK 1: Tombol khusus untuk Lamaran Pekerjaan --- ?>
         <?php if ($isJobApplication): ?>
             <?php if ($currentStatus === 'pending'): ?>
                 <a href="<?= site_url('jobseeker/applications/edit/' . esc($idToActOn)) ?>" class="btn btn-sm btn-info me-2 d-flex align-items-center">
@@ -266,7 +264,6 @@
         <?php endif; ?>
 
 
-        <?php // --- BLOK 2: Tombol khusus untuk Pendaftaran Pelatihan --- ?>
         <?php if ($isTrainingEnrollment): ?>
             <?php if (in_array($currentStatus, ['pending', 'accepted'])): ?>
                 <form action="<?= site_url('jobseeker/trainings/delete-enrollment/' . esc($idToActOn)) ?>" method="post" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pendaftaran pelatihan ini?');">
@@ -278,7 +275,7 @@
             <?php endif; ?>
         <?php endif; ?>
 
-    <?php endif; // End if idToActOn ?>
+    <?php endif;  ?>
                 </div>
                 <?php
                 $status_class = [

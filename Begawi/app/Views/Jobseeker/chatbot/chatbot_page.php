@@ -33,7 +33,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Styling tambahan untuk pesan loading
     const loadingMessageHtml = `
         <div class="chat-message bot-message loading">
             <strong>Career Assistant:</strong> <i>Mengetik...</i>
@@ -49,9 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         addMessage('user', question);
         $('#question').val('');
         
-        // =================== PERUBAHAN DIMULAI DI SINI ===================
 
-        // Ambil nama dan hash token CSRF dari hidden input
         const csrfName = $('input[name=csrf_test_name]').attr('name');
         const csrfHash = $('input[name=csrf_test_name]').val();
 
@@ -59,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
             url: '<?= site_url('jobseeker/chatbot/ask') ?>',
             type: 'POST',
             dataType: 'json',
-            // Kirim data pertanyaan BERSAMA DENGAN token CSRF
             data: {
                 question: question,
                 [csrfName]: csrfHash 
@@ -69,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 scrollToBottom();
             },
             success: function(response) {
-                // Perbarui nilai token di form agar request berikutnya valid
                 if(response.new_csrf_hash) {
                     $('input[name=csrf_test_name]').val(response.new_csrf_hash);
                 }

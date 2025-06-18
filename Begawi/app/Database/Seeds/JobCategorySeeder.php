@@ -8,11 +8,10 @@ class JobCategorySeeder extends Seeder
 {
     public function run()
     {
-        // Menyiapkan data kategori pekerjaan dalam bentuk array
         $data = [
             [
                 'name' => 'Teknologi Informasi & Perangkat Lunak',
-                'icon_path' => 'bi-code-slash', // Contoh: nama kelas dari Bootstrap Icons
+                'icon_path' => 'bi-code-slash', 
             ],
             [
                 'name' => 'Pemasaran & Komunikasi',
@@ -56,8 +55,7 @@ class JobCategorySeeder extends Seeder
             ],
         ];
 
-        // Menggunakan Query Builder untuk memasukkan semua data sekaligus
-        // Metode insertBatch() lebih efisien daripada insert() di dalam loop
+       
         $this->db->table('job_categories')->insertBatch($data);
     }
 }

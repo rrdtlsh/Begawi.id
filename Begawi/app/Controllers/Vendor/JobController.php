@@ -37,7 +37,6 @@ class JobController extends BaseController
             'locations' => $locationModel->findAll(),
         ];
 
-        // PERBAIKAN: Path ke view harusnya 'vendor/jobs/form' (plural)
         return view('vendor/jobs/form', $data);
     }
 
@@ -245,7 +244,6 @@ class JobController extends BaseController
 
     public function downloadApplicantsExcel($jobId = null)
     {
-        // 1. Ambil data (logikanya sama persis dengan fungsi PDF)
         $jobModel = new JobModel();
         $applicationModel = new JobApplicationModel();
         $vendorId = session()->get('profile_id');
@@ -268,7 +266,6 @@ class JobController extends BaseController
         $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(16);
         $sheet->getStyle('A2:A3')->getFont()->setBold(true);
 
-        //header kolom pelamar
         $sheet->setCellValue('A5', 'No.');
         $sheet->setCellValue('B5', 'Nama Pelamar');
         $sheet->setCellValue('C5', 'Email');

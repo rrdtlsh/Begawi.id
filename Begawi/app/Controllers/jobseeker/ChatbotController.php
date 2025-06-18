@@ -30,7 +30,6 @@ class ChatbotController extends BaseController
 
     public function ask()
     {
-        // Validasi input
         $validation = \Config\Services::validation();
         $validation->setRules([
             'question' => 'required|string|max_length[500]'
