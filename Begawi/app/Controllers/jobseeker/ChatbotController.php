@@ -161,7 +161,7 @@ class ChatbotController extends BaseController
                 'message' => 'Maaf, terjadi kesalahan saat menghubungi layanan chatbot. Silakan coba lagi nanti.'
             ]);
         } catch (RequestException $e) {
-            log_message('error', 'DeepSeek API Error: ' . $e->getMessage());
+            log_message('error', 'Meta API Error: ' . $e->getMessage());
             return $this->response->setJSON([
                 'status' => 'error',
                 'message' => 'Terjadi kesalahan saat menghubungi layanan chatbot. Silakan coba lagi nanti.'
