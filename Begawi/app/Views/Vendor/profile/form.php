@@ -81,12 +81,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="website">Website (Opsional)</label>
-                    <input type="text" id="website" name="website" class="form-control" placeholder="https://..."
-                        value="<?= old('website', $vendor->website ?? '') ?>">
-                </div>
-
-                <div class="form-group">
                     <label for="company_profile">Deskripsi Singkat Perusahaan</label>
                     <textarea id="company_profile" name="company_profile" class="form-control"
                         rows="5"><?= old('company_profile', $vendor->company_profile ?? '') ?></textarea>
@@ -97,6 +91,17 @@
                     <a href="/vendor/dashboard" class="btn btn-secondary">Batal</a>
                 </div>
             </form>
+
+            <hr class="my-4">
+
+            <div class="danger-zone">
+                <h5 class="text-danger">Hapus Akun !</h5>
+                <p class="text-muted small">Tindakan ini tidak dapat diurungkan. Semua data terkait perusahaan Anda, termasuk lowongan dan pelatihan yang pernah Anda publikasikan, akan dihapus secara permanen.</p>
+                <form action="<?= site_url('vendor/profile/delete') ?>" method="post" onsubmit="return confirm('PERINGATAN: Apakah Anda benar-benar yakin ingin menghapus akun ini secara permanen?');">
+                    <?= csrf_field() ?>
+                    <button type="submit" class="btn btn-danger w-100">Hapus Akun Saya</button>
+                </form>
+            </div>
         </div>
     </div>
 

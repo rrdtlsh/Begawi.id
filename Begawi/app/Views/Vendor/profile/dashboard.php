@@ -56,7 +56,7 @@
                                     class="btn btn-brand-green btn-sm flex-fill">Lihat Pelamar</a>
                                 <form action="<?= site_url('vendor/jobs/delete/' . $job->id) ?>" method="post"
                                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?');">
-                                    <button type="submit" class="btn btn-danger btn-sm">
+                                    <?= csrf_field() ?> <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="bi bi-trash3-fill"></i>
                                     </button>
                                 </form>
@@ -96,7 +96,7 @@
                                 <a href="<?= site_url('vendor/trainings/' . $training->id . '/participants') ?>" class="btn btn-brand-green btn-sm flex-fill">Lihat Peserta</a>
                                 <form action="<?= site_url('vendor/trainings/delete/' . $training->id) ?>" method="post"
                                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus pelatihan ini?');">
-                                    <button type="submit" class="btn btn-danger btn-sm">
+                                    <?= csrf_field() ?> <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="bi bi-trash3-fill"></i>
                                     </button>
                                 </form>

@@ -42,7 +42,6 @@ class CreateTrainingApplications extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        // Pastikan foreign key juga ada
         $this->forge->addForeignKey('training_id', 'trainings', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('jobseeker_id', 'jobseekers', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('training_applications');

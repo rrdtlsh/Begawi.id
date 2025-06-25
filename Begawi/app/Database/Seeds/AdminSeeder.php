@@ -18,7 +18,6 @@ class AdminSeeder extends Seeder
             'role' => 'admin',
         ];
 
-        // Cek apakah email sudah ada
         if (!$userModel->where('email', $adminData['email'])->first()) {
             $userModel->save($adminData);
             echo "Akun admin berhasil dibuat.\n";

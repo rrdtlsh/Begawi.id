@@ -80,4 +80,25 @@ class ProfileController extends BaseController
 
         return redirect()->to('/vendor/dashboard')->with('success', 'Profil berhasil diperbarui.');
     }
+
+    public function deleteAccount()
+    {
+        if (!session()->get('isLoggedIn') || session()->get('role') !== 'vendor') {
+            return redirect()->to('/login')->with('error', 'Akses tidak sah.');
+        }
+
+        $userId = session()->get('user_id');
+
+        $userModel = new UserModel();
+
+    
+        $deleted = $userModel->delete($userId, true);
+
+        if ($deleted) {
+            session()->destroy();
+            return redirect()->to('/')->with('success', 'Akun Anda telah berhasil dihapus secara permanen. Terima kasih telah menggunakan layanan kami.');
+        } else {
+            return redirect()->to('/vendor/dashboard')->with('error', 'Gagal menghapus akun. Silakan coba lagi.');
+        }
+    }
 }

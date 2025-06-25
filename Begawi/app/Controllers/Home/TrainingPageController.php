@@ -34,7 +34,6 @@ class TrainingPageController extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
-        // Cek apakah user sudah terdaftar di pelatihan ini
         $isRegistered = false;
         $isQuotaFull = false;
         if (session()->get('isLoggedIn') && session()->get('role') === 'jobseeker') {

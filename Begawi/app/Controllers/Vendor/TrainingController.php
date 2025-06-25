@@ -7,6 +7,9 @@ use App\Models\TrainingModel;
 use App\Models\JobCategoryModel;
 use App\Models\LocationModel;
 use App\Models\TrainingApplicationModel;
+use Dompdf\Dompdf;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class TrainingController extends BaseController
 {
@@ -180,5 +183,88 @@ class TrainingController extends BaseController
         } else {
             return redirect()->back()->with('error', 'Gagal memperbarui status peserta.');
         }
+    }
+
+    public function downloadParticipantsPdf($trainingId = null)
+    {
+        $trainingModels = new TrainingModel();
+        $vendorId = session()->get('profile_id');
+        $training = $trainingModels->where(['id' => $trainingId, 'vendor_id' => $vendorId])->first();
+
+        if (!$training) {
+            return redirect()->to('/vendor/dashboard')->with('error', 'Pelatihan tidak ditemukan atau akses ditolak.');
+        }
+
+        $applicationModel = new TrainingApplicationModel();
+        $participants = $applicationModel->getApplicantsForTraining($trainingId);
+
+        $html = view('vendor/trainings/pdf_template', [
+            'training' => $training,
+            'participants' => $participants,
+        ]);
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return $dompdf->stream('peserta_pelatihan_' . $training->id . '.pdf', ['Attachment' => false]);
+
+    }
+
+    public function downloadParticipantsExcel($trainingId = null)
+    {
+        $trainingModel = new TrainingModel();
+        $applicationModel = new TrainingApplicationModel();
+        $vendorId = session()->get('profile_id');
+
+        $training = $trainingModel->getTrainingDetails($trainingId);
+        if (!$training || $training->vendor_id != $vendorId) {
+            return redirect()->to('vendor/dashboard')->with('error', 'Akses ditolak.');
+        }
+
+        $participants = $applicationModel->getApplicantsForTraining($trainingId);
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'Laporan Daftar Peserta');
+        $sheet->setCellValue('A2', 'Judul Pelatihan:');
+        $sheet->setCellValue('B2', $training->title);
+        $sheet->setCellValue('A3', 'Penyelenggara:');
+        $sheet->setCellValue('B3', $training->penyelenggara);
+        $sheet->mergeCells('A1:E1');
+        $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(16);
+        $sheet->getStyle('A2:A3')->getFont()->setBold(true);
+
+        $sheet->setCellValue('A5', 'No.');
+        $sheet->setCellValue('B5', 'Nama Peserta');
+        $sheet->setCellValue('C5', 'Email');
+        $sheet->setCellValue('D5', 'Tanggal Mendaftar');
+        $sheet->setCellValue('E5', 'Status');
+        $sheet->getStyle('A5:E5')->getFont()->setBold(true);
+        $sheet->getStyle('A5:E5')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFF2F2F2');
+
+        $rowNumber = 6;
+        foreach ($participants as $index => $participant) {
+            $sheet->setCellValue('A' . $rowNumber, $index + 1);
+            $sheet->setCellValue('B' . $rowNumber, $participant->jobseeker_name);
+            $sheet->setCellValue('C' . $rowNumber, $participant->jobseeker_email);
+            $sheet->setCellValue('D' . $rowNumber, date('d-m-Y H:i', strtotime($participant->enrolled_at)));
+            $sheet->setCellValue('E' . $rowNumber, ucfirst($participant->status));
+            $rowNumber++;
+        }
+
+        foreach (range('A', 'E') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'laporan-peserta-' . url_title($training->title, '-', true) . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
+        $writer->save('php://output');
+        exit();
     }
 }

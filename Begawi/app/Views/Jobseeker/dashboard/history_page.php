@@ -34,11 +34,15 @@
         padding: 5px 15px;
         border-radius: 15px;
     }
+    /* Tambahan CSS untuk label status count agar warnanya sesuai */
+    .status-item .label.pending { background-color:#ffc107; color:#333; }
+    .status-item .label.accepted { background-color:#28a745; color:#fff; }
+    .status-item .label.rejected { background-color:#dc3545; color:#fff; }
 
     .application-list {
         background-color: #fff;
         border-radius: 12px;
-        margin-top: -10px;
+        margin-top: -10px; /* Sesuaikan jika Anda menambahkan lebih banyak kartu status di atasnya */
         padding-top: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     }
@@ -60,6 +64,7 @@
         align-items: center;
         justify-content: center;
         font-weight: bold;
+        flex-shrink: 0; /* Mencegah logo menyusut */
     }
 
     .badge-status {
@@ -73,17 +78,36 @@
         font-size: 0.8rem;
         color: #6c757d;
         margin-top: 4px;
+        flex-wrap: wrap; /* Memastikan metadata bisa wrap */
     }
 
-    .item-metadata .type-label {
+    .item-metadata .type-label,
+    .item-metadata .date-label {
         display: flex;
         align-items: center;
         margin-right: 15px;
     }
+    .item-metadata .type-label i,
+    .item-metadata .date-label i {
+        margin-right: 5px; /* Spasi antara ikon dan teks */
+    }
 
-    .item-metadata .date-label {
-        display: flex;
+    /* CSS untuk tombol aksi */
+    .actions {
+        /* Menggunakan ml-auto sudah mendorong ke kanan */
+        /* d-flex dan align-items-center sudah ada di div luar */
+        margin-left: auto; /* Untuk mendorong ke kanan */
+        flex-shrink: 0; /* Mencegah tombol menyusut */
+        display: flex; /* Memastikan tombol di dalam actions tetap sejajar */
+        align-items: center; /* Untuk vertikal alignment */
+        gap: 10px; /* Spasi antar tombol */
+    }
+    .actions .btn {
+        display: flex; /* Untuk ikon dan teks */
         align-items: center;
+    }
+    .actions .btn i {
+        margin-right: 5px;
     }
     </style>
 </head>
@@ -92,42 +116,107 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">...</nav>
 
     <div class="container my-4">
+        <div class="mb-3">
+        <a href="<?= site_url('jobseeker/dashboard') ?>" class="btn btn-secondary btn-sm">
+            <i class="bi bi-arrow-left me-1"></i> Kembali ke Dashboard
+        </a>
+    </div>
         <h2>Status Lamaran</h2>
-
         <div class="status-card">
-            <h4 class="text-center mb-3">Status Lamaran Anda</h4>
+            <h4 class="text-center mb-3">Status Lamaran & Pelatihan Anda</h4>
             <div class="status-bar">
                 <div class="status-item">
-                    <div class="count"><?= esc($statusCounts['pending'] ?? 0) ?></div>
-                    <div class="label" style="background-color:#ffc107; color:#333;">Menunggu</div>
+                    <div class="count"><?= esc($summaryCounts['total']['pending'] ?? 0) ?></div>
+                    <div class="label pending">Menunggu</div>
                 </div>
                 <div class="status-item">
-                    <div class="count"><?= esc($statusCounts['accepted'] ?? 0) ?></div>
-                    <div class="label">Diterima</div>
+                    <div class="count"><?= esc($summaryCounts['total']['accepted'] ?? 0) ?></div>
+                    <div class="label accepted">Diterima</div>
                 </div>
                 <div class="status-item">
-                    <div class="count"><?= esc($statusCounts['rejected'] ?? 0) ?></div>
-                    <div class="label" style="background-color:#dc3545;">Ditolak</div>
+                    <div class="count"><?= esc($summaryCounts['total']['rejected'] ?? 0) ?></div>
+                    <div class="label rejected">Ditolak</div>
                 </div>
             </div>
         </div>
 
-        <div class="application-list">
+        <div class="status-card mt-4" style="background-color: #007bff;">
+            <h4 class="text-center mb-3">Status Lamaran Kerja</h4>
+            <div class="status-bar">
+                <div class="status-item">
+                    <div class="count"><?= esc($summaryCounts['jobs']['pending'] ?? 0) ?></div>
+                    <div class="label pending">Menunggu</div>
+                </div>
+                <div class="status-item">
+                    <div class="count"><?= esc($summaryCounts['jobs']['accepted'] ?? 0) ?></div>
+                    <div class="label accepted">Diterima</div>
+                </div>
+                <div class="status-item">
+                    <div class="count"><?= esc($summaryCounts['jobs']['rejected'] ?? 0) ?></div>
+                    <div class="label rejected">Ditolak</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-card mt-4" style="background-color: #6f42c1;">
+            <h4 class="text-center mb-3">Status Pendaftaran Pelatihan</h4>
+            <div class="status-bar">
+                <div class="status-item">
+                    <div class="count"><?= esc($summaryCounts['trainings']['pending'] ?? 0) ?></div>
+                    <div class="label pending">Menunggu</div>
+                </div>
+                <div class="status-item">
+                    <div class="count"><?= esc($summaryCounts['trainings']['accepted'] ?? 0) ?></div>
+                    <div class="label accepted">Diterima</div>
+                </div>
+                <div class="status-item">
+                    <div class="count"><?= esc($summaryCounts['trainings']['rejected'] ?? 0) ?></div>
+                    <div class="label rejected">Ditolak</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="application-list mt-4">
             <?php if (!empty($history)): ?>
             <?php foreach ($history as $item): ?>
             <div class="application-item">
                 <div class="app-logo">
-                    <?= isset($item->job_title) ? substr(esc($item->company_name ?? ''), 0, 2) : substr(esc($item->penyelenggara ?? ''), 0, 2) ?>
+                    <?php
+                    if (($item->type ?? '') === 'job_application') {
+                        echo substr(esc($item->company_name ?? ''), 0, 2);
+                    } elseif (($item->type ?? '') === 'training_enrollment') {
+                        echo substr(esc($item->penyelenggara ?? ''), 0, 2);
+                    } else {
+                        echo '??';
+                    }
+                    ?>
                 </div>
                 <div class="flex-grow-1">
                     <h6 class="mb-0 font-weight-bold">
-                        <?= esc($item->job_title ?? $item->title ?? 'Judul Tidak Ditemukan') ?>
+                        <?php
+                        if (($item->type ?? '') === 'job_application') {
+                            echo esc($item->job_title ?? 'Judul Lamaran Tidak Ditemukan');
+                        } elseif (($item->type ?? '') === 'training_enrollment') {
+                            echo esc($item->title ?? 'Judul Pelatihan Tidak Ditemukan');
+                        } else {
+                            echo 'Judul Tidak Ditemukan';
+                        }
+                        ?>
                     </h6>
-                    <small
-                        class="text-muted"><?= esc($item->company_name ?? 'Oleh: ' . ($item->penyelenggara ?? 'N/A')) ?></small>
+                    <small class="text-muted">
+                        <?php
+                        if (($item->type ?? '') === 'job_application') {
+                            echo esc($item->company_name ?? 'N/A');
+                        } elseif (($item->type ?? '') === 'training_enrollment') {
+                            echo 'Oleh: ' . esc($item->penyelenggara ?? 'N/A');
+                        } else {
+                            echo 'N/A';
+                        }
+                        ?>
+                    </small>
 
                     <div class="item-metadata">
-                        <?php if (isset($item->job_title)): ?>
+                        <?php if (($item->type ?? '') === 'job_application'): ?>
                         <div class="type-label">
                             <i class="bi bi-briefcase-fill mr-1"></i>
                             Lamaran Kerja
@@ -137,7 +226,7 @@
                             Diajukan:
                             <?= isset($item->applied_at) ? date('d M Y', strtotime($item->applied_at)) : 'N/A' ?>
                         </div>
-                        <?php else:  ?>
+                        <?php elseif (($item->type ?? '') === 'training_enrollment'):  ?>
                         <div class="type-label">
                             <i class="bi bi-easel-fill mr-1"></i>
                             Pelatihan
@@ -149,22 +238,58 @@
                         </div>
                         <?php endif; ?>
                     </div>
+                </div>
+                <div class="actions ml-auto d-flex align-items-center">
+                    <?php
+    $isJobApplication = (($item->type ?? '') === 'job_application');
+    $isTrainingEnrollment = (($item->type ?? '') === 'training_enrollment');
+    $currentStatus = $item->status ?? 'pending';
+    $idToActOn = $item->id ?? null;
+    ?>
 
+    <?php if ($idToActOn): ?>
+
+        <?php if ($isJobApplication): ?>
+            <?php if ($currentStatus === 'pending'): ?>
+                <a href="<?= site_url('jobseeker/applications/edit/' . esc($idToActOn)) ?>" class="btn btn-sm btn-info me-2 d-flex align-items-center">
+                    <i class="bi bi-pencil-square me-1"></i> Edit
+                </a>
+                <form action="<?= site_url('jobseeker/applications/delete/' . esc($idToActOn)) ?>" method="post" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus lamaran ini?');">
+                    <?= csrf_field() ?>
+                    <button type="submit" class="btn btn-sm btn-danger d-flex align-items-center">
+                        <i class="bi bi-trash me-1"></i> Hapus
+                    </button>
+                </form>
+            <?php endif; ?>
+        <?php endif; ?>
+
+
+        <?php if ($isTrainingEnrollment): ?>
+            <?php if (in_array($currentStatus, ['pending', 'accepted'])): ?>
+                <form action="<?= site_url('jobseeker/trainings/delete-enrollment/' . esc($idToActOn)) ?>" method="post" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pendaftaran pelatihan ini?');">
+                    <?= csrf_field() ?>
+                    <button type="submit" class="btn btn-sm btn-danger d-flex align-items-center">
+                        <i class="bi bi-x-circle me-1"></i> Batalkan Pendaftaran
+                    </button>
+                </form>
+            <?php endif; ?>
+        <?php endif; ?>
+
+    <?php endif;  ?>
                 </div>
                 <?php
-                        $status_class = [
-                            'pending' => 'warning',
-                            'accepted' => 'success',
-                            'rejected' => 'danger',
-                            'completed' => 'primary'
-                        ];
-                        $status_text = ($item->status ?? 'unknown') === 'accepted' ? 'Diterima' : ucfirst($item->status ?? 'Unknown');
-                        ?>
+                $status_class = [
+                    'pending' => 'warning',
+                    'accepted' => 'success',
+                    'rejected' => 'danger',
+                    'completed' => 'primary'
+                ];
+                $status_text = ($item->status ?? 'unknown') === 'accepted' ? 'Diterima' : ucfirst($item->status ?? 'Unknown');
+                ?>
                 <div>
-                    <span
-                        class="badge badge-<?= $status_class[$item->status ?? 'secondary'] ?? 'secondary' ?> badge-status"><?= esc($status_text) ?></span>
+                    <span class="badge badge-<?= $status_class[$item->status ?? 'secondary'] ?? 'secondary' ?> badge-status"><?= esc($status_text) ?></span>
                 </div>
-            </div>
+                </div>
             <?php endforeach; ?>
             <?php else: ?>
             <p class="text-center text-muted p-4">Anda belum memiliki riwayat lamaran atau pendaftaran pelatihan.</p>

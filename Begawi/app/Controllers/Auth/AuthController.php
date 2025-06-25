@@ -171,14 +171,37 @@ class AuthController extends BaseController
 
     public function processLogin()
     {
+        $session = session();
         $userModel = new UserModel();
+
+        $lockoutTime = $session->get('lockout_time');
+        if ($lockoutTime && time() < $lockoutTime) {
+            $remainingTime = $lockoutTime - time();
+            $session->setFlashdata('lockout_active', true); 
+            return redirect()->back()->withInput()->with('error', 'Terlalu banyak percobaan. Silakan coba lagi dalam ' . $remainingTime . ' detik.');
+        }
+
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
         $user = $userModel->where('email', $email)->first();
 
         if (!$user || !password_verify($password, $user->password)) {
-            return redirect()->back()->withInput()->with('error', 'Email atau password salah.');
+            
+            $loginAttempts = $session->get('login_attempts') ?? 0;
+            $loginAttempts++;
+            $session->set('login_attempts', $loginAttempts);
+
+            if ($loginAttempts >= 4) {
+                $session->set('lockout_time', time() + 30); 
+                $session->remove('login_attempts'); 
+                $session->setFlashdata('lockout_active', true); 
+                return redirect()->back()->withInput()->with('error', 'Anda telah 4 kali gagal melakukan login. Akun dikunci sementara selama 30 detik.');
+            }
+
+            return redirect()->back()->withInput()->with('error', 'Email atau kata sandi salah. Percobaan ke-' . $loginAttempts . ' dari 3.');
         }
+
+        $session->remove(['login_attempts', 'lockout_time']);
 
         $profileId = null;
         if ($user->role === 'jobseeker') {

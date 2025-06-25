@@ -8,6 +8,9 @@ use App\Models\JobCategoryModel;
 use App\Models\LocationModel;
 use App\Models\JobApplicationModel;
 use App\Models\JobSeekerModel;
+use Dompdf\Dompdf;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class JobController extends BaseController
 {
@@ -34,7 +37,6 @@ class JobController extends BaseController
             'locations' => $locationModel->findAll(),
         ];
 
-        // PERBAIKAN: Path ke view harusnya 'vendor/jobs/form' (plural)
         return view('vendor/jobs/form', $data);
     }
 
@@ -210,5 +212,88 @@ class JobController extends BaseController
         ];
 
         return view('vendor/jobs/applicant_detail', $data);
+    }
+
+    public function downloadApplicantsPdf($jobId = null)
+    {
+        $jobModel = new JobModel();
+        $applicationModel = new JobApplicationModel();
+        $vendorId = session()->get('profile_id');
+
+        $job = $jobModel->getJobDetails($jobId);
+        if (!$job || $job->vendor_id != $vendorId) {
+            return redirect()->to('vendor/dashboard')->with('error', 'Akses ditolak.');
+        }
+
+        $applicants = $applicationModel->getApplicantsForJob($jobId);
+
+        $data = [
+            'job' => $job,
+            'applicants' => $applicants,
+        ];
+
+        $html = view('vendor/jobs/pdf_template', $data);
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return $dompdf->stream('pendaftar_lowongan' . $job->id . '.pdf', ['Attachment' => false]);
+    }
+
+    public function downloadApplicantsExcel($jobId = null)
+    {
+        $jobModel = new JobModel();
+        $applicationModel = new JobApplicationModel();
+        $vendorId = session()->get('profile_id');
+
+        $job = $jobModel->getJobDetails($jobId);
+        if (!$job || $job->vendor_id != $vendorId) {
+            return redirect()->to('vendor/dashboard')->with('error', 'Akses ditolak.');
+        }
+        $applicants = $applicationModel->getApplicantsForJob($jobId);
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'Laporan Daftar Pelamar');
+        $sheet->setCellValue('A2', 'Judul Lowongan:');
+        $sheet->setCellValue('B2', $job->title);
+        $sheet->setCellValue('A3', 'Perusahaan:');
+        $sheet->setCellValue('B3', $job->company_name);
+        $sheet->mergeCells('A1:E1');
+        $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(16);
+        $sheet->getStyle('A2:A3')->getFont()->setBold(true);
+
+        $sheet->setCellValue('A5', 'No.');
+        $sheet->setCellValue('B5', 'Nama Pelamar');
+        $sheet->setCellValue('C5', 'Email');
+        $sheet->setCellValue('D5', 'Tanggal Melamar');
+        $sheet->setCellValue('E5', 'Status');
+        $sheet->getStyle('A5:E5')->getFont()->setBold(true);
+        $sheet->getStyle('A5:E5')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFF2F2F2');
+
+        $rowNumber = 6;
+        foreach ($applicants as $index => $applicant) {
+            $sheet->setCellValue('A' . $rowNumber, $index + 1);
+            $sheet->setCellValue('B' . $rowNumber, $applicant->jobseeker_name);
+            $sheet->setCellValue('C' . $rowNumber, $applicant->jobseeker_email);
+            $sheet->setCellValue('D' . $rowNumber, date('d-m-Y H:i', strtotime($applicant->applied_at)));
+            $sheet->setCellValue('E' . $rowNumber, ucfirst($applicant->status));
+            $rowNumber++;
+        }
+
+        foreach (range('A', 'E') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'laporan-pelamar-' . url_title($job->title, '-', true) . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
+        $writer->save('php://output');
+        exit();
     }
 }

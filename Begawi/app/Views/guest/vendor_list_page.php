@@ -15,7 +15,6 @@
                     <a href="<?= site_url('vendor/detail/' . esc($vendor->id)) ?>" class="company-card-link">
                         <div class="company-card">
                             <?php
-                                // Logika untuk membuat avatar inisial perusahaan
                                 $companyName = $vendor->company_name;
                                 $words = explode(' ', $companyName);
                                 $initials = '';
@@ -30,11 +29,9 @@
                                         $initials .= strtoupper(substr($words[2], 0, 1));
                                     }
                                 } else {
-                                    // Jika hanya satu kata, ambil 2 huruf pertama
                                     $initials = strtoupper(substr($words[0], 0, 2));
                                 }
 
-                                // Memberi warna random untuk background avatar
                                 $colors = ['#215546', '#A1C349', '#FFC700', '#00796B', '#5E35B1', '#E53935'];
                                 $color = $colors[crc32($companyName) % count($colors)];
                             ?>

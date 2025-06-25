@@ -11,6 +11,17 @@
 </section>
 
 <section class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Data Pelamar</h5>
+        <div>
+            <a href="<?= site_url('vendor/jobs/'.$job->id.'/download-excel') ?>" class="btn btn-success btn-sm">
+                <i class="bi bi-file-earmark-excel-fill"></i> Download Excel
+            </a>
+            <a href="<?= site_url('vendor/jobs/'.$job->id.'/download-pdf') ?>" class="btn btn-danger btn-sm">
+                <i class="bi bi-file-pdf-fill"></i> Download PDF
+            </a>
+        </div>
+    </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-hover align-middle">
@@ -19,9 +30,8 @@
                         <th scope="col">#</th>
                         <th scope="col">Nama Pelamar</th>
                         <th scope="col">Tanggal Melamar</th>
-                        <!-- PERBAIKAN: Kolom Status dikembalikan -->
                         <th scope="col">Status</th>
-                        <th scope="col" style="min-width: 340px;">Aksi</th>
+                        <th scope="col" class="text-end" style="min-width: 380px;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,23 +56,23 @@
                             <span
                                 class="badge <?= $status_class[$applicant->status] ?? 'bg-secondary' ?> p-2"><?= ucfirst($applicant->status ?? 'N/A') ?></span>
                         </td>
-                        <td>
-                            <div class="d-flex align-items-center gap-2">
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end align-items-center gap-2">
                                 <a href="<?= site_url('vendor/jobs/applicant/' . $applicant->application_id) ?>"
                                     class="btn btn-sm btn-light border" title="Lihat Detail Pelamar">
-                                    Detail
+                                    <i class="bi bi-person-lines-fill"></i> Detail
                                 </a>
 
                                 <a href="<?= base_url('uploads/resumes/' . $applicant->resume_file_path) ?>"
-                                    target="_blank" class="btn btn-sm btn-light border" title="Unduh CV Pelamar">
-                                    Unduh CV
+                                    target="_blank" class="btn btn-sm btn-secondary" title="Unduh CV Pelamar">
+                                    <i class="bi bi-download"></i> CV
                                 </a>
 
                                 <form
                                     action="<?= site_url('vendor/applicants/' . $applicant->application_id . '/status') ?>"
-                                    method="post" class="d-flex gap-1 ms-auto">
+                                    method="post" class="d-flex gap-1">
                                     <?= csrf_field() ?>
-                                    <select name="status" class="form-select form-select-sm" style="width: 110px;">
+                                    <select name="status" class="form-select form-select-sm" style="width: auto;">
                                         <option value="pending"
                                             <?= ($applicant->status ?? '') == 'pending' ? 'selected' : '' ?>>Pending
                                         </option>

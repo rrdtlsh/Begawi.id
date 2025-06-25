@@ -10,7 +10,6 @@ class LocationModel extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = ['name'];
 
-    // Kita tidak menggunakan created_at/updated_at di tabel locations
     protected $useTimestamps = false;
 
     protected $returnType = 'object';

@@ -36,6 +36,7 @@ class Filters extends BaseFilters
         'performance' => PerformanceMetrics::class,
         'auth' => \App\Filters\AuthFilter::class,
         'admin' => \App\Filters\AdminFilter::class,
+        'throttle' => \App\Filters\Throttle::class,
     ];
 
     /**
@@ -77,6 +78,7 @@ class Filters extends BaseFilters
         ],
         'after' => [
             // 'honeypot',
+
             // 'secureheaders',
         ],
     ];
@@ -94,7 +96,9 @@ class Filters extends BaseFilters
      *
      * @var array<string, list<string>>
      */
-    public array $methods = [];
+    public array $methods = [
+        'POST' => ['throttle'],
+    ];
 
     /**
      * List of filter aliases that should run on any

@@ -24,7 +24,6 @@ class VendorModel extends Model
 
     protected $useTimestamps = true;
     protected $deletedField = 'deleted_at';
-    //push github
     public function getVendorProfileByUserId(int $userId)
     {
         return $this->select(
@@ -53,5 +52,5 @@ class VendorModel extends Model
             ->join('locations', 'locations.id = vendors.location_id', 'left')
             ->orderBy('vendors.company_name', 'ASC')
             ->paginate($perPage);
-    }//
+    }
 }

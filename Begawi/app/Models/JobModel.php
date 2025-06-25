@@ -22,6 +22,7 @@ class JobModel extends Model
         'job_type',
         'salary_min',
         'salary_max',
+        'quota',
         'application_deadline',
         'contact_email',
         'contact_phone'
