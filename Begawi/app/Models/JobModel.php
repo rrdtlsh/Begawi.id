@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
 
 class JobModel extends Model
 {
@@ -42,7 +43,7 @@ class JobModel extends Model
         'job_type' => 'required|in_list[Full-time,Part-time,Contract,Internship,Freelance]',
         'salary_min' => 'permit_empty|integer|less_than_equal_to[salary_max]',
         'salary_max' => 'permit_empty|integer',
-        'application_deadline' => 'required',
+        'application_deadline' => 'required|valid_date[Y-m-d H:i:s]|is_future_date',
         'quota' => 'permit_empty|integer|greater_than_equal_to[1]',
         'contact_email' => 'required|valid_email',
         'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]',
@@ -58,7 +59,7 @@ class JobModel extends Model
         'job_type' => 'permit_empty|in_list[Full-time,Part-time,Contract,Internship,Freelance]',
         'salary_min' => 'permit_empty|integer|less_than_equal_to[salary_max]',
         'salary_max' => 'permit_empty|integer',
-        'application_deadline' => 'permit_empty|valid_date[Y-m-d H:i:s]|after_now',
+        'application_deadline' => 'permit_empty|valid_date[Y-m-d H:i:s]|is_future_date',
         'quota' => 'permit_empty|integer|greater_than_equal_to[1]',
         'contact_email' => 'permit_empty|valid_email',
         'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]',
@@ -82,8 +83,8 @@ class JobModel extends Model
         ],
         'application_deadline' => [
             'required' => 'Batas waktu lamaran wajib diisi.',
-            'valid_date' => 'Format batas waktu tidak valid.',
-            'after_now' => 'Batas waktu lamaran harus di masa depan.'
+            'valid_date' => 'Format batas waktu tidak valid. Gunakan format YYYY-MM-DD HH:MM:SS.',
+            'is_future_date' => 'Batas waktu lamaran harus tanggal dan waktu di masa depan.'
         ],
         'contact_email' => [
             'required' => 'Email kontak wajib diisi.',
@@ -100,14 +101,16 @@ class JobModel extends Model
 
     public function getLatestJobs(int $limit = 6)
     {
+        $now = date('Y-m-d H:i:s');
         return $this->select('
-                jobs.*,
-                vendors.company_name,
-                vendors.company_logo_path,
-                locations.name as location_name
-            ')
+                    jobs.*,
+                    vendors.company_name,
+                    vendors.company_logo_path,
+                    locations.name as location_name
+                ')
             ->join('vendors', 'vendors.id = jobs.vendor_id', 'left')
             ->join('locations', 'locations.id = jobs.location_id', 'left')
+            ->where('jobs.application_deadline >', $now)
             ->orderBy('jobs.created_at', 'DESC')
             ->limit($limit)
             ->findAll();
@@ -115,14 +118,16 @@ class JobModel extends Model
 
     public function searchJobs($keyword, $locationId, $categoryId)
     {
+        $now = date('Y-m-d H:i:s');
         $builder = $this->select('
-                jobs.*,
-                vendors.company_name,
-                vendors.company_logo_path,
-                locations.name as location_name
-            ')
+                    jobs.*,
+                    vendors.company_name,
+                    vendors.company_logo_path,
+                    locations.name as location_name
+                ')
             ->join('vendors', 'vendors.id = jobs.vendor_id', 'left')
-            ->join('locations', 'locations.id = jobs.location_id', 'left');
+            ->join('locations', 'locations.id = jobs.location_id', 'left')
+            ->where('jobs.application_deadline >', $now);
 
         if (!empty($keyword)) {
             $builder->like('jobs.title', $keyword);
@@ -139,14 +144,16 @@ class JobModel extends Model
 
     public function getPublishedJobs($keyword = null, $location = null, $category = null)
     {
+        $now = date('Y-m-d H:i:s');
         $builder = $this->select('
-                            jobs.*,
-                            vendors.company_name,
-                            vendors.company_logo_path,
-                            locations.name as location_name
-                        ')
+                                jobs.*,
+                                vendors.company_name,
+                                vendors.company_logo_path,
+                                locations.name as location_name
+                            ')
             ->join('vendors', 'vendors.id = jobs.vendor_id')
-            ->join('locations', 'locations.id = jobs.location_id', 'left');
+            ->join('locations', 'locations.id = jobs.location_id', 'left')
+            ->where('jobs.application_deadline >', $now);
 
         if ($keyword) {
             $builder->groupStart();

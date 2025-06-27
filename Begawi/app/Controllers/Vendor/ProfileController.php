@@ -41,7 +41,7 @@ class ProfileController extends BaseController
             'contact' => 'required|min_length[9]',
             'company_logo' => [
                 'label' => 'Logo Perusahaan',
-                'rules' => 'is_image[company_logo]|mime_in[company_logo,image/jpg,image/jpeg,image/png]|max_size[company_logo,1024]',
+                'rules' => 'permit_empty|is_image[company_logo]|mime_in[company_logo,image/jpg,image/jpeg,image/png]|max_size[company_logo,1024]',
             ],
         ];
 
@@ -91,7 +91,7 @@ class ProfileController extends BaseController
 
         $userModel = new UserModel();
 
-    
+
         $deleted = $userModel->delete($userId, true);
 
         if ($deleted) {

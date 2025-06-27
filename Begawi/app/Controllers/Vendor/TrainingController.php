@@ -45,11 +45,11 @@ class TrainingController extends BaseController
         $data = $this->request->getPost();
         $data['vendor_id'] = session()->get('profile_id');
 
-        if (isset($data['start_date']) && !empty($data['start_date'])) {
-            $data['start_date'] = date('Y-m-d H:i:s', strtotime($data['start_date']));
+        if (!empty($data['start_date'])) {
+            $data['start_date'] = str_replace('T', ' ', $data['start_date']) . ':00';
         }
-        if (isset($data['end_date']) && !empty($data['end_date'])) {
-            $data['end_date'] = date('Y-m-d H:i:s', strtotime($data['end_date']));
+        if (!empty($data['end_date'])) {
+            $data['end_date'] = str_replace('T', ' ', $data['end_date']) . ':00';
         } else {
             $data['end_date'] = null;
         }
@@ -93,21 +93,19 @@ class TrainingController extends BaseController
         }
 
         $data = $this->request->getPost();
-
-        foreach ($data as $key => $value) {
-            if ($value === '') {
-                unset($data[$key]);
-            }
-        }
-
         if (isset($data['start_date']) && !empty($data['start_date'])) {
-            $data['start_date'] = date('Y-m-d H:i:s', strtotime($data['start_date']));
+            $data['start_date'] = str_replace('T', ' ', $data['start_date']) . ':00';
         }
         if (isset($data['end_date'])) {
             if (empty($data['end_date'])) {
                 $data['end_date'] = null;
             } else {
-                $data['end_date'] = date('Y-m-d H:i:s', strtotime($data['end_date']));
+                $data['end_date'] = str_replace('T', ' ', $data['end_date']) . ':00';
+            }
+        }
+        foreach ($data as $key => $value) {
+            if ($value === '') {
+                unset($data[$key]);
             }
         }
 
@@ -159,7 +157,9 @@ class TrainingController extends BaseController
 
     public function updateParticipantStatus($applicationId)
     {
-        $newStatus = $this->request->getPost('status');
+        $postData = $this->request->getPost();
+        $newStatus = $postData['status'] ?? null;
+        $rejectionReason = $postData['rejection_reason'] ?? null;
         $allowedStatus = ['pending', 'accepted', 'rejected'];
         if (!in_array($newStatus, $allowedStatus)) {
             return redirect()->back()->with('error', 'Status tidak valid.');
@@ -176,9 +176,12 @@ class TrainingController extends BaseController
             return redirect()->back()->with('error', 'Akses ditolak.');
         }
 
-        $updateResult = $applicationModel->update($applicationId, ['status' => $newStatus]);
+        $dataToUpdate = [
+            'status' => $newStatus,
+            'rejection_reason' => ($newStatus === 'rejected') ? $rejectionReason : null,
+        ];
 
-        if ($updateResult) {
+        if ($applicationModel->update($applicationId, $dataToUpdate)) {
             return redirect()->back()->with('success', 'Status peserta berhasil diperbarui.');
         } else {
             return redirect()->back()->with('error', 'Gagal memperbarui status peserta.');
@@ -209,7 +212,6 @@ class TrainingController extends BaseController
         $dompdf->render();
 
         return $dompdf->stream('peserta_pelatihan_' . $training->id . '.pdf', ['Attachment' => false]);
-
     }
 
     public function downloadParticipantsExcel($trainingId = null)
@@ -250,7 +252,7 @@ class TrainingController extends BaseController
             $sheet->setCellValue('A' . $rowNumber, $index + 1);
             $sheet->setCellValue('B' . $rowNumber, $participant->jobseeker_name);
             $sheet->setCellValue('C' . $rowNumber, $participant->jobseeker_email);
-            $sheet->setCellValue('D' . $rowNumber, date('d-m-Y H:i', strtotime($participant->enrolled_at)));
+            $sheet->setCellValue('D' . $rowNumber, \CodeIgniter\I18n\Time::parse($participant->enrolled_at, 'UTC')->setTimezone('Asia/Makassar')->format('d-m-Y H:i'));
             $sheet->setCellValue('E' . $rowNumber, ucfirst($participant->status));
             $rowNumber++;
         }

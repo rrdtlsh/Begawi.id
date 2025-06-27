@@ -17,8 +17,9 @@ class JobApplicationModel extends Model
         'resume_file_path',
         'status',
         'notes',
+        'rejection_reason',
     ];
-    
+
     protected $useTimestamps = true;
     protected $createdField = 'applied_at';
     protected $updatedField = 'updated_at';
@@ -29,6 +30,7 @@ class JobApplicationModel extends Model
                         job_applications.id as id,
                         job_applications.status,
                         job_applications.applied_at,
+                        job_applications.rejection_reason,
                         jobs.title as job_title,
                         vendors.company_name,
                         vendors.company_logo_path
@@ -79,7 +81,6 @@ class JobApplicationModel extends Model
             ->where('job_applications.job_id', $jobId)
             ->orderBy('job_applications.applied_at', 'ASC')
             ->findAll();
-
     }
 
     public function getApplicationDetailsForEmail($applicationId)
@@ -120,5 +121,4 @@ class JobApplicationModel extends Model
             ->where('job_applications.id', $applicationId)
             ->first();
     }
-
 }

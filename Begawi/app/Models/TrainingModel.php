@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use CodeIgniter\Model;
@@ -38,8 +39,8 @@ class TrainingModel extends Model
         'registration_instructions' => 'required',
         'contact_email' => 'required|valid_email',
         'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]',
-        'start_date' => 'required',
-        'end_date' => 'permit_empty',
+        'start_date' => 'required|valid_date[Y-m-d H:i:s]|is_future_date',
+        'end_date' => 'permit_empty|valid_date[Y-m-d H:i:s]|after_field[start_date]',
         'duration' => 'required|integer|greater_than[0]',
         'quota' => 'permit_empty|integer|greater_than_equal_to[1]',
     ];
@@ -53,8 +54,8 @@ class TrainingModel extends Model
         'registration_instructions' => 'permit_empty',
         'contact_email' => 'permit_empty|valid_email',
         'contact_phone' => 'permit_empty|regex_match[/^[0-9\s\-\(\)]+$/]|max_length[20]',
-        'start_date' => 'permit_empty',
-        'end_date' => 'permit_empty|after_field[start_date]',
+        'start_date' => 'permit_empty|valid_date[Y-m-d H:i:s]|is_future_date',
+        'end_date' => 'permit_empty|valid_date[Y-m-d H:i:s]|after_field[start_date]',
         'duration' => 'permit_empty|integer|greater_than[0]',
         'quota' => 'permit_empty|integer|greater_than_equal_to[1]',
     ];
@@ -105,12 +106,25 @@ class TrainingModel extends Model
             'greater_than_equal_to' => 'Kuota tidak boleh negatif.'
         ]
     ];
+    public function getTrainingsByVendor(int $vendorId): array
+    {
+        return $this->select('
+                        trainings.*,
+                        locations.name as location_name
+                    ')
+            ->join('locations', 'locations.id = trainings.location_id', 'left')
+            ->where('trainings.vendor_id', $vendorId)
+            ->where('trainings.start_date >', date('Y-m-d H:i:s'))
+            ->orderBy('trainings.start_date', 'ASC')
+            ->findAll();
+    }
 
     public function getLatestTrainings(int $limit = 3)
     {
         return $this->select('
                         trainings.*,
                         vendors.company_name,
+                        vendors.company_logo_path,
                         locations.name as location_name
                     ')
             ->join('vendors', 'vendors.id = trainings.vendor_id', 'left')
@@ -131,7 +145,7 @@ class TrainingModel extends Model
             ->orderBy('trainings.start_date', 'ASC')
             ->paginate($perPage);
     }
-    
+
     public function getTrainingDetails(int $id)
     {
         return $this->select('
@@ -154,6 +168,7 @@ class TrainingModel extends Model
         $builder = $this->select('
                 trainings.*, 
                 vendors.company_name as penyelenggara, 
+                vendors.company_logo_path,
                 locations.name as location_name,
                 job_categories.name as category_name
             ')

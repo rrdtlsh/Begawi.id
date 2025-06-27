@@ -46,6 +46,9 @@ class JobController extends BaseController
 
         $postData = $this->request->getPost();
 
+        if (!empty($postData['application_deadline'])) {
+            $postData['application_deadline'] = str_replace('T', ' ', $postData['application_deadline']) . ':00';
+        }
 
         if (!empty($postData['salary_min'])) {
             $postData['salary_min'] = preg_replace('/[^0-9]/', '', $postData['salary_min']);
@@ -97,6 +100,10 @@ class JobController extends BaseController
         }
 
         $postData = $this->request->getPost();
+        if (!empty($postData['application_deadline'])) {
+            $postData['application_deadline'] = str_replace('T', ' ', $postData['application_deadline']) . ':00';
+        }
+
         if (isset($postData['salary_min'])) {
             $postData['salary_min'] = preg_replace('/[^0-9]/', '', $postData['salary_min']);
         }
@@ -157,7 +164,9 @@ class JobController extends BaseController
 
     public function updateApplicantStatus($applicationId)
     {
-        $newStatus = $this->request->getPost('status');
+        $postData = $this->request->getPost();
+        $newStatus = $postData['status'] ?? null;
+        $rejectionReason = $postData['rejection_reason'] ?? null;
         $allowedStatus = ['pending', 'reviewed', 'accepted', 'rejected'];
         if (!in_array($newStatus, $allowedStatus)) {
             return redirect()->back()->with('error', 'Status tidak valid.');
@@ -173,7 +182,12 @@ class JobController extends BaseController
             return redirect()->back()->with('error', 'Akses ditolak.');
         }
 
-        $applicationModel->update($applicationId, ['status' => $newStatus]);
+        $dataToUpdate = [
+            'status' => $newStatus,
+            'rejection_reason' => ($newStatus === 'rejected') ? $rejectionReason : null,
+        ];
+
+        $applicationModel->update($applicationId, $dataToUpdate, ['status' => $newStatus]);
 
         if ($newStatus === 'accepted') {
             helper('email');
@@ -279,7 +293,7 @@ class JobController extends BaseController
             $sheet->setCellValue('A' . $rowNumber, $index + 1);
             $sheet->setCellValue('B' . $rowNumber, $applicant->jobseeker_name);
             $sheet->setCellValue('C' . $rowNumber, $applicant->jobseeker_email);
-            $sheet->setCellValue('D' . $rowNumber, date('d-m-Y H:i', strtotime($applicant->applied_at)));
+            $sheet->setCellValue('D' . $rowNumber, \CodeIgniter\I18n\Time::parse($applicant->applied_at, 'UTC')->setTimezone('Asia/Makassar')->format('d-m-Y H:i'));
             $sheet->setCellValue('E' . $rowNumber, ucfirst($applicant->status));
             $rowNumber++;
         }

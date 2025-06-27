@@ -8,7 +8,7 @@
         <p class="lead mb-5">Platform pencarian kerja terpercaya di Banua.</p>
 
         <div class="search-form-card col-lg-11 mx-auto">
-            
+
             <form class="row g-3 align-items-end" action="<?= site_url('search/process') ?>" method="post">
                 <?= csrf_field() ?>
 
@@ -31,8 +31,9 @@
                     <select class="form-select form-select-lg" id="location" name="location">
                         <option value="">Semua Lokasi</option>
                         <?php if (!empty($locations)): foreach ($locations as $loc): ?>
-                            <option value="<?= $loc->id ?>"><?= esc($loc->name) ?></option>
-                        <?php endforeach; endif; ?>
+                                <option value="<?= $loc->id ?>"><?= esc($loc->name) ?></option>
+                        <?php endforeach;
+                        endif; ?>
                     </select>
                 </div>
 
@@ -41,8 +42,9 @@
                     <select class="form-select form-select-lg" id="category" name="category">
                         <option value="">Semua Kategori</option>
                         <?php if (!empty($categories)): foreach ($categories as $cat): ?>
-                            <option value="<?= $cat->id ?>"><?= esc($cat->name) ?></option>
-                        <?php endforeach; endif; ?>
+                                <option value="<?= $cat->id ?>"><?= esc($cat->name) ?></option>
+                        <?php endforeach;
+                        endif; ?>
                     </select>
                 </div>
 
@@ -112,8 +114,23 @@
                         <div class="card job-card w-100">
                             <div class="card-body d-flex flex-column">
                                 <div class="d-flex align-items-start mb-3">
-                                    <img src="<?= esc($job->company_logo_path ?? 'https://placehold.co/60x60/A1C349/FFFFFF?text=' . substr(esc($job->company_name), 0, 2) ) ?>"
-                                        alt="Logo Perusahaan" class="company-logo me-3">
+                                    <?php
+                                    $companyName = esc($job->company_name ?? 'N/A');
+                                    $words = explode(' ', $companyName);
+                                    $initials = (count($words) >= 2) ? (substr($words[0], 0, 1) . substr($words[1], 0, 1)) : substr($companyName, 0, 2);
+                                    $initials = strtoupper($initials);
+                                    $placeholder = 'https://placehold.co/60x60/F8DE3D/333333?text=' . $initials;
+
+                                    $logo_url = $placeholder;
+
+                                    if (isset($job->company_logo_path) && !empty(trim($job->company_logo_path))) {
+                                        $logo_file = 'uploads/logos/' . trim($job->company_logo_path);
+                                        if (file_exists($logo_file)) {
+                                            $logo_url = base_url($logo_file);
+                                        }
+                                    }
+                                    ?>
+                                    <img src="<?= $logo_url ?>" alt="Logo Perusahaan" class="company-logo me-3">
                                     <div>
                                         <h5 class="card-title mb-1"><a href="#"><?= esc($job->title) ?></a></h5>
                                         <h6 class="card-subtitle mb-2 text-muted"><?= esc($job->company_name) ?></h6>
@@ -130,7 +147,12 @@
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <div class="col-12"><div class="alert alert-warning text-center"><h4>Tidak Ada Lowongan</h4><p>Saat ini belum ada lowongan yang tersedia.</p></div></div>
+                <div class="col-12">
+                    <div class="alert alert-warning text-center">
+                        <h4>Tidak Ada Lowongan</h4>
+                        <p>Saat ini belum ada lowongan yang tersedia.</p>
+                    </div>
+                </div>
             <?php endif; ?>
         </div>
     </div>
@@ -146,8 +168,23 @@
                         <div class="card job-card w-100">
                             <div class="card-body d-flex flex-column">
                                 <div class="d-flex align-items-start mb-3">
-                                    <img src="<?= esc($training->company_logo_path ?? 'https://placehold.co/60x60/F8DE3D/333333?text=' . substr(esc($training->company_name), 0, 2)) ?>"
-                                        alt="Logo Penyelenggara" class="company-logo me-3">
+                                    <?php
+                                    $companyName = esc($training->company_name ?? 'N/A');
+                                    $words = explode(' ', $companyName);
+                                    $initials = (count($words) >= 2) ? (substr($words[0], 0, 1) . substr($words[1], 0, 1)) : substr($companyName, 0, 2);
+                                    $initials = strtoupper($initials);
+                                    $placeholder = 'https://placehold.co/60x60/F8DE3D/333333?text=' . $initials;
+
+                                    $training_logo_url = $placeholder;
+
+                                    if (isset($training->company_logo_path) && !empty(trim($training->company_logo_path))) {
+                                        $logo_file = 'uploads/logos/' . trim($training->company_logo_path);
+                                        if (file_exists($logo_file)) {
+                                            $training_logo_url = base_url($logo_file);
+                                        }
+                                    }
+                                    ?>
+                                    <img src="<?= $training_logo_url ?>" alt="Logo Penyelenggara" class="company-logo me-3">
                                     <div>
                                         <h5 class="card-title mb-1"><a href="#"><?= esc($training->title) ?></a></h5>
                                         <h6 class="card-subtitle mb-2 text-muted"><?= esc($training->company_name) ?></h6>
@@ -163,7 +200,11 @@
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <div class="col-12"><div class="alert alert-info text-center"><p>Belum ada pelatihan yang tersedia saat ini.</p></div></div>
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        <p>Belum ada pelatihan yang tersedia saat ini.</p>
+                    </div>
+                </div>
             <?php endif; ?>
         </div>
     </div>

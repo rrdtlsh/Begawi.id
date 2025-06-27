@@ -15,6 +15,7 @@ class TrainingApplicationModel extends Model
         'training_id',
         'jobseeker_id',
         'status',
+        'rejection_reason',
     ];
 
     protected $useTimestamps = true;
@@ -28,10 +29,11 @@ class TrainingApplicationModel extends Model
                             trainings.title, 
                             training_applications.status, 
                             training_applications.enrolled_at,
+                            training_applications.rejection_reason,
                             vendors.company_name as penyelenggara
                         ')
             ->join('trainings', 'trainings.id = training_applications.training_id')
-            ->join('vendors', 'vendors.id = trainings.vendor_id', 'left') 
+            ->join('vendors', 'vendors.id = trainings.vendor_id', 'left')
             ->where('training_applications.jobseeker_id', $jobseekerId)
             ->orderBy('training_applications.enrolled_at', 'DESC')
             ->findAll($limit);

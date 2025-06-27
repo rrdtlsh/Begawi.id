@@ -29,9 +29,22 @@
                             <div class="card job-card w-100 mb-4">
                                 <div class="card-body d-flex flex-column">
                                     <div class="d-flex align-items-start mb-3">
-                                        <img src="<?= esc($job->company_logo_path ?? 'https://placehold.co/60x60/A1C349/FFFFFF?text=PT') ?>"
-                                            alt="Logo Perusahaan" class="company-logo me-3"
-                                            style="width:60px; height:60px; border-radius: 0.5rem; object-fit: cover;">
+                                        <?php
+                                        $companyName = esc($job->company_name ?? 'N/A');
+                                        $words = explode(' ', $companyName);
+                                        $initials = (count($words) >= 2) ? (substr($words[0], 0, 1) . substr($words[1], 0, 1)) : substr($companyName, 0, 2);
+                                        $initials = strtoupper($initials);
+                                        $placeholder = 'https://placehold.co/60x60/F8DE3D/333333?text=' . $initials;
+                                        $logo_url = $placeholder;
+
+                                        if (isset($job->company_logo_path) && !empty(trim($job->company_logo_path))) {
+                                            $logo_file = 'uploads/logos/' . trim($job->company_logo_path);
+                                            if (file_exists(FCPATH . $logo_file)) {
+                                                $logo_url = base_url($logo_file);
+                                            }
+                                        }
+                                        ?>
+                                        <img src="<?= $logo_url ?>" alt="Logo Perusahaan" class="company-logo me-3" style="width:60px; height:60px; border-radius: 0.5rem; object-fit: cover;">
                                         <div>
                                             <h5 class="card-title mb-1"><a
                                                     href="<?= site_url('lowongan/detail/' . $job->id) ?>"><?= esc($job->title) ?></a>
@@ -57,21 +70,33 @@
                         <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
                             <div class="card job-card w-100 mb-4">
                                 <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title mb-1"><a
-                                            href="<?= site_url('pelatihan/detail/' . $training->id) ?>"><?= esc($training->title) ?></a>
-                                    </h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">
-                                        <?= esc($training->penyelenggara ?? $training->company_name) ?>
-                                    </h6>
-                                    <div class="mb-3 small">
-                                        <p class="job-detail-item"><i class="bi bi-geo-alt-fill"></i>
-                                            <?= esc($training->location_name ?? 'Online') ?></p>
-                                        <p class="job-detail-item"><i class="bi bi-calendar-event"></i> Mulai:
-                                            <?= date('d M Y', strtotime($training->start_date)) ?>
-                                        </p>
+                                    <div class="d-flex align-items-start mb-3">
+                                        <?php
+                                        $companyName = esc($training->penyelenggara ?? $training->company_name);
+                                        $words = explode(' ', $companyName);
+                                        $initials = (count($words) >= 2) ? (substr($words[0], 0, 1) . substr($words[1], 0, 1)) : substr($companyName, 0, 2);
+                                        $initials = strtoupper($initials);
+                                        $placeholder = 'https://placehold.co/60x60/F8DE3D/333333?text=' . $initials;
+                                        $logo_url = $placeholder;
+
+                                        if (isset($training->company_logo_path) && !empty(trim($training->company_logo_path))) {
+                                            $logo_file = 'uploads/logos/' . trim($training->company_logo_path);
+                                            if (file_exists(FCPATH . $logo_file)) {
+                                                $logo_url = base_url($logo_file);
+                                            }
+                                        }
+                                        ?>
+                                        <img src="<?= $logo_url ?>" alt="Logo Penyelenggara" class="company-logo me-3" style="width:60px; height:60px; border-radius: 0.5rem; object-fit: cover;">
+                                        <div>
+                                            <h5 class="card-title mb-1"><a href="<?= site_url('pelatihan/detail/' . $training->id) ?>"><?= esc($training->title) ?></a></h5>
+                                            <h6 class="card-subtitle mb-2 text-muted"><?= esc($training->penyelenggara ?? $training->company_name) ?></h6>
+                                        </div>
                                     </div>
-                                    <a href="<?= site_url('pelatihan/detail/' . $training->id) ?>"
-                                        class="btn btn-custom-green mt-auto">Lihat Detail Pelatihan</a>
+                                    <div class="mb-3 small">
+                                        <p class="job-detail-item"><i class="bi bi-geo-alt-fill"></i> <?= esc($training->location_name ?? 'Online') ?></p>
+                                        <p class="job-detail-item"><i class="bi bi-calendar-event"></i> Mulai: <?= date('d M Y', strtotime($training->start_date)) ?></p>
+                                    </div>
+                                    <a href="<?= site_url('pelatihan/detail/' . $training->id) ?>" class="btn btn-custom-green mt-auto">Lihat Detail Pelatihan</a>
                                 </div>
                             </div>
                         </div>

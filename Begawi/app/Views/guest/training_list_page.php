@@ -12,28 +12,35 @@
             <?php foreach ($trainings as $training): ?>
                 <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
                     <div class="job-card-new">
-                        
+
                         <div class="card-header-new">
                             <?php
-                                $organizerName = $training->penyelenggara ?? 'Umum';
-                                $words = explode(' ', $organizerName);
-                                $initials = '';
-                                if (isset($words[0])) {
-                                    $initials .= strtoupper(substr($words[0], 0, 1));
-                                }
-                                if (isset($words[1])) {
-                                    $initials .= strtoupper(substr($words[1], 0, 1));
-                                } else {
-                                    $initials = strtoupper(substr($words[0], 0, 2));
-                                }
+                            $organizerName = $training->penyelenggara ?? 'Umum';
+                            $words = explode(' ', $organizerName);
+                            $initials = (count($words) >= 2) ? (substr($words[0], 0, 1) . substr($words[1], 0, 1)) : substr($organizerName, 0, 2);
+                            $initials = strtoupper($initials);
 
-                                $colors = ['#00796B', '#5E35B1', '#E53935', '#215546', '#A1C349', '#FFC700'];
-                                $color = $colors[crc32($organizerName) % count($colors)];
+                            $colors = ['#00796B', '#5E35B1', '#E53935', '#215546', '#A1C349', '#FFC700'];
+                            $color = $colors[crc32($organizerName) % count($colors)];
+
+                            $logo_path = isset($training->company_logo_path) ? trim($training->company_logo_path) : '';
+                            $has_real_logo = false;
+                            if (!empty($logo_path)) {
+                                $logo_file_path = 'uploads/logos/' . $logo_path;
+                                if (file_exists(FCPATH . $logo_file_path)) {
+                                    $has_real_logo = true;
+                                    $logo_url = base_url($logo_file_path);
+                                }
+                            }
                             ?>
-                            <div class="company-initials-avatar" style="background-color: <?= $color; ?>;">
-                                <span><?= esc($initials) ?></span>
-                            </div>
 
+                            <?php if ($has_real_logo): ?>
+                                <img src="<?= $logo_url ?>" alt="Logo <?= esc($organizerName) ?>" class="company-initials-avatar">
+                            <?php else: ?>
+                                <div class="company-initials-avatar" style="background-color: <?= $color; ?>;">
+                                    <span><?= esc($initials) ?></span>
+                                </div>
+                            <?php endif; ?>
                             <div>
                                 <h5 class="job-title-new"><?= esc($training->title) ?></h5>
                                 <p class="company-name-new">Oleh: <?= esc($organizerName) ?></p>
@@ -56,7 +63,7 @@
                                 </li>
                             </ul>
                         </div>
-                        
+
                         <div class="card-footer-new">
                             <a href="<?= site_url('pelatihan/detail/' . $training->id) ?>" class="btn-apply-new">Lihat Detail</a>
                         </div>
