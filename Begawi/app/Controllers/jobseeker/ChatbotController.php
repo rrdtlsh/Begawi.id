@@ -52,7 +52,7 @@ class ChatbotController extends BaseController
                     'Accept' => 'application/json'
                 ],
                 'json' => [
-                    'model' => 'meta-llama/llama-3.3-8b-instruct:free',
+                    'model' => getenv('OPENROUTER_MODEL'),
                     'messages' => [
                         [
                             'role' => 'system',
@@ -133,7 +133,6 @@ class ChatbotController extends BaseController
                 'answer' => $answer,
                 'new_csrf_hash' => csrf_hash()
             ]);
-
         } catch (RequestException $e) {
             log_message('error', 'API RequestException: ' . $e->getMessage());
 
